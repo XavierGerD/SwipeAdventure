@@ -10,8 +10,15 @@ onready var CardCost = get_node('CardCost')
 onready var Description = get_node('Effect')
 onready var DiscardPileTotalLabel = get_node("DiscardTotal")
 onready var DrawPileTotalLabel = get_node("DrawTotal")
+onready var WinLoseText = get_node("WinLoseText")
+onready var Card = load('res://Scenes/Card/Card.tscn')
+
+var TopCard
 
 var MaxCardsInHand = 3
+
+const CARD_STARTING_POSITION_X = 288.5
+const CARD_STARTING_POSITION_Y = 642.5
 
 var Player = {
 	'health': 10,
@@ -58,7 +65,7 @@ const PlasmaBolt = {
 
 var Deck = [
 	Weld,
-	Weld, 
+	Weld,
 	Weld,
 	ShieldCharge,
 	ShieldCharge,
@@ -84,10 +91,16 @@ func _ready() -> void:
 	for i in (MaxCardsInHand):
 		Hand.push_back(DrawPile[i])
 		DrawPile.pop_front()
+	print(Hand.size())
+	print(DrawPile.size())
+	print(Deck.size())
 	DisplayCard(Hand[0])
 	SetDiscardTotal()
 	SetDrawTotal()
 	pass # Replace with function body.
+	
+func GetPlayerEnergy():
+	return Player.energy
 	
 func SetEnemyHealth(NewHealthTotal):
 	Enemy.health = NewHealthTotal
@@ -95,16 +108,15 @@ func SetEnemyHealth(NewHealthTotal):
 
 func SetPlayerEnergy(NewEnergyTotal):
 	Player.energy = NewEnergyTotal
-	PlayerEnergyLabel.set_text('Player Energy: ' + str(Player.energy))
+	PlayerEnergyLabel.set_text('PWR: ' + str(Player.energy))
 
 func SetPlayerHealth(NewHealthTotal):
 	Player.health = NewHealthTotal
-	PlayerHealthLabel.set_text('Player Health: ' + str(Player.health))
-
+	PlayerHealthLabel.set_text('HP: ' + str(Player.health))
 
 func SetPlayerBlock(NewBlockTotal):
 	Player.block = NewBlockTotal
-	PlayerBlockLabel.set_text('Player Block: ' + str(Player.block))
+	PlayerBlockLabel.set_text('BLK: ' + str(Player.block))
 
 func SetDiscardTotal():
 	DiscardPileTotalLabel.set_text('Discard: ' + str(DiscardPile.size()))
@@ -113,49 +125,69 @@ func SetDrawTotal():
 	DrawPileTotalLabel.set_text('Draw: ' + str(DrawPile.size()))
 
 func DisplayCard(card):
-	CardName.set_text(card.name)
-	CardCost.set_text(str(card.cost))
-	Description.set_text(card.description)
+	var NewCard = Card.instance()
+	add_child(NewCard)
+	NewCard.set_position(Vector2(CARD_STARTING_POSITION_X, CARD_STARTING_POSITION_Y))
+	NewCard.connect('card_action', self, 'OnAction')
+	NewCard.connect('card_skip', self, 'OnSkip')
+	NewCard.connect('card_special', self, 'OnSpecial')
+	NewCard.InstanciateCard(card.name, str(card.cost), card.description, CARD_STARTING_POSITION_X, CARD_STARTING_POSITION_Y, card.special != null)
+	TopCard = NewCard
 	
 func GoToNextCard():
+	print("before", Hand)
+	TopCard.queue_free()
+	print("after", Hand)
 	DiscardPile.push_back(Hand[0])
 	Hand.pop_front()
-	ConditionnalyEndTurn()
 	DisplayCard(Hand[0])
 	SetDiscardTotal()
 	SetDrawTotal()
-	pass
 	
 func MoveCardFromDiscardToDrawPile():
 	DrawPile = DiscardPile.duplicate()
 	DiscardPile = []
 	randomize()
 	DrawPile.shuffle()
+	TopCard.queue_free()
 	
 func DealEnemyDamage():
 	var damage = Enemy.damage - Player.block if Enemy.damage - Player.block > 0 else 0
-	print(damage)
 	var block = Player.block - Enemy.damage if Player.block - Enemy.damage > 0 else 0
-	print(block)
 	SetPlayerHealth(Player.health - damage)
 	SetPlayerBlock(block)
-
-func ConditionnalyEndTurn():
+	
+func ConditionallyEndTurn():
 	if (Hand.size() == 0):
+		print('ending turn')
 		DealEnemyDamage()
+		ConditionallyLoseGame()
 		SetPlayerEnergy(Player.maxEnergy)
 		for i in (MaxCardsInHand):
 			if DrawPile.size() == 0:
 				MoveCardFromDiscardToDrawPile()
 			Hand.push_back(DrawPile[0])
 			DrawPile.pop_front()
+		TopCard.queue_free()	
 
-func _on_SkipButton_pressed() -> void:
+func ClearScreen():
+	for child in self.get_children():
+		child.queue_free()
+	pass
+
+func ConditionallyWinGame():
+	if (Enemy.health <= 0):
+		WinLoseText.set_text("You Win!")
+		return
 	GoToNextCard()
-	pass # Replace with function body.
+	
+func ConditionallyLoseGame():
+	if (Player.health <= 0):
+		WinLoseText.set_text("You Lose!")
+		return
+	GoToNextCard()
 
-
-func _on_ActionButton_pressed() -> void:
+func OnAction():
 	var currentCard = Hand[0]
 	if currentCard.cost > Player.energy:
 		return
@@ -164,11 +196,14 @@ func _on_ActionButton_pressed() -> void:
 	if (currentCard.block != null):
 		SetPlayerBlock(Player.block + currentCard.block)
 	SetPlayerEnergy(Player.energy - currentCard.cost)
+	ConditionallyWinGame()
+
+func OnSkip() -> void:
+	ConditionallyEndTurn()
 	GoToNextCard()
 	pass # Replace with function body.
 
-
-func _on_SpecialButton_pressed() -> void:
+func OnSpecial() -> void:
 	var currentCard = Hand[0]
 	if currentCard.special:
 		SetEnemyHealth(Enemy.health - currentCard.special.damage)
