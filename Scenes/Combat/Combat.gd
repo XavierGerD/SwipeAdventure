@@ -16,6 +16,9 @@ var TopCard
 
 var MaxCardsInHand = 3
 
+const CARD_STARTING_POSITION_X = 288.5
+const CARD_STARTING_POSITION_Y = 642.5
+
 var Player = {
 	'health': 10,
 	'block': 0,
@@ -60,12 +63,7 @@ const PlasmaBolt = {
 }
 
 var Deck = [
-	Weld,
-	Weld, 
-	Weld,
-	ShieldCharge,
-	ShieldCharge,
-	ShieldCharge,
+	PlasmaBolt,PlasmaBolt,PlasmaBolt,PlasmaBolt,
 	PlasmaBolt,
 ]
 
@@ -117,12 +115,22 @@ func SetDrawTotal():
 
 func DisplayCard(card):
 	var NewCard = Card.instance()
+<<<<<<< HEAD
 	NewCard.InstanciateCard(card.name, str(card.cost), card.description)
 	NewCard.set_position(Vector2(16, 330))
 	NewCard.connect('card_action', self, 'OnAction')
 	NewCard.connect('card_skip', self, 'OnSkip')
 	TopCard = NewCard
 	add_child(NewCard)
+=======
+	add_child(NewCard)
+	NewCard.set_position(Vector2(CARD_STARTING_POSITION_X, CARD_STARTING_POSITION_Y))
+	NewCard.connect('card_action', self, 'OnAction')
+	NewCard.connect('card_skip', self, 'OnSkip')
+	NewCard.connect('card_special', self, 'OnSpecial')
+	NewCard.InstanciateCard(card.name, str(card.cost), card.description, CARD_STARTING_POSITION_X, CARD_STARTING_POSITION_Y, card.special != null)
+	TopCard = NewCard
+>>>>>>> d80633ae3778d5896ba92f58542f5d211b235762
 	
 func GoToNextCard():
 	TopCard.queue_free()
@@ -173,7 +181,7 @@ func OnSkip() -> void:
 	GoToNextCard()
 	pass # Replace with function body.
 
-func _on_SpecialButton_pressed() -> void:
+func OnSpecial() -> void:
 	var currentCard = Hand[0]
 	if currentCard.special:
 		SetEnemyHealth(Enemy.health - currentCard.special.damage)
