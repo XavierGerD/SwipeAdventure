@@ -3,10 +3,13 @@ extends Node2D
 signal card_action
 signal card_skip
 signal card_special
+signal card_pressed
+signal card_released
 
 onready	var CardName = get_node("CardName")
 onready var Cost = get_node("Cost")
 onready	var Description = get_node("Description")
+onready var CardImage = get_node("CardImage")
 
 var IsClicked = false
 var DeltaX = 0
@@ -19,20 +22,43 @@ var HasSpecial = false
 var CardCost
 var IsCardPlayable
 
-func _ready() -> void:
-	pass # Replace with function body.
+func getCardDescription(Card, LocalDamageModifier):
+	var Description = Card.description
 	
-func InstanciateCard(CardNameLabel, CostLabel, DescriptionLabel, CardX, CardY, HasSpecialFromProps, IsCardPlayableFromProps):
-	CardName.set_text(CardNameLabel)
-	Cost.set_text(CostLabel)
-	Description.set_text(DescriptionLabel)
-	CardStartingPosition.x = CardX
-	CardStartingPosition.y = CardY
-	HasSpecial = HasSpecialFromProps
-	CardCost = int(CostLabel)
-	self.set_position(Vector2(CardX, CardY))
-	IsCardPlayable = IsCardPlayableFromProps
+	if (Card.damage != null):
+		Description = Description.replace('{dmg}', Card.damage * LocalDamageModifier)
+		
+	if (Card.heal != null):
+		Description = Description.replace('{hp}', Card.heal)
+		
+	if (Card.block != null):
+		Description = Description.replace('{blk}', Card.block)
+		
+	if (Card.special != null && Card.special.effect != null):
+		Description = Description.replace('{spDmg}', Card.special.effect * LocalDamageModifier)
 
+		
+	return Description
+
+func InstanciateCard(
+	Card,
+	CardX, 
+	CardY, 
+	HasSpecialFromProps, 
+	IsCardPlayableFromProps, 
+	TexturePath,
+	LocalDamageModifier = 1
+	):
+		CardName.set_text(Card.name)
+		Cost.set_text(str(Card.cost))
+		Description.set_text(getCardDescription(Card, LocalDamageModifier))
+		CardStartingPosition.x = CardX
+		CardStartingPosition.y = CardY
+		HasSpecial = HasSpecialFromProps
+		CardCost = Card.cost
+		self.set_position(Vector2(CardX, CardY))
+		IsCardPlayable = IsCardPlayableFromProps
+		CardImage.texture = load(TexturePath)
 
 func _input(event):
 	MousePosition = event.position
@@ -46,6 +72,7 @@ func _input(event):
 	pass
 
 func _on_Button_button_down() -> void:
+	emit_signal("card_pressed")
 	if !IsCardPlayable:
 		return
 	DeltaX = MousePosition.x - self.get_position().x
@@ -63,13 +90,12 @@ func TweenEndSpecial():
 	emit_signal('card_special')
 
 func _on_Button_button_up() -> void:
-	print(IsCardPlayable)
+	emit_signal("card_released")
 	if !IsCardPlayable:
 		return
 	IsClicked = false
 	var Energy = self.get_parent().GetPlayerEnergy()
 	if self.get_global_position().y <= 352 && HasSpecial && CardCost <= Energy:
-		print('special activated')
 		var PositionTween = Tween.new()
 		PositionTween.interpolate_property(
 			self, 
@@ -82,9 +108,9 @@ func _on_Button_button_up() -> void:
 		)
 		add_child(PositionTween)
 		PositionTween.start()
-		PositionTween.connect('tween_all_completed', self, 'TweenEndAction')
+		PositionTween.connect('tween_all_completed', self, 'TweenEndSpecial')
 		return
-	if self.get_global_position().x >= 448 && CardCost <= Energy:
+	if self.get_global_position().x >= 448 && self.get_global_position().y > 352 && CardCost <= Energy:
 		var PositionTween = Tween.new()
 		PositionTween.interpolate_property(
 			self, 
@@ -99,7 +125,7 @@ func _on_Button_button_up() -> void:
 		PositionTween.start()
 		PositionTween.connect('tween_all_completed', self, 'TweenEndAction')
 		return
-	if self.get_global_position().x <= 128:
+	if self.get_global_position().x <= 128 && self.get_global_position().y > 352:
 		var PositionTween = Tween.new()
 		PositionTween.interpolate_property(
 			self, 

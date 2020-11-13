@@ -1,0 +1,4 @@
+extends Node
+
+const CARD_STARTING_POSITION_X = 288.5
+const CARD_STARTING_POSITION_Y = 642.5

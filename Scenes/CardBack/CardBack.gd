@@ -10,3 +10,4 @@ func _ready() -> void:
 func _on_Button_pressed() -> void:
 	emit_signal("card_selected")
 	pass
+
