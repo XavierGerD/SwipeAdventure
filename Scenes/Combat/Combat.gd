@@ -70,7 +70,6 @@ var Deck = [
 	ShieldCharge,
 	ShieldCharge,
 	ShieldCharge,
-	PlasmaBolt,
 ]
 
 var Hand = []
@@ -201,7 +200,6 @@ func OnAction():
 func OnSkip() -> void:
 	ConditionallyEndTurn()
 	GoToNextCard()
-	pass # Replace with function body.
 
 func OnSpecial() -> void:
 	var currentCard = Hand[0]

@@ -30,9 +30,11 @@ func InstanciateCard(CardNameLabel, CostLabel, DescriptionLabel, CardX, CardY, H
 	HasSpecial = HasSpecialFromProps
 	CardCost = int(CostLabel)
 
+
 func _input(event):
 	MousePosition = event.position
 	if IsClicked:
+		rotation = (event.position.x - DeltaX) * 0.001
 		TotalDisplacementX = MousePosition.x - DeltaX
 		TotalDisplacementY = MousePosition.y - DeltaY
 		self.rotation = (TotalDisplacementX - CardStartingPosition.x) * 0.001
