@@ -17,11 +17,12 @@ var MousePosition = Vector2(0, 0)
 var CardStartingPosition = { 'x': 0, 'y': 0 }
 var HasSpecial = false
 var CardCost
+var IsCardPlayable
 
 func _ready() -> void:
 	pass # Replace with function body.
 	
-func InstanciateCard(CardNameLabel, CostLabel, DescriptionLabel, CardX, CardY, HasSpecialFromProps):
+func InstanciateCard(CardNameLabel, CostLabel, DescriptionLabel, CardX, CardY, HasSpecialFromProps, IsCardPlayableFromProps):
 	CardName.set_text(CardNameLabel)
 	Cost.set_text(CostLabel)
 	Description.set_text(DescriptionLabel)
@@ -29,6 +30,8 @@ func InstanciateCard(CardNameLabel, CostLabel, DescriptionLabel, CardX, CardY, H
 	CardStartingPosition.y = CardY
 	HasSpecial = HasSpecialFromProps
 	CardCost = int(CostLabel)
+	self.set_position(Vector2(CardX, CardY))
+	IsCardPlayable = IsCardPlayableFromProps
 
 
 func _input(event):
@@ -43,6 +46,8 @@ func _input(event):
 	pass
 
 func _on_Button_button_down() -> void:
+	if !IsCardPlayable:
+		return
 	DeltaX = MousePosition.x - self.get_position().x
 	DeltaY = MousePosition.y - self.get_position().y
 	IsClicked = true
@@ -58,6 +63,9 @@ func TweenEndSpecial():
 	emit_signal('card_special')
 
 func _on_Button_button_up() -> void:
+	print(IsCardPlayable)
+	if !IsCardPlayable:
+		return
 	IsClicked = false
 	var Energy = self.get_parent().GetPlayerEnergy()
 	if self.get_global_position().y <= 352 && HasSpecial && CardCost <= Energy:

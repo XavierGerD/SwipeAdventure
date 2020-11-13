@@ -12,6 +12,11 @@ onready var DiscardPileTotalLabel = get_node("DiscardTotal")
 onready var DrawPileTotalLabel = get_node("DrawTotal")
 onready var WinLoseText = get_node("WinLoseText")
 onready var Card = load('res://Scenes/Card/Card.tscn')
+onready var Cards = load('res://Scenes/Data/Cards.gd')
+onready var RewardScreen = load('res://Scenes/RewardScreen.tscn')
+
+var IsGameLost = false
+var IsGameWon = false
 
 var TopCard
 
@@ -33,43 +38,13 @@ var Enemy = {
 	'damage': 3
 }
 
-const Weld = {
-		'name': 'Weld',
-		'cost': 1,
-		'damage': 3,
-		'block': null,
-		'special': null,
-		'description': 'Use your welder to deal 3 damage'
-	}
-
-const ShieldCharge = {
-		'name': 'Shield Charge',
-		'cost': 1,
-		'damage': null,
-		'block': 3,
-		'special': null,
-		'description': 'Charge up your shield and gain 3 block'
-	}
-
-const PlasmaBolt = {
-	'name': 'Plasma Bolt',
-	'cost': 2,
-	'damage': 5,
-	'block': null,
-	'special': {
-		'damage': 7,
-		'condition': 'discard'
-	},
-	'description': 'Deal 5 damage with your plasma bolt. Overload this card to deal 7 damage and discard it.'
-}
-
-var Deck = [
-	Weld,
-	Weld,
-	Weld,
-	ShieldCharge,
-	ShieldCharge,
-	ShieldCharge,
+onready var Deck = [
+	Cards.Weld,
+	Cards.Weld,
+	Cards.Weld,
+	Cards.ShieldCharge,
+	Cards.ShieldCharge,
+	Cards.ShieldCharge,
 ]
 
 var Hand = []
@@ -97,6 +72,11 @@ func _ready() -> void:
 	SetDiscardTotal()
 	SetDrawTotal()
 	pass # Replace with function body.
+	
+func _process(delta):
+	if IsGameWon:
+		get_parent().add_child(RewardScreen.instance())
+		self.queue_free()
 	
 func GetPlayerEnergy():
 	return Player.energy
@@ -126,19 +106,28 @@ func SetDrawTotal():
 func DisplayCard(card):
 	var NewCard = Card.instance()
 	add_child(NewCard)
-	NewCard.set_position(Vector2(CARD_STARTING_POSITION_X, CARD_STARTING_POSITION_Y))
 	NewCard.connect('card_action', self, 'OnAction')
 	NewCard.connect('card_skip', self, 'OnSkip')
 	NewCard.connect('card_special', self, 'OnSpecial')
-	NewCard.InstanciateCard(card.name, str(card.cost), card.description, CARD_STARTING_POSITION_X, CARD_STARTING_POSITION_Y, card.special != null)
+	NewCard.InstanciateCard(card.name, str(card.cost), card.description, CARD_STARTING_POSITION_X, CARD_STARTING_POSITION_Y, card.special != null, true)
 	TopCard = NewCard
 	
+func GetIsTurnDone():
+	if (Hand.size() == 0):
+		return true
+	return false
+	
 func GoToNextCard():
-	print("before", Hand)
 	TopCard.queue_free()
-	print("after", Hand)
+	#Take the top card from your hand and place it in the discard pile
 	DiscardPile.push_back(Hand[0])
+	#Remove the card from your hand
 	Hand.pop_front()
+	#Check to see if turn is done
+	var IsTurnDone = GetIsTurnDone()
+	if IsTurnDone:
+		EndTurn()
+		return
 	DisplayCard(Hand[0])
 	SetDiscardTotal()
 	SetDrawTotal()
@@ -156,18 +145,18 @@ func DealEnemyDamage():
 	SetPlayerHealth(Player.health - damage)
 	SetPlayerBlock(block)
 	
-func ConditionallyEndTurn():
-	if (Hand.size() == 0):
-		print('ending turn')
-		DealEnemyDamage()
-		ConditionallyLoseGame()
-		SetPlayerEnergy(Player.maxEnergy)
-		for i in (MaxCardsInHand):
-			if DrawPile.size() == 0:
-				MoveCardFromDiscardToDrawPile()
-			Hand.push_back(DrawPile[0])
-			DrawPile.pop_front()
-		TopCard.queue_free()	
+func EndTurn():
+	DealEnemyDamage()
+	ConditionallyLoseGame()
+	SetPlayerEnergy(Player.maxEnergy)
+	for i in (MaxCardsInHand):
+		if DrawPile.size() == 0:
+			MoveCardFromDiscardToDrawPile()
+		Hand.push_back(DrawPile[0])
+		DrawPile.pop_front()
+	TopCard.queue_free()
+	GoToNextCard()
+
 
 func ClearScreen():
 	for child in self.get_children():
@@ -177,31 +166,36 @@ func ClearScreen():
 func ConditionallyWinGame():
 	if (Enemy.health <= 0):
 		WinLoseText.set_text("You Win!")
+		IsGameWon = true
 		return
 	GoToNextCard()
 	
 func ConditionallyLoseGame():
 	if (Player.health <= 0):
 		WinLoseText.set_text("You Lose!")
+		IsGameLost = true
 		return
-	GoToNextCard()
 
 func OnAction():
-	var currentCard = Hand[0]
-	if currentCard.cost > Player.energy:
+	if IsGameLost:
 		return
+	var currentCard = Hand[0]
 	if (currentCard.damage != null):
-		SetEnemyHealth(Enemy.health - currentCard.damage)
+		var newEnemyHealth = Enemy.health - currentCard.damage if  Enemy.health - currentCard.damage >=0 else 0
+		SetEnemyHealth(newEnemyHealth)
 	if (currentCard.block != null):
 		SetPlayerBlock(Player.block + currentCard.block)
 	SetPlayerEnergy(Player.energy - currentCard.cost)
 	ConditionallyWinGame()
 
 func OnSkip() -> void:
-	ConditionallyEndTurn()
+	if IsGameLost:
+		return
 	GoToNextCard()
 
 func OnSpecial() -> void:
+	if IsGameLost:
+		return
 	var currentCard = Hand[0]
 	if currentCard.special:
 		SetEnemyHealth(Enemy.health - currentCard.special.damage)
