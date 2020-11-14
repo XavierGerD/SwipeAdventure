@@ -1,10 +1,12 @@
 extends Node2D
 
+signal game_is_won(Enemy)
+signal game_is_lost
+signal update_health
+
 onready var PlayerHealthLabel = get_node("PlayerHealth")
 onready var PlayerEnergyLabel = get_node("PlayerEnergy")
 onready var PlayerBlockLabel = get_node("PlayerBlock")
-onready var EnemyNameLabel = get_node("MonsterName")
-onready var EnemyHealthLabel = get_node("MonsterEnergy")
 onready var CardName = get_node('CardName')
 onready var CardCost = get_node('CardCost')
 onready var Description = get_node('Effect')
@@ -14,13 +16,10 @@ onready var HandTotalLabel = get_node("HandTotal")
 onready var WinLoseText = get_node("WinLoseText")
 
 onready var LoadoutManager = load('res://Scenes/LoadoutManager/LoadoutManager.gd')
-
 onready var Card = load('res://Scenes/Card/Card.tscn')
+onready var EnemyNode = load('res://Scenes/Enemy/Enemy.tscn')
 
 onready var HandStack = get_node("HandStack")
-
-onready var RewardScreen = load('res://Scenes/RewardScreen/RewardScreen.tscn')
-onready var LosingScreen = load('res://Scenes/LosingScreen/LosingScreen.tscn')
 
 var IsGameLost = false
 var IsGameWon = false
@@ -29,7 +28,9 @@ var TopCard
 
 var MaxCardsInHand = 3
 
-var Enemy
+var EncounterEnemies
+var EncounterEnemyNodes = []
+var TargetEnemy
 
 var CurrentLoadoutManager
 var Player
@@ -42,7 +43,6 @@ var PendingPlayerToEnemyDamage = 0
 
 #init functions
 func _ready() -> void:
-	InstanciateCombat(InitGame.NewPlayerTemplate.duplicate(), Enemies.SlaveWatcher)
 	pass # Replace with function body.
 	
 func InstanciateLoadout(CurrentLoadout):
@@ -51,10 +51,19 @@ func InstanciateLoadout(CurrentLoadout):
 	NewDeck += CurrentLoadout.shield
 	Deck = NewDeck
 
-func InstanciateEnemy(CurrentEnemy):
-	Enemy = CurrentEnemy
-	EnemyNameLabel.set_text('Enemy: ' + Enemy.name)
-	SetEnemyHealth(Enemy.health)
+func InstanciateEnemy(CurrentEnemy, i):
+	var NewEnemyNode = EnemyNode.instance()
+	add_child(NewEnemyNode)
+	NewEnemyNode.set_position(Vector2((i * 175) + 128, 150))
+	NewEnemyNode.InstanciateEnemy(CurrentEnemy)
+	NewEnemyNode.connect('enemy_selected', self, 'OnSelectEnemy')
+	EncounterEnemyNodes.push_back(
+		{
+			'node': NewEnemyNode,
+			'enemyRef': CurrentEnemy,			
+		}
+	)
+	self.connect('update_health', NewEnemyNode, 'OnHealthUpdate')
 
 func InstanciatePlayer(CurrentPlayer):
 	Player = CurrentPlayer
@@ -62,15 +71,17 @@ func InstanciatePlayer(CurrentPlayer):
 	SetPlayerEnergy(Player.maxEnergy)
 	SetPlayerBlock(Player.block)
 	
-
-func InstanciateCombat(CurrentPlayer, CurrentEnemy):
+func InstanciateCombat(CurrentPlayer, CurrentEnemies):
 	InstanciatePlayer(CurrentPlayer)
-	InstanciateEnemy(CurrentEnemy)
+	EncounterEnemies = CurrentEnemies
+	for i in range(CurrentEnemies.size()):
+		InstanciateEnemy(CurrentEnemies[i], i)
+	OnSelectEnemy(EncounterEnemyNodes[0].enemyRef, EncounterEnemyNodes[0].node)
 	InstanciateLoadout(CurrentPlayer.loadout)
 	PrepareDeck()
 
 func PrepareDeck():
-	DrawPile = Deck.duplicate() 
+	DrawPile = Deck.duplicate(true) 
 	randomize()
 	DrawPile.shuffle()
 	for i in (MaxCardsInHand):
@@ -81,22 +92,14 @@ func PrepareDeck():
 #game loop
 func _process(_delta):
 	if IsGameWon:
-		var NewRewardScreen = RewardScreen.instance()
-		get_parent().add_child(NewRewardScreen)
-		NewRewardScreen.InstanciateRewardScreen([Enemy])
-		self.queue_free()
+		emit_signal("game_is_won", EncounterEnemies)
 	if IsGameLost:
-		get_parent().add_child(LosingScreen.instance())
-		self.queue_free()
+		emit_signal("game_is_lost")
 			
 #setters and getters
 func GetPlayerEnergy():
 	return Player.energy
 	
-func SetEnemyHealth(NewHealthTotal):
-	Enemy.health = NewHealthTotal
-	EnemyHealthLabel.set_text(str(Enemy.health))
-
 func SetPlayerEnergy(NewEnergyTotal):
 	Player.energy = NewEnergyTotal
 	PlayerEnergyLabel.set_text('PWR: ' + str(Player.energy))
@@ -117,6 +120,16 @@ func SetDrawTotal():
 	
 func SetHandTotal():
 	HandTotalLabel.set_text('Hand: ' + str(Hand.size()))
+
+func OnSelectEnemy(SelectedEnemy, EnemyNode):
+	for EnemyNode in EncounterEnemyNodes:
+		if EnemyNode.node != null:
+			EnemyNode.node.OnDeselect()
+	EnemyNode.OnSelect()
+	TargetEnemy = { 
+		'node': EnemyNode,
+		'enemyRef': SelectedEnemy, 
+	}
 
 #card methods
 func DisplayCard(card):
@@ -155,10 +168,8 @@ func GoToNextCard():
 	#Check to see if turn is done
 	var IsTurnDone = GetIsTurnDone()
 	if IsTurnDone:
-		print('turn is done')
 		EndTurn()
 		return
-	print('turn is not done')
 	UpdateHand()
 	
 func MoveCardFromDiscardToDrawPile():
@@ -170,10 +181,12 @@ func MoveCardFromDiscardToDrawPile():
 
 #game logic
 func DealEnemyDamage():
-	var damage = Enemy.baseDamage - Player.block if Enemy.baseDamage - Player.block > 0 else 0
-	var block = Player.block - Enemy.baseDamage if Player.block - Enemy.baseDamage > 0 else 0
-	SetPlayerHealth(Player.health - damage)
-	SetPlayerBlock(block)
+	for Enemy in EncounterEnemyNodes:
+		if Enemy.node != null:	
+			var damage = Enemy.enemyRef.baseDamage - Player.block if Enemy.enemyRef.baseDamage - Player.block > 0 else 0
+			var block = Player.block - Enemy.enemyRef.baseDamage if Player.block - Enemy.enemyRef.baseDamage > 0 else 0
+			SetPlayerHealth(Player.health - damage)
+			SetPlayerBlock(block)
 	
 func GetIsTurnDone():
 	if (Hand.size() == 0 || Player.energy == 0):
@@ -181,9 +194,8 @@ func GetIsTurnDone():
 	return false
 	
 func BeginTurn():
-	print('beginning turn', PendingPlayerToEnemyDamage)
-	var newEnemyHealth = Enemy.health - PendingPlayerToEnemyDamage if Enemy.health - PendingPlayerToEnemyDamage >= 0 else 0
-	SetEnemyHealth(newEnemyHealth)
+	TargetEnemy.enemyRef.health = TargetEnemy.enemyRef.health - PendingPlayerToEnemyDamage if TargetEnemy.enemyRef.health - PendingPlayerToEnemyDamage >= 0 else 0
+	emit_signal("update_health")
 	PendingPlayerToEnemyDamage = 0
 	UpdateHand()
 	
@@ -201,16 +213,39 @@ func EndTurn():
 	TopCard.queue_free()
 	BeginTurn()
 
+func ContidionallyDestroyEnemies():
+	var WasAnEnemyDestroyed = false
+	print(TargetEnemy)
+	print(EncounterEnemyNodes)
+	#There HAS to be a better way to do this......
+	for i in range(EncounterEnemyNodes.size()):
+		if EncounterEnemyNodes[i].enemyRef.health == 0:
+			if (EncounterEnemyNodes[i].node != null):
+				EncounterEnemyNodes[i].node.queue_free()
+				EncounterEnemyNodes[i].node = null
+				WasAnEnemyDestroyed = true
+	if WasAnEnemyDestroyed:
+		var index = -1
+		for i in range(EncounterEnemyNodes.size()):
+			if (EncounterEnemyNodes[i].enemyRef.health > 0  && index == -1):
+				index = i
+		OnSelectEnemy(EncounterEnemyNodes[index].enemyRef, EncounterEnemyNodes[index].node)
+
 func CheckGameWinCondition():
-	if (Enemy.health <= 0):
+	ContidionallyDestroyEnemies()
+	var AreAllEnemiesDead = true
+	for Enemy in EncounterEnemyNodes:
+		if Enemy.node != null:
+			AreAllEnemiesDead = false
+	if (AreAllEnemiesDead):
 		WinLoseText.set_text("You Win!")
 		IsGameWon = true
 		return true
 	return false
 		
 func ConditionallyWinGame():
-	var IsGameWon = CheckGameWinCondition()
-	if !IsGameWon:
+	var IsGameWonThisTurn = CheckGameWinCondition()
+	if !IsGameWonThisTurn:
 		GoToNextCard()
 	
 func ConditionallyLoseGame():
@@ -226,8 +261,8 @@ func OnAction():
 	var CurrentCard = Hand[0]
 	if (CurrentCard.damage != null):
 		var CardDamage = GetCardDamage(CurrentCard)
-		var newEnemyHealth = Enemy.health - CardDamage if  Enemy.health - CardDamage >= 0 else 0
-		SetEnemyHealth(newEnemyHealth)
+		TargetEnemy.enemyRef.health = TargetEnemy.enemyRef.health - CardDamage if TargetEnemy.enemyRef.health - CardDamage >= 0 else 0
+		emit_signal("update_health")
 	if (CurrentCard.block != null):
 		SetPlayerBlock(Player.block + CurrentCard.block)
 	if (CurrentCard.heal != null):
@@ -249,7 +284,8 @@ func OnSpecial() -> void:
 	var CurrentCard = Hand[0]
 	if CurrentCard.special:
 		if (CurrentCard.special.damage != null):
-			SetEnemyHealth(Enemy.health - (CurrentCard.special.damage * LocalDamageModifier))
+			TargetEnemy.enemyRef.health = TargetEnemy.enemyRef.health - CurrentCard.special.damage * LocalDamageModifier if TargetEnemy.enemyRef.health - CurrentCard.special.damage * LocalDamageModifier >= 0 else 0
+			emit_signal("update_health")
 		if (CurrentCard.special.condition == 'discard'):
 			Hand.pop_front()
 		if (CurrentCard.special.power == 'pendingDamage'):
