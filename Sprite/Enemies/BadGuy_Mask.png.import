@@ -1,0 +1,15 @@
+[remap]
+
+importer="bitmap"
+type="BitMap"
+path="res://.import/BadGuy_Mask.png-40f13b95d56121489ecb1fcd6c96ae2f.res"
+
+[deps]
+
+source_file="res://Sprite/Enemies/BadGuy_Mask.png"
+dest_files=[ "res://.import/BadGuy_Mask.png-40f13b95d56121489ecb1fcd6c96ae2f.res" ]
+
+[params]
+
+create_from=0
+threshold=0.5

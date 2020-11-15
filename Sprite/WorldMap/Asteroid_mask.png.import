@@ -1,0 +1,15 @@
+[remap]
+
+importer="bitmap"
+type="BitMap"
+path="res://.import/Asteroid_mask.png-f0ba87bec989dcbb3de17915483e793e.res"
+
+[deps]
+
+source_file="res://Sprite/WorldMap/Asteroid_mask.png"
+dest_files=[ "res://.import/Asteroid_mask.png-f0ba87bec989dcbb3de17915483e793e.res" ]
+
+[params]
+
+create_from=0
+threshold=0.5
