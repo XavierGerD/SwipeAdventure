@@ -25,6 +25,12 @@ Cards="*res://Data/Cards.gd"
 InitGame="*res://Data/InitGame.gd"
 Enemies="*res://Data/Enemies.gd"
 Constants="*res://Data/Constants.gd"
+<<<<<<< Updated upstream
+=======
+Encounters="*res://Data/Encounters.gd"
+SetGetUtils="*res://Utils/SetGetUtils.gd"
+Skills="*res://Data/Skills.gd"
+>>>>>>> Stashed changes
 
 [display]
 

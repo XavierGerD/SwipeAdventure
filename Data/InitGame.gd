@@ -6,6 +6,7 @@ onready var NewPlayerTemplate = {
 	'block': 0,
 	'energy': 3,
 	'maxEnergy': 3,
+	'maxCardsInHand': 3,
 	'loadout': {
 		'weapon': Cards.PlasmaBolter,
 		'shield': Cards.BasicShield
