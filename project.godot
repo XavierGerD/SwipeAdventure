@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="SwipeAdventure"
-run/main_scene="res://Scenes/Combat/Combat.tscn"
+run/main_scene="res://Scenes/GameManager/GameManager.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -25,12 +25,9 @@ Cards="*res://Data/Cards.gd"
 InitGame="*res://Data/InitGame.gd"
 Enemies="*res://Data/Enemies.gd"
 Constants="*res://Data/Constants.gd"
-<<<<<<< Updated upstream
-=======
 Encounters="*res://Data/Encounters.gd"
 SetGetUtils="*res://Utils/SetGetUtils.gd"
 Skills="*res://Data/Skills.gd"
->>>>>>> Stashed changes
 
 [display]
 

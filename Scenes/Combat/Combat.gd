@@ -27,15 +27,9 @@ var IsGameWon = false
 
 var TopCard
 
-<<<<<<< Updated upstream
-var MaxCardsInHand = 3
-
-var Enemy
-=======
 var EncounterEnemies
 var EncounterEnemyNodes = []
 var TargetEnemy
->>>>>>> Stashed changes
 
 var CurrentLoadoutManager
 var Player
@@ -47,23 +41,15 @@ var LocalDamageModifier = 1
 var PendingPlayerToEnemyDamage = 0
 
 #init functions
-<<<<<<< Updated upstream
-func _ready() -> void:
-	InstanciateCombat(InitGame.NewPlayerTemplate.duplicate(), Enemies.SlaveWatcher)
-	pass # Replace with function body.
-	
-=======
->>>>>>> Stashed changes
 func InstanciateLoadout(CurrentLoadout):
 	var NewDeck = []
 	NewDeck += CurrentLoadout.weapon
 	NewDeck += CurrentLoadout.shield
 	Deck = NewDeck
 
-func InstanciateEnemy(CurrentEnemy):
-	Enemy = CurrentEnemy
-	EnemyNameLabel.set_text('Enemy: ' + Enemy.name)
-	SetEnemyHealth(Enemy.health)
+func InstanciateEnemy(CurrentEnemies):
+	for Enemy in CurrentEnemies:
+		
 
 func InstanciatePlayer(CurrentPlayer):
 	Player = CurrentPlayer
@@ -72,9 +58,9 @@ func InstanciatePlayer(CurrentPlayer):
 	SetGetUtils.SetPlayerBlock(PlayerBlockLabel, Player, Player.block)
 	
 
-func InstanciateCombat(CurrentPlayer, CurrentEnemy):
+func InstanciateCombat(CurrentPlayer, CurrentEnemies):
 	InstanciatePlayer(CurrentPlayer)
-	InstanciateEnemy(CurrentEnemy)
+	InstanciateEnemies(CurrentEnemies)
 	InstanciateLoadout(CurrentPlayer.loadout)
 	PrepareDeck()
 
@@ -103,35 +89,6 @@ func _process(_delta):
 		self.queue_free()
 			
 #setters and getters
-<<<<<<< Updated upstream
-func GetPlayerEnergy():
-	return Player.energy
-	
-func SetEnemyHealth(NewHealthTotal):
-	Enemy.health = NewHealthTotal
-	EnemyHealthLabel.set_text(str(Enemy.health))
-
-func SetPlayerEnergy(NewEnergyTotal):
-	Player.energy = NewEnergyTotal
-	PlayerEnergyLabel.set_text('PWR: ' + str(Player.energy))
-
-func SetPlayerHealth(NewHealthTotal):
-	Player.health = NewHealthTotal
-	PlayerHealthLabel.set_text('HP: ' + str(Player.health))
-
-func SetPlayerBlock(NewBlockTotal):
-	Player.block = NewBlockTotal
-	PlayerBlockLabel.set_text('BLK: ' + str(Player.block))
-
-func SetDiscardTotal():
-	DiscardPileTotalLabel.set_text('Discard: ' + str(DiscardPile.size()))
-	
-func SetDrawTotal():
-	DrawPileTotalLabel.set_text('Draw: ' + str(DrawPile.size()))
-	
-func SetHandTotal():
-	HandTotalLabel.set_text('Hand: ' + str(Hand.size()))
-=======
 func OnSelectEnemy(SelectedEnemy, EnemyNode):
 	for EnemyNode in EncounterEnemyNodes:
 		if EnemyNode.node != null:
@@ -141,7 +98,6 @@ func OnSelectEnemy(SelectedEnemy, EnemyNode):
 		'node': EnemyNode,
 		'enemyRef': SelectedEnemy, 
 	}
->>>>>>> Stashed changes
 
 #card methods
 func DisplayCard(card):
@@ -195,19 +151,12 @@ func MoveCardFromDiscardToDrawPile():
 
 #game logic
 func DealEnemyDamage():
-<<<<<<< Updated upstream
-	var damage = Enemy.baseDamage - Player.block if Enemy.baseDamage - Player.block > 0 else 0
-	var block = Player.block - Enemy.baseDamage if Player.block - Enemy.baseDamage > 0 else 0
-	SetPlayerHealth(Player.health - damage)
-	SetPlayerBlock(block)
-=======
 	for Enemy in EncounterEnemyNodes:
 		if Enemy.node != null:	
 			var damage = Enemy.enemyRef.baseDamage - Player.block if Enemy.enemyRef.baseDamage - Player.block > 0 else 0
 			var block = Player.block - Enemy.enemyRef.baseDamage if Player.block - Enemy.enemyRef.baseDamage > 0 else 0
 			SetGetUtils.SetPlayerHealth(PlayerHealthLabel, Player, Player.health - damage)
 			SetGetUtils.SetPlayerBlock(PlayerBlockLabel, Player, block)
->>>>>>> Stashed changes
 	
 func GetIsTurnDone():
 	if (Hand.size() == 0 || Player.energy == 0):
@@ -235,8 +184,6 @@ func EndTurn():
 	TopCard.queue_free()
 	BeginTurn()
 
-<<<<<<< Updated upstream
-=======
 func ContidionallyDestroyEnemies():
 	var WasAnEnemyDestroyed = false
 	#There HAS to be a better way to do this......
@@ -254,7 +201,6 @@ func ContidionallyDestroyEnemies():
 		if EncounterEnemyNodes[index].node:
 			OnSelectEnemy(EncounterEnemyNodes[index].enemyRef, EncounterEnemyNodes[index].node)
 
->>>>>>> Stashed changes
 func CheckGameWinCondition():
 	if (Enemy.health <= 0):
 		WinLoseText.set_text("You Win!")
