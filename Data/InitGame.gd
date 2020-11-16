@@ -8,10 +8,10 @@ onready var NewPlayerTemplate = {
 	'maxEnergy': 3,
 	'maxCardsInHand': 3,
 	'loadout': {
-		'weapon': Cards.PlasmaBolter,
+		'weapon': Cards.Welder,
 		'shield': Cards.BasicShield
 	},
 	'inventory': [],
-	'credit': 0,
+	'credits': 0,
 	'stage': null,
 }

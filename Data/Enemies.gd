@@ -1,6 +1,6 @@
 extends Node
 
-var Heckler = {
+const Heckler = {
 	'name': 'Heckler',
 	'baseDamage': 3,
 	'health': 5,
@@ -10,7 +10,7 @@ var Heckler = {
 	}
 }
 
-var LongStepper = {
+const LongStepper = {
 	'name': 'Long Stepper',
 	'baseDamage': 4,
 	'health': 8,
@@ -20,7 +20,7 @@ var LongStepper = {
 	}
 }
 
-var DuneMaker = {
+const DuneMaker = {
 	'name': 'Dune Maker',
 	'baseDamage': 5,
 	'health': 15,
@@ -29,7 +29,7 @@ var DuneMaker = {
 	}
 }
 
-var SlaveWatcher = {
+const SlaveWatcher = {
 	'name': 'Slave Watcher',
 	'baseDamage': 1,
 	'health': 2,
