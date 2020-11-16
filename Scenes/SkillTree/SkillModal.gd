@@ -1,5 +1,7 @@
 extends Node2D
 
+signal buy_button_pressed
+
 onready var DescriptionLabelNode = get_node("DescriptionLabel")
 onready var SkillnameLabelNode = get_node("SkillNameLabel")
 onready var CostLabelNode = get_node("CostLabel")
@@ -17,6 +19,7 @@ func UpdateSkillModal(Skill):
 	
 func SetCanUserBuySkill(Skill):
 	if GetCanUserBuySkill(Skill):
+		BuyButtonNode.disabled = false
 		return
 	BuyButtonNode.disabled = true
 		
@@ -32,4 +35,10 @@ func GetUserCreditTotal():
 
 func _on_CancelButton_pressed() -> void:
 	self.visible = false
+	self.get_parent().CurrentBuySignal = null
+	self.get_parent().CurrentBuyButton = null
+	pass # Replace with function body.
+
+func _on_BuyButton_pressed() -> void:
+	emit_signal("buy_button_pressed", CurrentSkill)
 	pass # Replace with function body.

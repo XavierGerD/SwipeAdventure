@@ -14,4 +14,5 @@ onready var NewPlayerTemplate = {
 	'inventory': [],
 	'credits': 0,
 	'stage': null,
+	'skills': {}
 }

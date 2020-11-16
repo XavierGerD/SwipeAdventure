@@ -19,6 +19,8 @@ onready var LoadoutManager = load('res://Scenes/LoadoutManager/LoadoutManager.gd
 onready var Card = load('res://Scenes/Card/Card.tscn')
 onready var EnemyNode = load('res://Scenes/Enemy/Enemy.tscn')
 
+onready var AttackSpriteNode = load('res://Scenes/AttackSprite/AttackSprite.tscn')
+
 onready var HandStack = get_node("HandStack")
 
 var IsGameLost = false
@@ -38,8 +40,11 @@ var Deck
 var Hand = []
 var DrawPile = []
 var DiscardPile = []
+var CurrentCard
 var LocalDamageModifier = 1
 var PendingPlayerToEnemyDamage = 0
+
+var IsAnimatingAttack = false
 
 #init functions
 func _ready() -> void:
@@ -93,45 +98,49 @@ func PrepareDeck():
 func GetPlayerEnergy():
 	return Player.energy
 #game loop
+func CheckGameWinCondition():
+	var AreAllEnemiesDead = true
+	for Enemy in EncounterEnemyNodes:
+		if Enemy.node != null:
+			AreAllEnemiesDead = false
+	if (AreAllEnemiesDead):
+		IsGameWon = true
+		return true
+	return false
+	
+func CheckGameLostCondition():
+	if (Player.health <= 0):
+		IsGameLost = true
+		return
+
+func ContidionallyDestroyEnemies():
+	var WasAnEnemyDestroyed = false
+	#There HAS to be a better way to do this......
+	for i in range(EncounterEnemyNodes.size()):
+		if EncounterEnemyNodes[i].enemyRef.health == 0:
+			if (EncounterEnemyNodes[i].node != null):
+				EncounterEnemyNodes[i].node.queue_free()
+				EncounterEnemyNodes[i].node = null
+				WasAnEnemyDestroyed = true
+	if WasAnEnemyDestroyed:
+		var index = -1
+		for i in range(EncounterEnemyNodes.size()):
+			if (EncounterEnemyNodes[i].enemyRef.health > 0  && index == -1):
+				index = i
+		if EncounterEnemyNodes[index].node:
+			OnSelectEnemy(EncounterEnemyNodes[index].enemyRef, EncounterEnemyNodes[index].node)
+
 func _process(_delta):
+	if !IsAnimatingAttack:
+		ContidionallyDestroyEnemies()
+	CheckGameWinCondition()
+	CheckGameLostCondition()
 	if IsGameWon:
 		emit_signal("game_is_won", EncounterEnemies)
 	if IsGameLost:
 		emit_signal("game_is_lost")
-			
+
 #setters and getters
-func GetPlayerEnergy():
-	return Player.energy
-	
-func SetPlayerEnergy(NewEnergyTotal):
-	Player.energy = NewEnergyTotal
-	PlayerEnergyLabel.set_text('PWR: ' + str(Player.energy))
-
-func SetPlayerHealth(NewHealthTotal):
-	Player.health = NewHealthTotal
-	PlayerHealthLabel.set_text('HP: ' + str(Player.health))
-
-func SetPlayerBlock(NewBlockTotal):
-	Player.block = NewBlockTotal
-	PlayerBlockLabel.set_text('BLK: ' + str(Player.block))
-
-func SetDiscardTotal():
-	DiscardPileTotalLabel.set_text('Discard: ' + str(DiscardPile.size()))
-	
-func SetDrawTotal():
-	DrawPileTotalLabel.set_text('Draw: ' + str(DrawPile.size()))
-	
-#setters and getters
-func OnSelectEnemy(SelectedEnemy, EnemyNode):
-	for EnemyNode in EncounterEnemyNodes:
-		if EnemyNode.node != null:
-			EnemyNode.node.OnDeselect()
-	EnemyNode.OnSelect()
-	TargetEnemy = { 
-		'node': EnemyNode,
-		'enemyRef': SelectedEnemy, 
-	}
-
 func OnSelectEnemy(SelectedEnemy, EnemyNode):
 	for EnemyNode in EncounterEnemyNodes:
 		if EnemyNode.node != null:
@@ -212,7 +221,6 @@ func BeginTurn():
 	
 func EndTurn():
 	DealEnemyDamage()
-	ConditionallyLoseGame()
 	SetGetUtils.SetPlayerEnergy(PlayerEnergyLabel, Player, Player.maxEnergy)
 	DiscardPile += Hand
 	Hand = []
@@ -223,54 +231,27 @@ func EndTurn():
 		DrawPile.pop_front()
 	TopCard.queue_free()
 	BeginTurn()
-
-func ContidionallyDestroyEnemies():
-	var WasAnEnemyDestroyed = false
-	#There HAS to be a better way to do this......
-	for i in range(EncounterEnemyNodes.size()):
-		if EncounterEnemyNodes[i].enemyRef.health == 0:
-			if (EncounterEnemyNodes[i].node != null):
-				EncounterEnemyNodes[i].node.queue_free()
-				EncounterEnemyNodes[i].node = null
-				WasAnEnemyDestroyed = true
-	if WasAnEnemyDestroyed:
-		var index = -1
-		for i in range(EncounterEnemyNodes.size()):
-			if (EncounterEnemyNodes[i].enemyRef.health > 0  && index == -1):
-				index = i
-		if EncounterEnemyNodes[index].node:
-			OnSelectEnemy(EncounterEnemyNodes[index].enemyRef, EncounterEnemyNodes[index].node)
-
-func CheckGameWinCondition():
-	ContidionallyDestroyEnemies()
-	var AreAllEnemiesDead = true
-	for Enemy in EncounterEnemyNodes:
-		if Enemy.node != null:
-			AreAllEnemiesDead = false
-	if (AreAllEnemiesDead):
-		IsGameWon = true
-		return true
-	return false
-		
-func ConditionallyWinGame():
-	var IsGameWonThisTurn = CheckGameWinCondition()
-	if !IsGameWonThisTurn:
-		GoToNextCard()
 	
-func ConditionallyLoseGame():
-	if (Player.health <= 0):
-		IsGameLost = true
-		return
+func DealDamageToEnemy():
+	var NewAttackAnim = AttackSpriteNode.instance()
+	add_child(NewAttackAnim)
+	IsAnimatingAttack = true
+	NewAttackAnim.connect('anim_done', self, 'OnAttackDone')
+	NewAttackAnim.AnimateAttack(TargetEnemy.node.get_position().x)
+	
+func OnAttackDone():
+	IsAnimatingAttack = false
+	var CardDamage = GetCardDamage()
+	TargetEnemy.enemyRef.health = TargetEnemy.enemyRef.health - CardDamage if TargetEnemy.enemyRef.health - CardDamage >= 0 else 0
+	emit_signal("update_health")
 
 #player actions
 func OnAction():
 	if IsGameLost:
 		return
-	var CurrentCard = Hand[0]
+	CurrentCard = Hand[0]
 	if (CurrentCard.damage != null):
-		var CardDamage = GetCardDamage(CurrentCard)
-		TargetEnemy.enemyRef.health = TargetEnemy.enemyRef.health - CardDamage if TargetEnemy.enemyRef.health - CardDamage >= 0 else 0
-		emit_signal("update_health")
+		DealDamageToEnemy()
 	if (CurrentCard.block != null):
 		SetGetUtils.SetPlayerBlock(PlayerBlockLabel, Player, Player.block + CurrentCard.block)
 	if (CurrentCard.heal != null):
@@ -279,7 +260,8 @@ func OnAction():
 	if (CurrentCard.power != null):
 		HandleCardPower(CurrentCard)
 	SetGetUtils.SetPlayerEnergy(PlayerEnergyLabel, Player, Player.energy - CurrentCard.cost)
-	ConditionallyWinGame()
+	if !IsGameWon:
+		GoToNextCard()
 
 func OnSkip() -> void:
 	if IsGameLost:
@@ -289,7 +271,7 @@ func OnSkip() -> void:
 func OnSpecial() -> void:
 	if IsGameLost:
 		return
-	var CurrentCard = Hand[0]
+	CurrentCard = Hand[0]
 	if CurrentCard.special:
 		if (CurrentCard.special.damage != null):
 			TargetEnemy.enemyRef.health = TargetEnemy.enemyRef.health - CurrentCard.special.damage * LocalDamageModifier if TargetEnemy.enemyRef.health - CurrentCard.special.damage * LocalDamageModifier >= 0 else 0
@@ -299,14 +281,15 @@ func OnSpecial() -> void:
 		if (CurrentCard.special.power == 'pendingDamage'):
 			PendingPlayerToEnemyDamage = CurrentCard.special.effect
 	SetGetUtils.SetPlayerEnergy(PlayerEnergyLabel, Player, Player.energy - CurrentCard.cost)
-	ConditionallyWinGame()
+	if !IsGameWon:
+		GoToNextCard()
 	pass # Replace with function body.
 
 func HandleCardPower(CurrentCard):
 	if (CurrentCard.power == 'doubleDamage'):
 		LocalDamageModifier = 2 if LocalDamageModifier == 1 else LocalDamageModifier + 2
 
-func GetCardDamage(CurrentCard):
+func GetCardDamage():
 	var Damage = CurrentCard.damage * LocalDamageModifier
 	LocalDamageModifier = 1
 	return Damage

@@ -82,4 +82,5 @@ text = "CANCEL"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="pressed" from="BuyButton" to="." method="_on_BuyButton_pressed"]
 [connection signal="pressed" from="CancelButton" to="." method="_on_CancelButton_pressed"]
