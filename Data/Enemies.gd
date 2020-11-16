@@ -3,8 +3,8 @@ extends Node
 const Heckler = {
 	'name': 'Heckler',
 	'baseDamage': 3,
-	'health': 7,
-	'maxHealth': 7,
+	'health': 5,
+	'maxHealth': 5,
 	'rewards': {
 		'credits': [10, 20]
 	}
@@ -13,8 +13,8 @@ const Heckler = {
 const LongStepper = {
 	'name': 'Long Stepper',
 	'baseDamage': 4,
-	'health': 12,
-	'maxHealth': 12,
+	'health': 8,
+	'maxHealth': 8,
 	'rewards': {
 		'credits': [20, 35]
 	}
@@ -33,8 +33,8 @@ const DuneMaker = {
 const SlaveWatcher = {
 	'name': 'Slave Watcher',
 	'baseDamage': 1,
-	'health': 4,
-	'maxHealth': 4,
+	'health': 2,
+	'maxHealth': 2,
 	'rewards': {
 		'credits': [2, 5]
 	}

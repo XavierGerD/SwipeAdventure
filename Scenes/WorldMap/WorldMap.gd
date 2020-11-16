@@ -1,6 +1,7 @@
 extends Node2D
 
 signal load_encounter(Encounter)
+signal show_or_hide_skill_tree
 
 var EmptyEncounter = load('res://Scenes/WorldMap/Encounter.tscn')
 onready var CreditTotalLabel = get_node("CreditTotalLabel")
@@ -18,3 +19,7 @@ func InstanciateWorldMap(Player):
 
 func LoadEncounter(Encounter):
 	emit_signal("load_encounter", Encounter)
+
+func _on_SkillTreeButton_pressed() -> void:
+	emit_signal('show_or_hide_skill_tree')
+	pass

@@ -1,0 +1,86 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Fonts/Font1.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Scenes/SkillTree/SkillModal.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/SkillTree/SkillTree.gd" type="Script" id=3]
+
+[node name="SkillTree" type="Node2D"]
+z_index = 20
+script = ExtResource( 3 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 576.0
+margin_bottom = 1024.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LifeBoost" type="Button" parent="."]
+margin_left = 88.0
+margin_top = 864.0
+margin_right = 272.0
+margin_bottom = 976.0
+custom_fonts/font = ExtResource( 1 )
+text = "Life Boost"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Premonition" type="Button" parent="."]
+margin_left = 88.0
+margin_top = 664.0
+margin_right = 273.0
+margin_bottom = 776.0
+custom_fonts/font = ExtResource( 1 )
+text = "Premonition"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Line2D" type="Line2D" parent="."]
+position = Vector2( 149.333, 800.296 )
+scale = Vector2( 1.33333, 1.62963 )
+points = PoolVector2Array( 26, -14.9091, 26, 39.0909 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_top = 8.0
+margin_right = 576.0
+margin_bottom = 144.0
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[center]SKILL TREE[/center]"
+text = "SKILL TREE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SkillModal" parent="." instance=ExtResource( 2 )]
+visible = false
+z_index = 10
+
+[node name="HideButton" type="Button" parent="."]
+margin_left = 432.0
+margin_top = 944.0
+margin_right = 552.0
+margin_bottom = 1008.0
+custom_fonts/font = ExtResource( 1 )
+text = "Hide"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UserCreditsTotalLabel" type="RichTextLabel" parent="."]
+margin_left = 8.0
+margin_top = 88.0
+margin_right = 576.0
+margin_bottom = 136.0
+custom_fonts/normal_font = ExtResource( 1 )
+text = "Credits: 200"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="LifeBoost" to="." method="_on_LifeBoost_pressed"]
+[connection signal="pressed" from="HideButton" to="." method="_on_Button_pressed"]

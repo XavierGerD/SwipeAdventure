@@ -26,6 +26,8 @@ InitGame="*res://Data/InitGame.gd"
 Enemies="*res://Data/Enemies.gd"
 Constants="*res://Data/Constants.gd"
 Encounters="*res://Data/Encounters.gd"
+SetGetUtils="*res://Utils/SetGetUtils.gd"
+Skills="*res://Data/Skills.gd"
 
 [display]
 
