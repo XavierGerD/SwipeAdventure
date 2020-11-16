@@ -5,7 +5,8 @@ const LifeBoost = {
 	'description': 'This skill permanently gives you 5 extra hit points.',
 	'power': 'plusMaxHealth',
 	'effect': 5,
-	'cost': 200,
-	'hasUserAcquired': false
+	'cost': 10,
+	'hasUserAcquired': false,
+	'onBuy': null
 	#'prerequisites': null
 }
