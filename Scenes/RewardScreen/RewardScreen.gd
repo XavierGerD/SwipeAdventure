@@ -1,5 +1,7 @@
 extends Node2D
 
+signal credits_claimed(Credits)
+
 onready var CreditsLabel = get_node("CreditsLabel")
 onready var Card = load('res://Scenes/Card/Card.tscn')
 onready var CardBack = load('res://Scenes/CardBack/CardBack.tscn')
@@ -20,7 +22,8 @@ onready var PossibleRewards = [
 
 var Reward
 
-func _ready() -> void:
+# TODO: Find a better name lol
+func ShowCard():
 	var RandomNumber = (randf() * (3  -1)) + 1
 	Reward = PossibleRewards[RandomNumber]
 	NewCard = Card.instance()
@@ -62,7 +65,7 @@ func _ready() -> void:
 	CardBackPositionTween.start()
 	PositionTween.start()
 	pass # Replace with function body.
-	
+
 func InstanciateRewardScreen(DeadEnemies):
 	var CashPrize = 0
 	for Enemy in DeadEnemies:
@@ -112,3 +115,8 @@ func OnRewardSelected():
 	var _GrowTween = TweenToShrink(NewCard)
 	ShrinkTween.connect('tween_all_completed', self, "OnShrinkDone")
 	pass
+
+
+func _on_ClaimCreditsButtom_pressed() -> void:
+	emit_signal("credits_claimed", Credits)
+	pass # Replace with function body.

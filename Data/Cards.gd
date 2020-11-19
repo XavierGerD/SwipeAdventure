@@ -16,16 +16,12 @@ onready var Welder = [
 ]
 	
 onready var PlasmaBolter = [
-	#PlasmaBolt,
-	#PlasmaBolt,
-	#QuickShot,
-	#QuickShot,
+	PlasmaBolt,
+	PlasmaBolt,
+	QuickShot,
+	QuickShot,
 	SteadySight,
-	SteadySight,
-	SteadySight,
-	SteadySight,
-	SteadySight,
-	#RevUp
+	RevUp
 ]
 #Welder loadout
 const Weld = {

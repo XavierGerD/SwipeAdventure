@@ -8,7 +8,7 @@ signal card_released
 
 onready	var CardName = get_node("CardName")
 onready var Cost = get_node("Cost")
-onready	var Description = get_node("Description")
+onready	var DescriptionNode = get_node("Description")
 onready var CardImage = get_node("CardImage")
 
 var IsClicked = false
@@ -36,6 +36,9 @@ func getCardDescription(Card, LocalDamageModifier):
 		
 	if (Card.special != null && Card.special.effect != null):
 		Description = Description.replace('{spDmg}', Card.special.effect * LocalDamageModifier)
+	
+	if (Card.special != null && Card.special.damage != null):
+		Description = Description.replace('{spDmg}', Card.special.damage * LocalDamageModifier)
 
 		
 	return Description
@@ -51,7 +54,7 @@ func InstanciateCard(
 	):
 		CardName.set_text(Card.name)
 		Cost.set_text(str(Card.cost))
-		Description.set_text(getCardDescription(Card, LocalDamageModifier))
+		DescriptionNode.set_text(getCardDescription(Card, LocalDamageModifier))
 		CardStartingPosition.x = CardX
 		CardStartingPosition.y = CardY
 		HasSpecial = HasSpecialFromProps

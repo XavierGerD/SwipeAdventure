@@ -17,6 +17,7 @@ _global_script_class_icons={
 
 config/name="SwipeAdventure"
 run/main_scene="res://Scenes/GameManager/GameManager.tscn"
+
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon.png"
 
@@ -27,6 +28,10 @@ InitGame="*res://Data/InitGame.gd"
 Enemies="*res://Data/Enemies.gd"
 Constants="*res://Data/Constants.gd"
 Encounters="*res://Data/Encounters.gd"
+
+SetGetUtils="*res://Utils/SetGetUtils.gd"
+Skills="*res://Data/Skills.gd"
+
 
 [display]
 

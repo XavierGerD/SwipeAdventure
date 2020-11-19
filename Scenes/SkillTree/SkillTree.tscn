@@ -1,0 +1,264 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Fonts/Font1.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Scenes/SkillTree/SkillModal.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/SkillTree/SkillTree.gd" type="Script" id=3]
+
+[node name="SkillTree" type="Node2D"]
+z_index = 20
+script = ExtResource( 3 )
+
+[node name="Background" type="ColorRect" parent="."]
+margin_right = 576.0
+margin_bottom = 1024.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TitleLabel" type="RichTextLabel" parent="."]
+margin_top = 8.0
+margin_right = 576.0
+margin_bottom = 72.0
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[center]SKILL TREE[/center]"
+text = "SKILL TREE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TreeContainer" type="ReferenceRect" parent="."]
+visible = false
+margin_top = -136.0
+margin_right = 592.0
+margin_bottom = 1032.0
+border_color = Color( 1, 1, 1, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Line2D" type="Line2D" parent="TreeContainer"]
+position = Vector2( 85.333, 819.243 )
+scale = Vector2( 1.33333, 2.37838 )
+points = PoolVector2Array( 26, -14.9091, 26, -5.53363, 26, 39.0909 )
+
+[node name="LifeBloodI" type="Button" parent="TreeContainer"]
+margin_left = 24.0
+margin_top = 880.0
+margin_right = 209.0
+margin_bottom = 923.0
+custom_fonts/font = ExtResource( 1 )
+text = "Life Boost"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LifeBloodII" type="Button" parent="TreeContainer"]
+margin_left = 24.0
+margin_top = 808.0
+margin_right = 209.0
+margin_bottom = 851.0
+custom_fonts/font = ExtResource( 1 )
+text = "Life Boost"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LifeBloodIII" type="Button" parent="TreeContainer"]
+margin_left = 24.0
+margin_top = 744.0
+margin_right = 209.0
+margin_bottom = 787.0
+custom_fonts/font = ExtResource( 1 )
+text = "Life Boost"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Line2D2" type="Line2D" parent="TreeContainer"]
+position = Vector2( 416, 757.7 )
+scale = Vector2( 1.33333, 1.51351 )
+points = PoolVector2Array( 26, -14.9091, 26, 39.0909 )
+
+[node name="PremonitionI" type="Button" parent="TreeContainer"]
+margin_left = 352.0
+margin_top = 776.0
+margin_right = 537.0
+margin_bottom = 819.0
+custom_fonts/font = ExtResource( 1 )
+text = "Premonition"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PremonitionII" type="Button" parent="TreeContainer"]
+margin_left = 352.0
+margin_top = 696.0
+margin_right = 537.0
+margin_bottom = 739.0
+custom_fonts/font = ExtResource( 1 )
+text = "Premonition"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Line2D3" type="Line2D" parent="TreeContainer"]
+position = Vector2( 424, 573.7 )
+scale = Vector2( 1.33333, 1.51351 )
+points = PoolVector2Array( 26, -14.9091, 26, 39.0909 )
+
+[node name="HustleI" type="Button" parent="TreeContainer"]
+margin_left = 360.0
+margin_top = 592.0
+margin_right = 545.0
+margin_bottom = 635.0
+custom_fonts/font = ExtResource( 1 )
+text = "Premonition"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HustleII" type="Button" parent="TreeContainer"]
+margin_left = 360.0
+margin_top = 512.0
+margin_right = 545.0
+margin_bottom = 555.0
+custom_fonts/font = ExtResource( 1 )
+text = "Premonition"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UserCreditsTotalLabel" type="RichTextLabel" parent="."]
+margin_left = 8.0
+margin_top = 88.0
+margin_right = 576.0
+margin_bottom = 136.0
+custom_fonts/normal_font = ExtResource( 1 )
+text = "Credits: 200"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HideButton" type="Button" parent="."]
+margin_left = 432.0
+margin_top = 944.0
+margin_right = 552.0
+margin_bottom = 1008.0
+custom_fonts/font = ExtResource( 1 )
+text = "Hide"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SkillModal" parent="." instance=ExtResource( 2 )]
+visible = false
+z_index = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_right = 584.0
+margin_bottom = 1048.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TreeContainer2" type="Panel" parent="ScrollContainer"]
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Line2D" type="Line2D" parent="ScrollContainer/TreeContainer2"]
+position = Vector2( 85.333, 819.243 )
+scale = Vector2( 1.33333, 2.37838 )
+points = PoolVector2Array( 26, -14.9091, 26, -5.53363, 26, 39.0909 )
+
+[node name="LifeBloodI" type="Button" parent="ScrollContainer/TreeContainer2"]
+margin_left = 24.0
+margin_top = 880.0
+margin_right = 209.0
+margin_bottom = 923.0
+custom_fonts/font = ExtResource( 1 )
+text = "Life Boost"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LifeBloodII" type="Button" parent="ScrollContainer/TreeContainer2"]
+margin_left = 24.0
+margin_top = 808.0
+margin_right = 209.0
+margin_bottom = 851.0
+custom_fonts/font = ExtResource( 1 )
+text = "Life Boost"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LifeBloodIII" type="Button" parent="ScrollContainer/TreeContainer2"]
+margin_left = 24.0
+margin_top = 744.0
+margin_right = 209.0
+margin_bottom = 787.0
+custom_fonts/font = ExtResource( 1 )
+text = "Life Boost"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Line2D2" type="Line2D" parent="ScrollContainer/TreeContainer2"]
+position = Vector2( 416, 757.7 )
+scale = Vector2( 1.33333, 1.51351 )
+points = PoolVector2Array( 26, -14.9091, 26, 39.0909 )
+
+[node name="PremonitionI" type="Button" parent="ScrollContainer/TreeContainer2"]
+margin_left = 352.0
+margin_top = 776.0
+margin_right = 537.0
+margin_bottom = 819.0
+custom_fonts/font = ExtResource( 1 )
+text = "Premonition"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PremonitionII" type="Button" parent="ScrollContainer/TreeContainer2"]
+margin_left = 352.0
+margin_top = 696.0
+margin_right = 537.0
+margin_bottom = 739.0
+custom_fonts/font = ExtResource( 1 )
+text = "Premonition"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Line2D3" type="Line2D" parent="ScrollContainer/TreeContainer2"]
+position = Vector2( 424, 573.7 )
+scale = Vector2( 1.33333, 1.51351 )
+points = PoolVector2Array( 26, -14.9091, 26, 39.0909 )
+
+[node name="HustleI" type="Button" parent="ScrollContainer/TreeContainer2"]
+margin_left = 360.0
+margin_top = 592.0
+margin_right = 545.0
+margin_bottom = 635.0
+custom_fonts/font = ExtResource( 1 )
+text = "Premonition"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HustleII" type="Button" parent="ScrollContainer/TreeContainer2"]
+margin_left = 360.0
+margin_top = 512.0
+margin_right = 545.0
+margin_bottom = 555.0
+custom_fonts/font = ExtResource( 1 )
+text = "Premonition"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="HideButton" to="." method="_on_Button_pressed"]
