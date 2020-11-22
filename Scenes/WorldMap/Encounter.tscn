@@ -9,18 +9,20 @@
 script = ExtResource( 2 )
 
 [node name="TextureButton" type="TextureButton" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_left = 16.0
+margin_right = 144.0
+margin_bottom = 128.0
 texture_normal = ExtResource( 1 )
 texture_click_mask = ExtResource( 3 )
+expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="EncounterNameLabel" type="RichTextLabel" parent="."]
-margin_top = 88.0
-margin_right = 120.0
-margin_bottom = 168.0
+margin_top = 128.0
+margin_right = 192.0
+margin_bottom = 256.0
 custom_fonts/normal_font = ExtResource( 4 )
 text = "Asteroid"
 scroll_active = false

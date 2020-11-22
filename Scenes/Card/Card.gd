@@ -25,20 +25,20 @@ var IsCardPlayable
 func getCardDescription(Card, LocalDamageModifier):
 	var Description = Card.description
 	
-	if (Card.damage != null):
-		Description = Description.replace('{dmg}', Card.damage * LocalDamageModifier)
+	if (Card.onAction.damage != null):
+		Description = Description.replace('{dmg}', Card.onAction.damage * LocalDamageModifier)
 		
-	if (Card.heal != null):
-		Description = Description.replace('{hp}', Card.heal)
+	if (Card.onAction.heal != null):
+		Description = Description.replace('{hp}', Card.onAction.heal)
 		
-	if (Card.block != null):
-		Description = Description.replace('{blk}', Card.block)
+	if (Card.onAction.block != null):
+		Description = Description.replace('{blk}', Card.onAction.block)
 		
-	if (Card.special != null && Card.special.effect != null):
-		Description = Description.replace('{spDmg}', Card.special.effect * LocalDamageModifier)
+	if (Card.onSpecial != null && Card.onSpecial.effect != null):
+		Description = Description.replace('{spDmg}', Card.onSpecial.effect * LocalDamageModifier)
 	
-	if (Card.special != null && Card.special.damage != null):
-		Description = Description.replace('{spDmg}', Card.special.damage * LocalDamageModifier)
+	if (Card.onSpecial != null && Card.onSpecial.damage != null):
+		Description = Description.replace('{spDmg}', Card.onSpecial.damage * LocalDamageModifier)
 
 		
 	return Description
@@ -53,12 +53,12 @@ func InstanciateCard(
 	LocalDamageModifier = 1
 	):
 		CardName.set_text(Card.name)
-		Cost.set_text(str(Card.cost))
+		Cost.set_text(str(Card.onAction.cost))
 		DescriptionNode.set_text(getCardDescription(Card, LocalDamageModifier))
 		CardStartingPosition.x = CardX
 		CardStartingPosition.y = CardY
 		HasSpecial = HasSpecialFromProps
-		CardCost = Card.cost
+		CardCost = Card.onAction.cost
 		self.set_position(Vector2(CardX, CardY))
 		IsCardPlayable = IsCardPlayableFromProps
 		CardImage.texture = load(TexturePath)
@@ -98,7 +98,9 @@ func _on_Button_button_up() -> void:
 		return
 	IsClicked = false
 	var Energy = self.get_parent().GetPlayerEnergy()
-	if self.get_global_position().y <= 352 && HasSpecial && CardCost <= Energy:
+	if (self.get_global_position().y <= Constants.CARD_SWIPE_UPPER_LIMIT &&
+		HasSpecial &&
+		CardCost <= Energy):
 		var PositionTween = Tween.new()
 		PositionTween.interpolate_property(
 			self, 
@@ -113,14 +115,16 @@ func _on_Button_button_up() -> void:
 		PositionTween.start()
 		PositionTween.connect('tween_all_completed', self, 'TweenEndSpecial')
 		return
-	if self.get_global_position().x >= 448 && self.get_global_position().y > 352 && CardCost <= Energy:
+	if (self.get_global_position().x >= Constants.CARD_SWIPE_RIGHT_LIMIT &&
+		self.get_global_position().y > Constants.CARD_SWIPE_UPPER_LIMIT &&
+		CardCost <= Energy):
 		var PositionTween = Tween.new()
 		PositionTween.interpolate_property(
 			self, 
 			"position", 
 			self.get_position(), 
 			Vector2(1000, CardStartingPosition.y), 
-			0.2, 
+			0.1, 
 			Tween.TRANS_LINEAR, 
 			Tween.EASE_IN_OUT
 		)
@@ -128,14 +132,15 @@ func _on_Button_button_up() -> void:
 		PositionTween.start()
 		PositionTween.connect('tween_all_completed', self, 'TweenEndAction')
 		return
-	if self.get_global_position().x <= 128 && self.get_global_position().y > 352:
+	if (self.get_global_position().x <= Constants.CARD_SWIPE_LEFT_LIMIT &&
+		self.get_global_position().y > Constants.CARD_SWIPE_UPPER_LIMIT):
 		var PositionTween = Tween.new()
 		PositionTween.interpolate_property(
 			self, 
 			"position", 
 			self.get_position(), 
 			Vector2(-1000, CardStartingPosition.y), 
-			0.2, 
+			0.1, 
 			Tween.TRANS_LINEAR, 
 			Tween.EASE_IN_OUT
 		)

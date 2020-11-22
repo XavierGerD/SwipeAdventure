@@ -54,7 +54,7 @@ onready var SkillList = {
 		'cost': 20,
 		'hasUserAcquired': false,
 		'onBuy': funcref(self, 'OnBuyLifeBoost'),
-		'prerequisite': null
+		'prerequisite': 'PremonitionI'
 	},
 	'HustleI': {
 		'key': 'HustleI',
@@ -73,6 +73,39 @@ onready var SkillList = {
 		'description': 'Unlock a third weapon slot.',
 		'power': 'unlockSlot',
 		'effect': null,
+		'cost': 20,
+		'hasUserAcquired': false,
+		'onBuy': funcref(self, 'OnBuyLifeBoost'),
+		'prerequisite': 'HustleI'
+	},
+	'DeterminationI': {
+		'key': 'DeterminationI',
+		'skillName': 'Determination I',
+		'description': 'At the end of your turn, if you skipped all the cards in your hand, draw another card.',
+		'power': 'drawAtEndOfTurn',
+		'effect': null,
+		'cost': 20,
+		'hasUserAcquired': false,
+		'onBuy': funcref(self, 'OnBuyLifeBoost'),
+		'prerequisite': null
+	},
+	'DeterminationII': {
+		'key': 'DeterminationII',
+		'skillName': 'Determination II',
+		'description': 'At the end of your turn, gain 1 health for each card you skipped.',
+		'power': 'drawAtEndOfTurn',
+		'effect': 1,
+		'cost': 20,
+		'hasUserAcquired': false,
+		'onBuy': funcref(self, 'OnBuyLifeBoost'),
+		'prerequisite': 'DeterminationII'
+	},
+	'LongevityI': {
+		'key': 'LongevityI',
+		'skillName': 'Longevity I',
+		'description': 'Increase the maximum number of cards in your hand by one.',
+		'power': 'increaseHandSize',
+		'effect': 1,
 		'cost': 20,
 		'hasUserAcquired': false,
 		'onBuy': funcref(self, 'OnBuyLifeBoost'),

@@ -9,20 +9,21 @@
 script = ExtResource( 4 )
 
 [node name="TextureButton" type="TextureButton" parent="."]
-margin_left = -64.0
-margin_top = -64.0
-margin_right = 64.0
-margin_bottom = 64.0
+margin_left = -80.0
+margin_top = -80.0
+margin_right = 80.0
+margin_bottom = 80.0
 texture_normal = ExtResource( 1 )
 texture_click_mask = ExtResource( 2 )
+expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="EnemyLabel" type="RichTextLabel" parent="."]
-margin_left = -64.0
-margin_top = -144.0
-margin_right = 64.0
+margin_left = -104.0
+margin_top = -184.0
+margin_right = 104.0
 margin_bottom = -64.0
 custom_fonts/normal_font = ExtResource( 3 )
 bbcode_enabled = true
@@ -33,10 +34,10 @@ __meta__ = {
 }
 
 [node name="EnemyHP" type="RichTextLabel" parent="."]
-margin_left = -64.0
-margin_top = 64.0
-margin_right = 64.0
-margin_bottom = 104.0
+margin_left = -96.0
+margin_top = 88.0
+margin_right = 96.0
+margin_bottom = 144.0
 custom_fonts/normal_font = ExtResource( 3 )
 bbcode_enabled = true
 bbcode_text = "[center]10/10[/center]"
@@ -46,11 +47,10 @@ __meta__ = {
 }
 
 [node name="EnemySelector" type="RichTextLabel" parent="."]
-visible = false
-margin_left = -80.0
-margin_top = -64.0
-margin_right = 96.0
-margin_bottom = 56.0
+margin_left = -112.0
+margin_top = -88.0
+margin_right = 152.0
+margin_bottom = 104.0
 custom_fonts/normal_font = ExtResource( 3 )
 text = ">                 <
 >                 <

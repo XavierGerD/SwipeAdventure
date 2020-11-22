@@ -17,7 +17,7 @@ const OFFSCREEN_CARD_STARTING_POINT_Y = 450
 onready var PossibleRewards = [
 	Cards.Weld,
 	Cards.ShieldCharge,
-	Cards.PlasmaBolt
+	Cards.PlasmaBolter
 ]
 
 var Reward

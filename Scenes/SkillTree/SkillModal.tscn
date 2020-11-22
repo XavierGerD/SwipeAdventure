@@ -7,10 +7,10 @@
 script = ExtResource( 2 )
 
 [node name="Dimmer" type="ColorRect" parent="."]
-margin_left = -40.0
-margin_top = -32.0
-margin_right = 632.0
-margin_bottom = 1032.0
+margin_left = -24.0
+margin_top = -16.0
+margin_right = 816.0
+margin_bottom = 1512.0
 color = Color( 0, 0, 0, 0.384314 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -18,9 +18,9 @@ __meta__ = {
 
 [node name="ModalBackground" type="ColorRect" parent="."]
 margin_left = 64.0
-margin_top = 152.0
-margin_right = 512.0
-margin_bottom = 528.0
+margin_top = 288.0
+margin_right = 704.0
+margin_bottom = 752.0
 color = Color( 0.501961, 0.501961, 0.501961, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -28,9 +28,9 @@ __meta__ = {
 
 [node name="DescriptionLabel" type="RichTextLabel" parent="."]
 margin_left = 104.0
-margin_top = 208.0
-margin_right = 480.0
-margin_bottom = 368.0
+margin_top = 360.0
+margin_right = 680.0
+margin_bottom = 576.0
 custom_fonts/normal_font = ExtResource( 1 )
 text = "This skill permanently gives you 5 extra hit points."
 scroll_active = false
@@ -40,9 +40,9 @@ __meta__ = {
 
 [node name="CostLabel" type="RichTextLabel" parent="."]
 margin_left = 104.0
-margin_top = 368.0
+margin_top = 576.0
 margin_right = 480.0
-margin_bottom = 408.0
+margin_bottom = 616.0
 custom_fonts/normal_font = ExtResource( 1 )
 text = "Cost: 200"
 scroll_active = false
@@ -52,9 +52,9 @@ __meta__ = {
 
 [node name="SkillNameLabel" type="RichTextLabel" parent="."]
 margin_left = 104.0
-margin_top = 168.0
-margin_right = 480.0
-margin_bottom = 208.0
+margin_top = 304.0
+margin_right = 656.0
+margin_bottom = 368.0
 custom_fonts/normal_font = ExtResource( 1 )
 text = "Life Boost"
 __meta__ = {
@@ -62,10 +62,10 @@ __meta__ = {
 }
 
 [node name="BuyButton" type="Button" parent="."]
-margin_left = 120.0
-margin_top = 432.0
-margin_right = 264.0
-margin_bottom = 504.0
+margin_left = 128.0
+margin_top = 632.0
+margin_right = 272.0
+margin_bottom = 704.0
 custom_fonts/font = ExtResource( 1 )
 text = "BUY"
 __meta__ = {
@@ -73,10 +73,10 @@ __meta__ = {
 }
 
 [node name="CancelButton" type="Button" parent="."]
-margin_left = 312.0
-margin_top = 432.0
-margin_right = 453.0
-margin_bottom = 504.0
+margin_left = 472.0
+margin_top = 632.0
+margin_right = 643.0
+margin_bottom = 704.0
 custom_fonts/font = ExtResource( 1 )
 text = "CANCEL"
 __meta__ = {
