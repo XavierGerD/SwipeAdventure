@@ -39,3 +39,13 @@ const SlaveWatcher = {
 		'credits': [2, 5]
 	}
 }
+
+const SlaverMaster = {
+	'name': 'Slave Master',
+	'baseDamage': 8,
+	'health': 25,
+	'maxHealth': 25,
+	'rewards': {
+		'credits': [100, 150]
+	}
+}

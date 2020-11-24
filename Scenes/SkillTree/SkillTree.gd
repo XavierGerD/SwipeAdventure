@@ -35,7 +35,6 @@ func UpdatePrerequisited():
 
 func InstanciateSkillButtons():
 	for Skill in Skills.SkillList.values():
-		print("TreeContainer/" + Skill.key)
 		var SkillNodeButton = get_node(ControlButtonPath + Skill.key)
 		SkillNodeButton.connect('pressed', self, 'OnSkillButtonPressed', [Skill, SkillNodeButton])
 		SkillNodeButton.set_text(Skill.skillName)

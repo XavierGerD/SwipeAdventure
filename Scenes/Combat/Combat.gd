@@ -14,10 +14,12 @@ onready var DiscardPileTotalLabel = get_node("DiscardTotal")
 onready var DrawPileTotalLabel = get_node("DrawTotal")
 onready var HandTotalLabel = get_node("HandTotal")
 onready var WinLoseText = get_node("WinLoseText")
+onready var PlayerHitAnim = get_node("Flasher/PlayerHitAnim")
 
 onready var LoadoutManager = load('res://Scenes/LoadoutManager/LoadoutManager.gd')
 onready var Card = load('res://Scenes/Card/Card.tscn')
 onready var EnemyNode = load('res://Scenes/Enemy/Enemy.tscn')
+onready var DamageIndicator = load('res://Scenes/DamageIndicator/DamageIndicator.tscn')
 
 onready var AttackSpriteNode = load('res://Scenes/AttackSprite/AttackSprite.tscn')
 
@@ -45,6 +47,7 @@ var LocalDamageModifier = 1
 var PendingPlayerToEnemyDamage = 0
 
 var IsAnimatingAttack = false
+var EnemyAttackIndex = 0
 
 #init functions
 func _ready() -> void:
@@ -97,6 +100,7 @@ func PrepareDeck():
 #getters
 func GetPlayerEnergy():
 	return Player.energy
+
 #game loop
 func CheckGameWinCondition():
 	var AreAllEnemiesDead = true
@@ -188,7 +192,7 @@ func GoToNextCard():
 	#Check to see if turn is done
 	var IsTurnDone = GetIsTurnDone()
 	if IsTurnDone:
-		EndTurn()
+		DealEnemyDamage()
 		return
 	UpdateHand()
 	
@@ -201,13 +205,19 @@ func MoveCardFromDiscardToDrawPile():
 
 #game logic
 func DealEnemyDamage():
-	for Enemy in EncounterEnemyNodes:
-		if Enemy.node != null:	
-			var damage = Enemy.enemyRef.baseDamage - Player.block if Enemy.enemyRef.baseDamage - Player.block > 0 else 0
-			var block = Player.block - Enemy.enemyRef.baseDamage if Player.block - Enemy.enemyRef.baseDamage > 0 else 0
-			SetGetUtils.SetPlayerHealth(PlayerHealthLabel, Player, Player.health - damage)
-			SetGetUtils.SetPlayerBlock(PlayerBlockLabel, Player, block)
-	
+	if EnemyAttackIndex > EncounterEnemyNodes.size() - 1:
+		EndTurn()
+		EnemyAttackIndex = 0
+		return
+	var Enemy = EncounterEnemyNodes[EnemyAttackIndex]
+	if (Enemy.node == null):
+		EnemyAttackIndex += 1
+		DealEnemyDamage()
+		return
+	IsAnimatingAttack = true
+	PlayerHitAnim.play("Blink")
+	Enemy.node.FlipAnimation.play('Flip')
+
 func GetIsTurnDone():
 	if (Hand.size() == 0 || Player.energy == 0):
 		return true
@@ -220,7 +230,6 @@ func BeginTurn():
 	UpdateHand()
 	
 func EndTurn():
-	DealEnemyDamage()
 	SetGetUtils.SetPlayerEnergy(PlayerEnergyLabel, Player, Player.maxEnergy)
 	DiscardPile += Hand
 	Hand = []
@@ -247,7 +256,7 @@ func OnAttackDone():
 
 #player actions
 func OnAction():
-	if IsGameLost:
+	if IsGameLost && IsAnimatingAttack:
 		return
 	CurrentCard = Hand[0]
 	if (CurrentCard.onAction.damage != null):
@@ -264,12 +273,12 @@ func OnAction():
 		GoToNextCard()
 
 func OnSkip() -> void:
-	if IsGameLost:
+	if IsGameLost && IsAnimatingAttack:
 		return
 	GoToNextCard()
 
 func OnSpecial() -> void:
-	if IsGameLost:
+	if IsGameLost && IsAnimatingAttack:
 		return
 	CurrentCard = Hand[0]
 	if CurrentCard.onSpecial:
@@ -299,3 +308,24 @@ func GetCardDamage():
 	var Damage = CurrentCard.onAction.damage * LocalDamageModifier
 	LocalDamageModifier = 1
 	return Damage
+
+func PlayDamageIndicator(damage):
+	var NewDamageIndicator = DamageIndicator.instance()
+	add_child(NewDamageIndicator)
+	NewDamageIndicator.set_position(Vector2(768 / 2, 1366 / 2))
+	NewDamageIndicator.PlayAnimWithValue(damage)
+
+func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
+	var Enemy = EncounterEnemyNodes[EnemyAttackIndex]
+	var damage = Enemy.enemyRef.baseDamage - Player.block if Enemy.enemyRef.baseDamage - Player.block > 0 else 0
+	var block = Player.block - Enemy.enemyRef.baseDamage if Player.block - Enemy.enemyRef.baseDamage > 0 else 0
+	SetGetUtils.SetPlayerHealth(PlayerHealthLabel, Player, Player.health - damage)
+	SetGetUtils.SetPlayerBlock(PlayerBlockLabel, Player, block)
+	EnemyAttackIndex += 1
+	IsAnimatingAttack = false
+	DealEnemyDamage()
+	PlayDamageIndicator(damage)
+	pass # Replace with function body.
+
+func GetIsAnimatingAttack():
+	return IsAnimatingAttack

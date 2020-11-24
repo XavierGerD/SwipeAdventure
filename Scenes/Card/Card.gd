@@ -123,7 +123,7 @@ func _on_Button_button_up() -> void:
 			self, 
 			"position", 
 			self.get_position(), 
-			Vector2(1000, CardStartingPosition.y), 
+			Vector2(2000, CardStartingPosition.y), 
 			0.1, 
 			Tween.TRANS_LINEAR, 
 			Tween.EASE_IN_OUT

@@ -5,6 +5,7 @@ onready var CombatNode = load('res://Scenes/Combat/Combat.tscn')
 onready var RewardScreenNode = load('res://Scenes/RewardScreen/RewardScreen.tscn')
 onready var LosingScreenNode = load('res://Scenes/LosingScreen/LosingScreen.tscn')
 onready var SkillTreeNode = load('res://Scenes/SkillTree/SkillTree.tscn')
+onready var InventoryNode = load('res://Scenes/Inventory/Inventory.tscn')
 
 var Player
 var WorldMap
@@ -12,12 +13,16 @@ var Combat
 var RewardScreen
 var LosingScreen
 var SkillTree
+var Inventory
 
 func _ready() -> void:
 	Player = InitGame.NewPlayerTemplate.duplicate(true)
 	SkillTree = SkillTreeNode.instance()
 	add_child(SkillTree)
 	SkillTree.hide()
+	Inventory = InventoryNode.instance()
+	add_child(Inventory)
+	Inventory.hide()
 	OnWorldMapLoad()
 	self.move_child(SkillTree, self.get_child_count())
 	
@@ -28,6 +33,7 @@ func OnWorldMapLoad():
 	add_child(WorldMap)
 	WorldMap.InstanciateWorldMap(Player)
 	WorldMap.connect('show_or_hide_skill_tree', self, 'OnShowSkillTree')
+	WorldMap.connect('show_or_hide_inventory', self, 'OnShowInventory')
 	
 func OnEncounterLoad(Encounter):
 	Combat = CombatNode.instance()
@@ -63,6 +69,11 @@ func OnShowSkillTree():
 	SkillTree.UpdateUserCreditTotal()
 	HideWorldMap()
 	self.move_child(SkillTree, self.get_child_count())
+
+func OnShowInventory():
+	Inventory.show()
+	HideWorldMap()
+	self.move_child(Inventory, self.get_child_count())
 
 func HideWorldMap():
 	WorldMap.visible = false

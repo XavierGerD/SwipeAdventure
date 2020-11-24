@@ -1,5 +1,25 @@
 extends Node
 
+onready var AllEncounters = [LevelOneEncounters, LevelTwoEncounters, LevelThreeEncounters]
+
+var LevelOneEncounters = [
+	Encounter1,
+	Encounter1,
+	Encounter1,
+	Encounter2,
+]
+
+var LevelTwoEncounters = [
+	Encounter2,
+	Encounter2,
+	Encounter3,
+	Encounter3
+]
+
+var LevelThreeEncounters = [
+	Boss1
+]
+
 const Encounter1 = {
 	'name': 'Asteroid',
 	'enemies': [
@@ -11,7 +31,7 @@ const Encounter1 = {
 }
 
 const Encounter2 = {
-	'name': 'Asteroid',
+	'name': 'Space Station',
 	'enemies': [
 		Enemies.Heckler,
 		Enemies.Heckler,
@@ -39,4 +59,11 @@ const Encounter4 = {
 	],
 }
 
-onready var LevelOneEncounters = [Encounter1, Encounter2, Encounter3, Encounter4]
+const Boss1 = {
+	'name': 'Argon Moon',
+	'enemies' : [
+		Enemies.SlaveWatcher,
+		Enemies.SlaverMaster,
+		Enemies.SlaveWatcher
+	]
+}

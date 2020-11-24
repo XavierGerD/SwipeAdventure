@@ -1,0 +1,15 @@
+[remap]
+
+importer="bitmap"
+type="BitMap"
+path="res://.import/Moon_mask.png-20512dec2d4c1d45dabfc0b5fccc965a.res"
+
+[deps]
+
+source_file="res://Sprite/WorldMap/Moon_mask.png"
+dest_files=[ "res://.import/Moon_mask.png-20512dec2d4c1d45dabfc0b5fccc965a.res" ]
+
+[params]
+
+create_from=0
+threshold=0.5
