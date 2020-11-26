@@ -55,8 +55,10 @@ func _ready() -> void:
 	
 func InstanciateLoadout(CurrentLoadout):
 	var NewDeck = []
-	NewDeck += CurrentLoadout.weapon
-	NewDeck += CurrentLoadout.shield
+	var Items = CurrentLoadout.values()
+	for i in range(Items.size()):
+		if Items[i] != null:
+			NewDeck += Items[i].cardList
 	Deck = NewDeck
 
 func InstanciateEnemy(CurrentEnemy, i):
@@ -88,12 +90,15 @@ func InstanciateCombat(CurrentPlayer, CurrentEnemies):
 	InstanciateLoadout(CurrentPlayer.loadout)
 	PrepareDeck()
 
+func GetTotalCardsToDraw():
+	return Player.maxCardsInHand if Player.maxCardsInHand <= Deck.size() else Deck.size()
+
 func PrepareDeck():
 	DrawPile = Deck.duplicate(true) 
 	randomize()
 	DrawPile.shuffle()
-	for i in (Player.maxCardsInHand):
-		Hand.push_back(DrawPile[i])
+	for i in GetTotalCardsToDraw():
+		Hand.push_back(DrawPile[0])
 		DrawPile.pop_front()
 	UpdateHand()
 
@@ -233,7 +238,7 @@ func EndTurn():
 	SetGetUtils.SetPlayerEnergy(PlayerEnergyLabel, Player, Player.maxEnergy)
 	DiscardPile += Hand
 	Hand = []
-	for i in (Player.maxCardsInHand):
+	for i in GetTotalCardsToDraw():
 		if DrawPile.size() == 0:
 			MoveCardFromDiscardToDrawPile()
 		Hand.push_back(DrawPile[0])

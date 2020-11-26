@@ -205,16 +205,16 @@ margin_bottom = 112.0
 custom_fonts/normal_font = ExtResource( 1 )
 bbcode_enabled = true
 bbcode_text = "[center]SKILL TREE[/center]"
-text = "SKILLS"
+text = "SKILL TREE"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="UserCreditsTotalLabel" type="RichTextLabel" parent="."]
-margin_left = 48.0
-margin_top = 1296.0
-margin_right = 616.0
-margin_bottom = 1344.0
+margin_left = 504.0
+margin_top = 48.0
+margin_right = 1072.0
+margin_bottom = 96.0
 custom_fonts/normal_font = ExtResource( 1 )
 text = "Credits: 200"
 scroll_active = false

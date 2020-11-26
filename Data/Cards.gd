@@ -3,26 +3,47 @@ extends Node
 func _onready() -> void:
 	pass
 	
-onready var BasicShield = [
-	ShieldCharge,
-	ShieldCharge
-]
+onready var BasicShield = {
+	'name': 'Basic Shield', 
+	'imagePath':'whatever.jpg',
+	'type': 'shield',
+	'upgrades': null,
+	'equipSlot': 0,
+	'cardList': [
+		ShieldCharge,
+		ShieldCharge
+	]
+}
 
-onready var Welder = [
-	Weld,
-	Weld,
-	Weld,
-	Repair,	
-	OverCharge,
-]
+onready var Welder = {
+	'name': 'Welder', 
+	'imagePath':'whatever.jpg',
+	'type': 'weapon',
+	'upgrades': null,
+	'equipSlot': 0,
+	'cardList': [
+		Weld,
+		Weld,
+		Weld,
+		Repair,	
+		OverCharge,
+	]
+}
 	
-onready var PlasmaBolter = [
-	QuickShot,
-	QuickShot,
-	QuickShot,
-	SteadySight,
-	RevUp
-]
+onready var PlasmaBolter = {
+	'name': 'Plasma Bolter', 
+	'imagePath':'whatever.jpg',
+	'type': 'weapon',
+	'upgrades': null,
+	'equipSlot': 0,
+	'cardList': [
+		QuickShot,
+		QuickShot,
+		QuickShot,
+		SteadySight,
+		RevUp
+	]
+}
 
 onready var PlasmaRifle = [
 	IronSights,

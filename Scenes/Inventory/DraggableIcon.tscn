@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Fonts/Font1_SMALL.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Scenes/Inventory/DraggableIcon.gd" type="Script" id=2]
+
+[node name="DraggableIcon" type="Control"]
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonWithName" type="Button" parent="."]
+margin_right = 128.0
+margin_bottom = 128.0
+custom_fonts/font = ExtResource( 1 )
+text = "GUN"
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="button_down" from="ButtonWithName" to="." method="_on_Button_button_down"]
+[connection signal="button_up" from="ButtonWithName" to="." method="_on_Button_button_up"]
