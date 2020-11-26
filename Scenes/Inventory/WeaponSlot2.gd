@@ -1,6 +1,5 @@
-extends ColorRect
+extends CenterContainer
 
-var IsDisabled = true
+var IsDisabled = false
 var Type = 'weapon'
 var Name = 'weapon2'
-var IsOccupied = null

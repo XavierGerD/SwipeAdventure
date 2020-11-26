@@ -9,8 +9,8 @@ onready var NewPlayerTemplate = {
 	'maxCardsInHand': 3,
 	'loadout': {
 		'weapon1': Cards.Welder,
-		'weapon2': null,
-		'weapon3': null,
+		'weapon2': UnusedSlot,
+		'weapon3': ClosedSlot,
 		'shield': Cards.BasicShield
 	},
 	'inventory': [Cards.Welder, Cards.PlasmaBolter, Cards.BasicShield],
@@ -18,3 +18,6 @@ onready var NewPlayerTemplate = {
 	'stage': null,
 	'skills': {}
 }
+
+var UnusedSlot = { 'name': 'unused'}
+var ClosedSlot = { 'name': 'closed'}

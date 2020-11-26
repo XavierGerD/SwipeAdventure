@@ -22,19 +22,50 @@ func _on_HideButton_pressed() -> void:
 
 func _input(event):
 	MousePointer = event.position
+	
+func InitializeSlot(Slot, Disabled):
+	var Background = get_node(Slot.get_name() + 'BackGround')
+	print(Background)
+	if Disabled:
+		Slot.IsDisabled = true
+		Background.color = DISABLED_COLOR
+	else:
+		Slot.IsDisabled = false
+		Background.color = ACTIVE_COLOR
 
 func AssignIconToSlot(Item, Icon):
 	if (Item.name == GameManager.Player.loadout.weapon1.name):
 		WeaponSlotOne.add_child(Icon)
-	if (GameManager.Player.loadout.weapon2 != null && Item.name == GameManager.Player.loadout.weapon2.name):
+	elif (
+		Item.name == GameManager.Player.loadout.weapon2.name
+	):
 		WeaponSlotTwo.add_child(Icon)
-	if (GameManager.Player.loadout.weapon3 != null && Item.name == GameManager.Player.loadout.weapon3.name):
+	elif (
+		Item.name == GameManager.Player.loadout.weapon3.name
+	):
 		WeaponSlotTwo.add_child(Icon)
 	else:
 		InventoryBox.add_child(Icon)
 
+#This is getting ugly
+func FindSlotForPlayerLoadout(LoadoutSlot):
+	var ReturnedSlot
+	for WeaponSlot in WeaponSlots:
+		#print(LoadoutSlot, WeaponSlot.Name)
+		if LoadoutSlot == WeaponSlot.Name:
+			ReturnedSlot = WeaponSlot
+	return ReturnedSlot
+
 func _ready():
 	var Inventory = GameManager.Player.inventory
+	var Loadout = GameManager.Player.loadout.keys()
+	var LoadoutValues = GameManager.Player.loadout.values()
+	for i in range(Loadout.size()):
+		var Disabled = LoadoutValues[i].name == 'unused'
+		var WeaponSlot = FindSlotForPlayerLoadout(Loadout[i])
+		if WeaponSlot:
+			InitializeSlot(WeaponSlot, Disabled)
+	
 	for i in range(Inventory.size()):
 		var NewDraggableIcon = DraggableIconNode.instance()
 		DraggableIcons.push_back(NewDraggableIcon)

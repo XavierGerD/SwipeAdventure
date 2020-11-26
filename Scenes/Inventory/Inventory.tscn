@@ -1,11 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Sprite/SkillTreeBG.png" type="Texture" id=1]
 [ext_resource path="res://Fonts/Font1.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Scenes/Inventory/Inventory.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/Inventory/WeaponSlot1.gd" type="Script" id=4]
-[ext_resource path="res://Scenes/Inventory/WeaponSlot2.gd" type="Script" id=5]
-[ext_resource path="res://Scenes/Inventory/WeaponSlot3.gd" type="Script" id=6]
 [ext_resource path="res://Scenes/Inventory/InventoryBox.gd" type="Script" id=7]
 
 [node name="Inventory" type="Node2D"]
@@ -58,7 +56,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="WeaponSlotBackGround" type="ColorRect" parent="."]
+[node name="WeaponSlot1BackGround" type="ColorRect" parent="."]
 margin_left = 56.0
 margin_top = 240.0
 margin_right = 200.0
@@ -79,24 +77,45 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="WeaponSlot2" type="ColorRect" parent="."]
+[node name="WeaponSlot2BackGround" type="ColorRect" parent="."]
 margin_left = 216.0
 margin_top = 240.0
 margin_right = 360.0
 margin_bottom = 384.0
-color = Color( 0.203922, 0.2, 0.2, 1 )
-script = ExtResource( 5 )
+rect_min_size = Vector2( 144, 144 )
+color = Color( 0.458824, 0.458824, 0.458824, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="WeaponSlot3" type="ColorRect" parent="."]
-margin_left = 376.0
-margin_top = 240.0
-margin_right = 520.0
+[node name="WeaponSlot2" type="CenterContainer" parent="."]
+margin_left = 224.0
+margin_top = 248.0
+margin_right = 360.0
 margin_bottom = 384.0
-color = Color( 0.203922, 0.2, 0.2, 1 )
-script = ExtResource( 6 )
+use_top_left = true
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WeaponSlot3BackGround" type="ColorRect" parent="."]
+margin_left = 377.0
+margin_top = 240.0
+margin_right = 521.0
+margin_bottom = 384.0
+color = Color( 0.458824, 0.458824, 0.458824, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WeaponSlot3" type="CenterContainer" parent="."]
+margin_left = 385.0
+margin_top = 248.0
+margin_right = 521.0
+margin_bottom = 384.0
+use_top_left = true
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

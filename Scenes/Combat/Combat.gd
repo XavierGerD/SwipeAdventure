@@ -57,8 +57,8 @@ func InstanciateLoadout(CurrentLoadout):
 	var NewDeck = []
 	var Items = CurrentLoadout.values()
 	for i in range(Items.size()):
-		if Items[i] != null:
-			NewDeck += Items[i].cardList
+		if Items[i] != null && 'cardList' in Items[i]:
+				NewDeck += Items[i].cardList
 	Deck = NewDeck
 
 func InstanciateEnemy(CurrentEnemy, i):
@@ -297,7 +297,6 @@ func OnSpecial() -> void:
 	SetGetUtils.SetPlayerEnergy(PlayerEnergyLabel, Player, Player.energy - GetCardCost(CurrentCard))
 	if !IsGameWon:
 		GoToNextCard()
-	pass # Replace with function body.
 
 func GetCardCost(Card):
 	if Card.onSpecial.cost != null:
@@ -330,7 +329,6 @@ func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
 	IsAnimatingAttack = false
 	DealEnemyDamage()
 	PlayDamageIndicator(damage)
-	pass # Replace with function body.
 
 func GetIsAnimatingAttack():
 	return IsAnimatingAttack
