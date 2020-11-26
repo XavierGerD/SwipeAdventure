@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Weld.png-70cc3e239ff0eb668da699f381826af5.stex"
+path="res://.import/ClusterBomb.png-c31f81303a687f53bc8f60f0b6058cfa.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprite/CardImages/Weld.png"
-dest_files=[ "res://.import/Weld.png-70cc3e239ff0eb668da699f381826af5.stex" ]
+source_file="res://Sprite/CardImages/GrenadeLauncher/ClusterBomb.png"
+dest_files=[ "res://.import/ClusterBomb.png-c31f81303a687f53bc8f60f0b6058cfa.stex" ]
 
 [params]
 

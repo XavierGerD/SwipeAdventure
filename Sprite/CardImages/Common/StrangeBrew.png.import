@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Aggression.png-121af2e97eee0618a9c88b0d9a16a68e.stex"
+path="res://.import/StrangeBrew.png-8c17519e511ed1f21838716e579d5d1a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprite/CardImages/Common/Aggression.png"
-dest_files=[ "res://.import/Aggression.png-121af2e97eee0618a9c88b0d9a16a68e.stex" ]
+source_file="res://Sprite/CardImages/Common/StrangeBrew.png"
+dest_files=[ "res://.import/StrangeBrew.png-8c17519e511ed1f21838716e579d5d1a.stex" ]
 
 [params]
 

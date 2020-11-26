@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/PlasmaBolt.jpg-efabef087051c5948c68bdd8b593c8a4.stex"
+path="res://.import/Restoration.png-c91d9df839ad8523e7c48aaf9e2ae8f2.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprite/CardImages/PlasmaBolt.jpg"
-dest_files=[ "res://.import/PlasmaBolt.jpg-efabef087051c5948c68bdd8b593c8a4.stex" ]
+source_file="res://Sprite/CardImages/Common/Restoration.png"
+dest_files=[ "res://.import/Restoration.png-c91d9df839ad8523e7c48aaf9e2ae8f2.stex" ]
 
 [params]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/QuickShot.png-b383363cd55e65d93499c5b8c26a761b.stex"
+path="res://.import/IronSight.png-793cae6732213eaad162319afb2bcced.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprite/CardImages/QuickShot.png"
-dest_files=[ "res://.import/QuickShot.png-b383363cd55e65d93499c5b8c26a761b.stex" ]
+source_file="res://Sprite/CardImages/PlasmaRifle/IronSight.png"
+dest_files=[ "res://.import/IronSight.png-793cae6732213eaad162319afb2bcced.stex" ]
 
 [params]
 

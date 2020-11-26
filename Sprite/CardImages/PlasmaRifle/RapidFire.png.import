@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Aggression.png-121af2e97eee0618a9c88b0d9a16a68e.stex"
+path="res://.import/RapidFire.png-3c1a6267f55342a4368b68333c8767f4.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprite/CardImages/Common/Aggression.png"
-dest_files=[ "res://.import/Aggression.png-121af2e97eee0618a9c88b0d9a16a68e.stex" ]
+source_file="res://Sprite/CardImages/PlasmaRifle/RapidFire.png"
+dest_files=[ "res://.import/RapidFire.png-3c1a6267f55342a4368b68333c8767f4.stex" ]
 
 [params]
 

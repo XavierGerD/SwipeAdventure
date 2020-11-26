@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/SteadyShot.png-72e4f6108cc7fdab8d91fd79d7056fc3.stex"
+path="res://.import/QuickShot.png-50cc9e6e63ad8efecb31d8d5023b6327.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprite/CardImages/SteadyShot.png"
-dest_files=[ "res://.import/SteadyShot.png-72e4f6108cc7fdab8d91fd79d7056fc3.stex" ]
+source_file="res://Sprite/CardImages/PlasmaBolter/QuickShot.png"
+dest_files=[ "res://.import/QuickShot.png-50cc9e6e63ad8efecb31d8d5023b6327.stex" ]
 
 [params]
 

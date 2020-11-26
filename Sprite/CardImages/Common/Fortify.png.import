@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Fortify.png-a2b770ba4f9bc6f5276483fc9881761f.stex"
+path="res://.import/Fortify.png-3af6eab6d54982f3d42fbbcec5cd8818.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprite/CardImages/Comon/Fortify.png"
-dest_files=[ "res://.import/Fortify.png-a2b770ba4f9bc6f5276483fc9881761f.stex" ]
+source_file="res://Sprite/CardImages/Common/Fortify.png"
+dest_files=[ "res://.import/Fortify.png-3af6eab6d54982f3d42fbbcec5cd8818.stex" ]
 
 [params]
 

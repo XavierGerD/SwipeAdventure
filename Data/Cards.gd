@@ -91,7 +91,7 @@ const ShieldCharge = {
 const Fortify = {
 	'name': 'Fortify',
 	'description': 'Gain {blk} block.',
-	'texturePath': 'res://Sprite/CardImages/ShieldCharge.jpg',
+	'texturePath': 'res://Sprite/CardImages/Common/Fortify.png',
 	'onAction': {
 		'cost': 2,
 		'damage': null,
@@ -109,7 +109,7 @@ const Fortify = {
 const Energize = {
 	'name': 'Energize',
 	'description': 'Restore 1 energy.',
-	'texturePath': 'res://Sprite/CardImages/ShieldCharge.jpg',
+	'texturePath': 'res://Sprite/CardImages/Common/Energize.png',
 	'onAction': {
 		'cost': 0,
 		'damage': null,
@@ -127,7 +127,7 @@ const Energize = {
 const Phaser = {
 	'name': 'Phaser',
 	'description': 'Stun an enemy for 1 turn.',
-	'texturePath': 'res://Sprite/CardImages/ShieldCharge.jpg',
+	'texturePath': 'res://Sprite/CardImages/Common/Phaser.png',
 	'onAction': {
 		'cost': 0,
 		'damage': null,
@@ -143,7 +143,7 @@ const Phaser = {
 const StrangeBrew = {
 	'name': 'StrangeBrew',
 	'description': 'Heal {hp} HP. Skip your next card.',
-	'texturePath': 'res://Sprite/CardImages/ShieldCharge.jpg',
+	'texturePath': 'res://Sprite/CardImages/Common/StrangeBrew.png',
 	'onAction': {
 		'cost': 0,
 		'damage': null,
@@ -161,7 +161,7 @@ const StrangeBrew = {
 const Focus = {
 	'name': 'Focus',
 	'description': 'For each card you skip until your next attack, deal 2 additional damage on your next attack.',
-	'texturePath': 'res://Sprite/CardImages/ShieldCharge.jpg',
+	'texturePath': 'res://Sprite/CardImages/Common/Focus.png',
 	'onAction': {
 		'cost': 2,
 		'damage': null,
@@ -180,7 +180,7 @@ const Focus = {
 const Restoration = {
 	'name': 'Restoration',
 	'description': 'All your cards gain “Heal 1 HP on skip.” until the end of combat.',
-	'texturePath': 'res://Sprite/CardImages/ShieldCharge.jpg',
+	'texturePath': 'res://Sprite/CardImages/Common/Restoration.png',
 	'onAction': {
 		'cost': 3,
 		'damage': null,
@@ -209,7 +209,7 @@ const Restoration = {
 const Agression = {
 	'name': 'Restoration',
 	'description': 'All your cards gain “Deal 1 damage on skip.” until the end of combat.',
-	'texturePath': 'res://Sprite/CardImages/ShieldCharge.jpg',
+	'texturePath': 'res://Sprite/CardImages/Common/Aggression.png',
 	'onAction': {
 		'cost': 3,
 		'damage': null,
@@ -238,7 +238,7 @@ const Agression = {
 const Ionization = {
 	'name': 'Restoration',
 	'description': 'All your cards gain “Gain 2 block on skip.” until the end of combat.',
-	'texturePath': 'res://Sprite/CardImages/ShieldCharge.jpg',
+	'texturePath': 'res://Sprite/CardImages/Common/Ionization.png',
 	'onAction': {
 		'cost': 3,
 		'damage': null,
@@ -268,7 +268,7 @@ const Ionization = {
 const Weld = {
 	'name': 'Weld',
 	'description': 'Deal {dmg} damage.',
-	'texturePath': 'res://Sprite/CardImages/Weld.png',
+	'texturePath': 'res://Sprite/CardImages/Welder/Weld.png',
 	'onAction': {
 		'cost': 1,
 		'damage': 2,
@@ -287,7 +287,7 @@ const Weld = {
 const Repair = {
 	'name': 'Repair',
 	'description': 'Heal {hp} HP.',
-	'texturePath': 'res://Sprite/CardImages/Weld.png',
+	'texturePath': 'res://Sprite/CardImages/Welder/Repair.png',
 	'onAction': {
 		'cost': 2,
 		'damage': null,
@@ -305,7 +305,7 @@ const Repair = {
 const OverCharge = {
 	'name': 'Plasma Bolt',
 	'description': 'Deal {dmg} damage. Overload this card to deal {spDmg} damage and discard it.',
-	'texturePath': 'res://Sprite/CardImages/PlasmaBolt.jpg',
+	'texturePath': 'res://Sprite/CardImages/Welder/Overcharge.png',
 	'onAction': {
 		'cost': 2,
 		'damage': 3,
@@ -330,7 +330,7 @@ const OverCharge = {
 const QuickShot = {
 	'name': 'Quick Shot',
 	'description': 'Deal {dmg} damage.',
-	'texturePath': 'res://Sprite/CardImages/QuickShot.png',
+	'texturePath': 'res://Sprite/CardImages/PlasmaBolter/QuickShot.png',
 	'onAction': {
 		'cost': 1,
 		'damage': 3,
@@ -348,7 +348,7 @@ const QuickShot = {
 const SteadySight = {
 	'name': 'Steady Sight',
 	'description': 'Deal {dmg} damage. Overload: pay 2 energy to deal {spDmg} damage next turn.',
-	'texturePath': 'res://Sprite/CardImages/SteadyShot.png',
+	'texturePath': 'res://Sprite/CardImages/PlasmaBolter/SteadyShot.png',
 	'onAction': {
 		'cost': 2,
 		'damage': 4,
@@ -372,7 +372,7 @@ const SteadySight = {
 const RevUp = {
 	'name': 'Rev Up',
 	'description': 'Your next attack deals double damage.',
-	'texturePath': 'res://Sprite/CardImages/RevUp.png',
+	'texturePath': 'res://Sprite/CardImages/PlasmaBolter/RevUp.png',
 	'onAction': {
 		'cost': 2,
 		'damage': null,
@@ -391,7 +391,7 @@ const RevUp = {
 const IronSights = {
 	'name': 'Iron Sights',
 	'description': 'Deal {dmg} damage.',
-	'texturePath': 'res://Sprite/CardImages/RevUp.png',
+	'texturePath': 'res://Sprite/CardImages/PlasmaRifle/IronSight.png',
 	'onAction': {
 		'cost': 1,
 		'damage': 3,
@@ -409,7 +409,7 @@ const IronSights = {
 const RapidFire = {
 	'name': 'Rapid Fire',
 	'description': 'Deal {dmg} damage to all enemies. Overload: pay 3 energy to deal {spDmg} damage to all enemies.',
-	'texturePath': 'res://Sprite/CardImages/RevUp.png',
+	'texturePath': 'res://Sprite/CardImages/PlasmaRifle/RapidFire.png',
 	'onAction': {
 		'cost': 2,
 		'damage': 2,
@@ -433,7 +433,7 @@ const RapidFire = {
 const Collateral = {
 	'name': 'Collateral',
 	'description': 'Deal {dmg} damage to the target enemy and {efDmg} damage to all other enemies.',
-	'texturePath': 'res://Sprite/CardImages/RevUp.png',
+	'texturePath': 'res://Sprite/CardImages/PlasmaRifle/Collateral.png',
 	'onAction': {
 		'cost': 1,
 		'damage': 3,
@@ -537,7 +537,7 @@ const Fury = {
 const LobbedShot = {
 	'name': 'Lobbed Shot',
 	'description': 'Deal 8 damage. Skip your next card.',
-	'texturePath': 'res://Sprite/CardImages/RevUp.png',
+	'texturePath': 'res://Sprite/CardImages/GrenadeLauncher/LobbedShot.png',
 	'onAction': {
 		'cost': 3,
 		'damage': 8,
@@ -555,7 +555,7 @@ const LobbedShot = {
 const ClusterBomb = {
 	'name': 'Cluster Bomb',
 	'description': 'Deal {dmg} damage to all enemies. Skipping this card deals 1 damage to you.',
-	'texturePath': 'res://Sprite/CardImages/RevUp.png',
+	'texturePath': 'res://Sprite/CardImages/GrenadeLauncher/ClusterBomb.png',
 	'onAction': {
 		'cost': 1,
 		'damage': 2,
@@ -582,7 +582,7 @@ const ClusterBomb = {
 const PrimedGrenade = {
 	'name': 'PrimedGrenade',
 	'description': 'Deal {dmg} damage. Skipping this card deals 1 damage to you.',
-	'texturePath': 'res://Sprite/CardImages/RevUp.png',
+	'texturePath': 'res://Sprite/CardImages/GrenadeLauncher/PrimedGrenade.png',
 	'onAction': {
 		'cost': 2,
 		'damage': 4,

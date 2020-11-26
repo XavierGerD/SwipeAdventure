@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Aggression.png-121af2e97eee0618a9c88b0d9a16a68e.stex"
+path="res://.import/LobbedShot.png-d40f0904591255ac0ec0da3da487de09.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprite/CardImages/Common/Aggression.png"
-dest_files=[ "res://.import/Aggression.png-121af2e97eee0618a9c88b0d9a16a68e.stex" ]
+source_file="res://Sprite/CardImages/GrenadeLauncher/LobbedShot.png"
+dest_files=[ "res://.import/LobbedShot.png-d40f0904591255ac0ec0da3da487de09.stex" ]
 
 [params]
 

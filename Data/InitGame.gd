@@ -8,7 +8,7 @@ onready var NewPlayerTemplate = {
 	'maxEnergy': 3,
 	'maxCardsInHand': 3,
 	'loadout': {
-		'weapon1': null,
+		'weapon1': Cards.Welder,
 		'weapon2': null,
 		'weapon3': null,
 		'shield': Cards.BasicShield

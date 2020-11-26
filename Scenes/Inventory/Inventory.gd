@@ -23,12 +23,22 @@ func _on_HideButton_pressed() -> void:
 func _input(event):
 	MousePointer = event.position
 
+func AssignIconToSlot(Item, Icon):
+	if (Item.name == GameManager.Player.loadout.weapon1.name):
+		WeaponSlotOne.add_child(Icon)
+	if (GameManager.Player.loadout.weapon2 != null && Item.name == GameManager.Player.loadout.weapon2.name):
+		WeaponSlotTwo.add_child(Icon)
+	if (GameManager.Player.loadout.weapon3 != null && Item.name == GameManager.Player.loadout.weapon3.name):
+		WeaponSlotTwo.add_child(Icon)
+	else:
+		InventoryBox.add_child(Icon)
+
 func _ready():
 	var Inventory = GameManager.Player.inventory
 	for i in range(Inventory.size()):
 		var NewDraggableIcon = DraggableIconNode.instance()
 		DraggableIcons.push_back(NewDraggableIcon)
-		InventoryBox.add_child(NewDraggableIcon)
+		AssignIconToSlot(Inventory[i], NewDraggableIcon)
 		NewDraggableIcon.InstanciateDraggableIcon(Inventory[i])
 		NewDraggableIcon.connect('icon_dropped', self, 'OnIconDrop')
 
@@ -70,26 +80,20 @@ func OnIconDrop(DraggableIcon):
 		var CurrentParent = DraggableIcon.get_parent()
 		AddIconToNewParent(DraggableIcon, CurrentParent)
 		return
+		
 	if IntersectingBox.Type == DraggableIcon.Type:
-		if IntersectingBox.EquippedItem != null:
-			AddIconToNewParent(IntersectingBox.get_child(0), InventoryBox)
-			AddIconToNewParent(DraggableIcon, IntersectingBox)
-			return
+		#if item can't be dropped, restore it to its old parent
 		if (!GetCanIconBeDroppedInSlot(IntersectingBox, DraggableIcon)):
-			var CurrentParent = DraggableIcon.get_parent()
-			DraggableIcon.get_parent().remove_child(DraggableIcon)
-			CurrentParent.add_child(DraggableIcon)
+			AddIconToNewParent(DraggableIcon, DraggableIcon.get_parent())
 			return
-		IntersectingBox.EquippedItem = DraggableIcon.Item
+		#If already an item in slot, remove the old one
+		if IntersectingBox.get_child(0) != null:
+			AddIconToNewParent(IntersectingBox.get_child(0), InventoryBox)
+		#In any case, add the dragged item to the slot and update player loadout
 		AddIconToNewParent(DraggableIcon, IntersectingBox)
 		GameManager.Player.loadout[IntersectingBox.Name] = DraggableIcon.Item
+		
 	if IntersectingBox.Type == 'inventory':
-		if WasPreviousParentSlot(DraggableIcon):
-			DraggableIcon.get_parent().EquippedItem = null
 		AddIconToNewParent(DraggableIcon, IntersectingBox)
 		IntersectingBox.move_child(DraggableIcon, IntersectingBox.get_child_count())
 	AddIconToNewParent(DraggableIcon, DraggableIcon.get_parent())
-func WasPreviousParentSlot(Icon):
-	if 'EquippedItem' in Icon.get_parent():
-		return true
-	return false
