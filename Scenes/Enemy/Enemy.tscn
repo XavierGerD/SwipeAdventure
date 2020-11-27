@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Sprite/Enemies/BadGuy.png" type="Texture" id=1]
 [ext_resource path="res://Sprite/Enemies/BadGuy_Mask.png" type="BitMap" id=2]
 [ext_resource path="res://Fonts/Font1.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Scenes/Enemy/Enemy.gd" type="Script" id=4]
+[ext_resource path="res://Sprite/arrow.png" type="Texture" id=5]
+[ext_resource path="res://Fonts/font4.tres" type="DynamicFont" id=6]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Flip"
@@ -53,10 +55,10 @@ anims/Flip = SubResource( 1 )
 
 [node name="EnemyLabel" type="RichTextLabel" parent="."]
 margin_left = -104.0
-margin_top = -184.0
-margin_right = 104.0
+margin_top = -168.0
+margin_right = 112.0
 margin_bottom = -64.0
-custom_fonts/normal_font = ExtResource( 3 )
+custom_fonts/normal_font = ExtResource( 6 )
 bbcode_enabled = true
 bbcode_text = "[center]Heckler[/center]"
 text = "Heckler"
@@ -77,16 +79,57 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="EnemySelector" type="RichTextLabel" parent="."]
+[node name="EnemySelector" type="Control" parent="."]
 margin_left = -112.0
 margin_top = -88.0
 margin_right = 152.0
 margin_bottom = 104.0
-custom_fonts/normal_font = ExtResource( 3 )
-text = ">                 <
->                 <
->                 <"
-scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect3" type="TextureRect" parent="EnemySelector"]
+margin_left = 3.0
+margin_top = 61.0
+margin_right = 35.0
+margin_bottom = 93.0
+texture = ExtResource( 5 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect5" type="TextureRect" parent="EnemySelector"]
+margin_left = 176.0
+margin_top = 61.0
+margin_right = 208.0
+margin_bottom = 93.0
+texture = ExtResource( 5 )
+expand = true
+flip_h = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect4" type="TextureRect" parent="EnemySelector"]
+margin_left = 3.0
+margin_top = 105.0
+margin_right = 35.0
+margin_bottom = 137.0
+texture = ExtResource( 5 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect6" type="TextureRect" parent="EnemySelector"]
+margin_left = 176.0
+margin_top = 105.0
+margin_right = 208.0
+margin_bottom = 137.0
+texture = ExtResource( 5 )
+expand = true
+flip_h = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
