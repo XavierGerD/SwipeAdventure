@@ -3,13 +3,12 @@ extends Node2D
 onready var WeaponSlotOne = get_node("WeaponSlot1")
 onready var WeaponSlotTwo = get_node("WeaponSlot2")
 onready var WeaponSlotThree = get_node("WeaponSlot3")
+onready var ShieldSlot = get_node("ShieldSlot")
 onready var InventoryBox = get_node("InventoryBox")
 onready var WeaponSlots = [WeaponSlotOne, WeaponSlotTwo, WeaponSlotThree, InventoryBox]
 
 onready var GameManager = self.get_parent()
 onready var DraggableIconNode = load('res://Scenes/Inventory/DraggableIcon.tscn')
-
-var DraggableIcons = []
 
 const ACTIVE_COLOR = '#757575'
 const DISABLED_COLOR = '#343333'
@@ -23,6 +22,12 @@ func _on_HideButton_pressed() -> void:
 func _input(event):
 	MousePointer = event.position
 	
+func AddNewIcon(Item):
+	var NewDraggableIcon = DraggableIconNode.instance()
+	InventoryBox.add_child(NewDraggableIcon)
+	NewDraggableIcon.InstanciateDraggableIcon(Item)
+	NewDraggableIcon.connect('icon_dropped', self, 'OnIconDrop')
+
 func InitializeSlot(Slot, Disabled):
 	var Background = get_node(Slot.get_name() + 'BackGround')
 	print(Background)
@@ -43,7 +48,9 @@ func AssignIconToSlot(Item, Icon):
 	elif (
 		Item.name == GameManager.Player.loadout.weapon3.name
 	):
-		WeaponSlotTwo.add_child(Icon)
+		WeaponSlotThree.add_child(Icon)
+	elif (Item.name == GameManager.Player.loadout.shield.name):
+		ShieldSlot.add_child(Icon)
 	else:
 		InventoryBox.add_child(Icon)
 
@@ -61,14 +68,13 @@ func _ready():
 	var Loadout = GameManager.Player.loadout.keys()
 	var LoadoutValues = GameManager.Player.loadout.values()
 	for i in range(Loadout.size()):
-		var Disabled = LoadoutValues[i].name == 'unused'
+		var Disabled = LoadoutValues[i].name == 'closed'
 		var WeaponSlot = FindSlotForPlayerLoadout(Loadout[i])
 		if WeaponSlot:
 			InitializeSlot(WeaponSlot, Disabled)
 	
 	for i in range(Inventory.size()):
 		var NewDraggableIcon = DraggableIconNode.instance()
-		DraggableIcons.push_back(NewDraggableIcon)
 		AssignIconToSlot(Inventory[i], NewDraggableIcon)
 		NewDraggableIcon.InstanciateDraggableIcon(Inventory[i])
 		NewDraggableIcon.connect('icon_dropped', self, 'OnIconDrop')

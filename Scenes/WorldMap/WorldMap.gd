@@ -3,6 +3,7 @@ extends Node2D
 signal load_encounter(Encounter)
 signal show_or_hide_skill_tree
 signal show_or_hide_inventory
+signal show_or_hide_shop
 
 var EmptyEncounter = load('res://Scenes/WorldMap/Encounter.tscn')
 onready var QuadrantOneEncounterOne = get_node("QuadrantOne/QuandrantOneEncounterOne")
@@ -78,4 +79,9 @@ func _on_SkillTreeButton_pressed() -> void:
 
 func _on_InventoryButton_pressed() -> void:
 	emit_signal('show_or_hide_inventory')
+	pass # Replace with function body.
+
+
+func _on_ShopButton_pressed() -> void:
+	emit_signal('show_or_hide_shop')
 	pass # Replace with function body.

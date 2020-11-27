@@ -2,13 +2,14 @@ extends Node
 
 func _onready() -> void:
 	pass
+
 	
 onready var BasicShield = {
 	'name': 'Basic Shield', 
 	'imagePath':'whatever.jpg',
 	'type': 'shield',
 	'upgrades': null,
-	'equipSlot': 0,
+	'cost': 0,
 	'cardList': [
 		ShieldCharge,
 		ShieldCharge
@@ -20,7 +21,7 @@ onready var Welder = {
 	'imagePath':'whatever.jpg',
 	'type': 'weapon',
 	'upgrades': null,
-	'equipSlot': 0,
+	'cost': 50,
 	'cardList': [
 		Weld,
 		Weld,
@@ -35,7 +36,7 @@ onready var PlasmaBolter = {
 	'imagePath':'whatever.jpg',
 	'type': 'weapon',
 	'upgrades': null,
-	'equipSlot': 0,
+	'cost': 100,
 	'cardList': [
 		QuickShot,
 		QuickShot,
@@ -45,29 +46,58 @@ onready var PlasmaBolter = {
 	]
 }
 
-onready var PlasmaRifle = [
-	IronSights,
-	IronSights,
-	RapidFire,
-	Collateral,
-	Collateral
-]
+onready var PlasmaRifle = {
+	'name': 'Plasma Rifle', 
+	'imagePath':'whatever.jpg',
+	'type': 'weapon',
+	'upgrades': null,
+	'cost': 200,
+	'cardList': [
+		IronSights,
+		IronSights,
+		RapidFire,
+		Collateral,
+		Collateral
+	]
+}
 
-onready var PowerHammer = [
-	HammerDown,
-	HammerDown,
-	HammerSpin,
-	Stun,
-	Stun,
-	Fury
-]
+#onready var PowerHammer = {
+#	'name': 'Plasma Rifle', 
+#	'imagePath':'whatever.jpg',
+#	'type': 'weapon',
+#	'upgrades': null,
+#	'cost': 100,
+#	'cardList': [
+#		HammerDown,
+#		HammerDown,
+#		HammerSpin,
+#		Stun,
+#		Stun,
+#		Fury
+#	]
+#}
 
-onready var GrenadeLauncher = [
-	LobbedShot,
-	ClusterBomb,
-	PrimedGrenade,
-	PrimedGrenade,
-	PrimedGrenade
+onready var GrenadeLauncher = {
+	'name': 'Grenade Launcher', 
+	'imagePath':'whatever.jpg',
+	'type': 'weapon',
+	'upgrades': null,
+	'cost': 250, 
+	'cardList': [
+		LobbedShot,
+		ClusterBomb,
+		PrimedGrenade,
+		PrimedGrenade,
+		PrimedGrenade
+	]
+}
+	
+onready var AllItems = [
+	BasicShield,
+	Welder,
+	PlasmaBolter,
+	PlasmaRifle,
+	GrenadeLauncher
 ]
 
 const ShieldCharge = {

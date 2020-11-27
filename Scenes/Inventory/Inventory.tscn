@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Sprite/SkillTreeBG.png" type="Texture" id=1]
 [ext_resource path="res://Fonts/Font1.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Scenes/Inventory/Inventory.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/Inventory/WeaponSlot1.gd" type="Script" id=4]
+[ext_resource path="res://Scenes/Inventory/WeaponSlot2.gd" type="Script" id=5]
+[ext_resource path="res://Scenes/Inventory/WeaponSlot3.gd" type="Script" id=6]
 [ext_resource path="res://Scenes/Inventory/InventoryBox.gd" type="Script" id=7]
 
 [node name="Inventory" type="Node2D"]
@@ -34,7 +36,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="InventoryLabel" type="RichTextLabel" parent="."]
 margin_left = 40.0
 margin_top = 56.0
 margin_right = 352.0
@@ -45,7 +47,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+[node name="WeaponsLabel" type="RichTextLabel" parent="."]
 margin_left = 56.0
 margin_top = 184.0
 margin_right = 368.0
@@ -94,7 +96,7 @@ margin_top = 248.0
 margin_right = 360.0
 margin_bottom = 384.0
 use_top_left = true
-script = ExtResource( 4 )
+script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -115,7 +117,7 @@ margin_top = 248.0
 margin_right = 521.0
 margin_bottom = 384.0
 use_top_left = true
-script = ExtResource( 4 )
+script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -125,10 +127,42 @@ margin_left = 48.0
 margin_top = 792.0
 margin_right = 728.0
 margin_bottom = 1224.0
-custom_constants/vseparation = 8
+custom_constants/vseparation = 136
 custom_constants/hseparation = 136
-columns = 3
+columns = 5
 script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ShieldLabel" type="RichTextLabel" parent="."]
+margin_left = 56.0
+margin_top = 424.0
+margin_right = 368.0
+margin_bottom = 480.0
+custom_fonts/normal_font = ExtResource( 2 )
+text = "Shield"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ShieldSlotBackGround" type="ColorRect" parent="."]
+margin_left = 56.0
+margin_top = 480.0
+margin_right = 200.0
+margin_bottom = 624.0
+color = Color( 0.458824, 0.458824, 0.458824, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ShieldSlot" type="CenterContainer" parent="."]
+margin_left = 64.0
+margin_top = 488.0
+margin_right = 200.0
+margin_bottom = 624.0
+use_top_left = true
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

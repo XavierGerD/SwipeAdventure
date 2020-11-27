@@ -29,7 +29,7 @@ func GetCanUserBuySkill(Skill):
 		return true	
 	return false
 	
-# Is there a better way reather than hard-coupling these scenes?
+# Is there a better way than hard-coupling these scenes?
 func GetUserCreditTotal():
 	return self.get_parent().get_parent().GetPlayerCredits()
 
