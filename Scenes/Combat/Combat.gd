@@ -27,6 +27,7 @@ onready var HandStack = get_node("HandStack")
 
 var IsGameLost = false
 var IsGameWon = false
+var SkipNext = false
 
 var TopCard
 
@@ -188,12 +189,17 @@ func UpdateHand():
 	SetGetUtils.SetDiscardTotal(DiscardPileTotalLabel, DiscardPile.size())
 	SetGetUtils.SetDrawTotal(DrawPileTotalLabel, DrawPile.size())
 	SetGetUtils.SetHandTotal(HandTotalLabel, Hand.size())
-	
-func GoToNextCard():
-	#Take the top card from your hand and place it in the discard pile
+
+func MoveCardFromHandToDiscard():
 	DiscardPile.push_back(Hand[0])
-	#Remove the card from your hand
 	Hand.pop_front()
+
+func GoToNextCard():
+	MoveCardFromHandToDiscard()
+	if SkipNext:
+		SkipNext = false
+		if Hand.size() != 0:
+			MoveCardFromHandToDiscard()
 	#Check to see if turn is done
 	var IsTurnDone = GetIsTurnDone()
 	if IsTurnDone:
@@ -246,33 +252,54 @@ func EndTurn():
 	TopCard.queue_free()
 	BeginTurn()
 	
-func DealDamageToEnemy():
+func StartEnemyDamageAnim(Type):
 	var NewAttackAnim = AttackSpriteNode.instance()
 	add_child(NewAttackAnim)
 	IsAnimatingAttack = true
-	NewAttackAnim.connect('anim_done', self, 'OnAttackDone')
+	NewAttackAnim.connect('anim_done', self, 'OnAttackDone', [Type])
 	NewAttackAnim.AnimateAttack(TargetEnemy.node.get_position().x)
 	
-func OnAttackDone():
+func OnAttackDone(Type):
 	IsAnimatingAttack = false
-	var CardDamage = GetCardDamage()
-	TargetEnemy.enemyRef.health = TargetEnemy.enemyRef.health - CardDamage if TargetEnemy.enemyRef.health - CardDamage >= 0 else 0
+	var CardDamage = GetCardDamage(Type)
+	DealDamageToEnemy(TargetEnemy, CardDamage)
 	emit_signal("update_health")
+
+func DealDamageToEnemy(Enemy, CardDamage):
+	Enemy.enemyRef.health = Enemy.enemyRef.health - CardDamage if Enemy.enemyRef.health - CardDamage >= 0 else 0
+	
+func ExecuteCard(CardAction, Type):
+	if (CardAction.damage != null):
+		StartEnemyDamageAnim(Type)
+	if (CardAction.block != null):
+		SetGetUtils.SetPlayerBlock(PlayerBlockLabel, Player, Player.block + CurrentCard.onAction.block)
+	if (CardAction.heal != null):
+		var newPlayerHealth = Player.health + CurrentCard.onAction.heal if Player.health + CurrentCard.onAction.heal <= Player.maxHealth else Player.maxHealth
+		SetGetUtils.SetPlayerHealth(PlayerHealthLabel, Player, newPlayerHealth)
+	if (CardAction.power != null):
+		ExecuteCardPowers(CardAction.power)
+
+func ExecuteCardPowers(Powers):
+	for Power in Powers:
+		if Power == 'doubleDamage':
+			LocalDamageModifier = 2 if LocalDamageModifier == 1 else LocalDamageModifier + 2
+		if Power == 'pendingDamage':
+			PendingPlayerToEnemyDamage = CurrentCard.onSpecial.effect
+		if Power == 'removeFromGame':
+			Hand.pop_front()
+		if Power == 'allEnemies':
+			for Enemy in EncounterEnemyNodes:
+				DealDamageToEnemy(Enemy, CurrentCard.onSpecial.effect)
+		if Power == 'skipNext':
+			SkipNext = true
+		return
 
 #player actions
 func OnAction():
 	if IsGameLost && IsAnimatingAttack:
 		return
 	CurrentCard = Hand[0]
-	if (CurrentCard.onAction.damage != null):
-		DealDamageToEnemy()
-	if (CurrentCard.onAction.block != null):
-		SetGetUtils.SetPlayerBlock(PlayerBlockLabel, Player, Player.block + CurrentCard.onAction.block)
-	if (CurrentCard.onAction.heal != null):
-		var newPlayerHealth = Player.health + CurrentCard.onAction.heal if Player.health + CurrentCard.onAction.heal <= Player.maxHealth else Player.maxHealth
-		SetGetUtils.SetPlayerHealth(PlayerHealthLabel, Player, newPlayerHealth)
-	if (CurrentCard.onAction.power != null):
-		HandleCardPower(CurrentCard)
+	ExecuteCard(CurrentCard.onAction, 'onAction')
 	SetGetUtils.SetPlayerEnergy(PlayerEnergyLabel, Player, Player.energy - CurrentCard.onAction.cost)
 	if !IsGameWon:
 		GoToNextCard()
@@ -280,36 +307,28 @@ func OnAction():
 func OnSkip() -> void:
 	if IsGameLost && IsAnimatingAttack:
 		return
+	CurrentCard = Hand[0]
+	if CurrentCard.onSkip != null:
+		ExecuteCard(CurrentCard.onSkip, 'onSkip')
 	GoToNextCard()
 
 func OnSpecial() -> void:
 	if IsGameLost && IsAnimatingAttack:
 		return
 	CurrentCard = Hand[0]
-	if CurrentCard.onSpecial:
-		if (CurrentCard.onSpecial.damage != null):
-			TargetEnemy.enemyRef.health = TargetEnemy.enemyRef.health - CurrentCard.onSpecial.damage * LocalDamageModifier if TargetEnemy.enemyRef.health - CurrentCard.onSpecial.damage * LocalDamageModifier >= 0 else 0
-			emit_signal("update_health")
-		if (CurrentCard.onSpecial.condition == 'discard'):
-			Hand.pop_front()
-		if (CurrentCard.onSpecial.power == 'pendingDamage'):
-			PendingPlayerToEnemyDamage = CurrentCard.onSpecial.effect
-	SetGetUtils.SetPlayerEnergy(PlayerEnergyLabel, Player, Player.energy - GetCardCost(CurrentCard))
+	ExecuteCard(CurrentCard.onSpecial, 'onSpecial')
+	SetGetUtils.SetPlayerEnergy(PlayerEnergyLabel, Player, Player.energy - GetCardCostForSpecial(CurrentCard))
 	if !IsGameWon:
 		GoToNextCard()
 
-func GetCardCost(Card):
+func GetCardCostForSpecial(Card):
 	if Card.onSpecial.cost != null:
 		return Card.onSpecial.cost
 	else:
 		return Card.onAction.cost
 
-func HandleCardPower(CurrentCard):
-	if (CurrentCard.onAction.power == 'doubleDamage'):
-		LocalDamageModifier = 2 if LocalDamageModifier == 1 else LocalDamageModifier + 2
-
-func GetCardDamage():
-	var Damage = CurrentCard.onAction.damage * LocalDamageModifier
+func GetCardDamage(Type):
+	var Damage = CurrentCard[Type].damage * LocalDamageModifier
 	LocalDamageModifier = 1
 	return Damage
 

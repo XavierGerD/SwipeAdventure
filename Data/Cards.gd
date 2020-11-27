@@ -334,7 +334,7 @@ const Repair = {
 	
 const OverCharge = {
 	'name': 'Plasma Bolt',
-	'description': 'Deal {dmg} damage. Overload this card to deal {spDmg} damage and discard it.',
+	'description': 'Deal {dmg} damage. Overload this card to deal {spDmg} damage and remove it from the game until the end of battle.',
 	'texturePath': 'res://Sprite/CardImages/Welder/Overcharge.png',
 	'onAction': {
 		'cost': 2,
@@ -347,9 +347,9 @@ const OverCharge = {
 	},
 	'onSpecial': {
 		'cost': null,
+		'block': null,
 		'damage': 5,
-		'condition': 'discard',
-		'power': null,
+		'power': ['removeFromGame'],
 		'effect': null,
 		'heal': null
 	},
@@ -393,6 +393,7 @@ const SteadySight = {
 		'damage': null,
 		'condition': null,
 		'heal': null,
+		'block': null,
 		'power': ['pendingDamage'],
 		'effect': 6
 	},
@@ -454,6 +455,7 @@ const RapidFire = {
 		'cost': 3,
 		'condition': null,
 		'heal': null,
+		'block': null,
 		'power': ['allEnemies'],
 		'effect': 3
 	},
@@ -497,6 +499,7 @@ const HammerDown = {
 		'cost': null,
 		'condition': null,
 		'heal': null,
+		'block': null,
 		'power': ['selfStun'],
 		'effect': 1
 	},
@@ -521,6 +524,7 @@ const HammerSpin = {
 		'cost': null,
 		'condition': null,
 		'heal': -4,
+		'block': null,
 		'power': ['allEnemies', 'selfStun'],
 		'effect': 1
 	},
