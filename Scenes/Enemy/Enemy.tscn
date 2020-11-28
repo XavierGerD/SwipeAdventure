@@ -62,6 +62,7 @@ custom_fonts/normal_font = ExtResource( 6 )
 bbcode_enabled = true
 bbcode_text = "[center]Heckler[/center]"
 text = "Heckler"
+scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
