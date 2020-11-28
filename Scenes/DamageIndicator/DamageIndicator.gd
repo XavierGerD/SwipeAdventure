@@ -7,5 +7,6 @@ func PlayAnimWithValue(value):
 	TextLabelNode.bbcode_text = "[center] -" + str(value) + "[/center]"
 	AnimNode.play("Damage")
 
+# warning-ignore:unused_argument
 func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
 	self.queue_free()

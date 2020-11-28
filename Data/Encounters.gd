@@ -23,8 +23,8 @@ var LevelThreeEncounters = [
 const Encounter1 = {
 	'name': 'Asteroid',
 	'enemies': [
-		Enemies.Heckler,
-		Enemies.SlaveWatcher,
+#		Enemies.Heckler,
+#		Enemies.SlaveWatcher,
 		Enemies.SlaveWatcher
 	],
 	'completed': false,

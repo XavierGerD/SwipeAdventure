@@ -74,6 +74,7 @@ func InstanciateEnemy(CurrentEnemy, i):
 			'enemyRef': CurrentEnemy,			
 		}
 	)
+# warning-ignore:return_value_discarded
 	self.connect('update_health', NewEnemyNode, 'OnHealthUpdate')
 
 func InstanciatePlayer(CurrentPlayer):
@@ -141,23 +142,30 @@ func ContidionallyDestroyEnemies():
 			OnSelectEnemy(EncounterEnemyNodes[index].enemyRef, EncounterEnemyNodes[index].node)
 
 func _process(_delta):
-	if !IsAnimatingAttack:
-		ContidionallyDestroyEnemies()
+	ContidionallyDestroyEnemies()
 	CheckGameWinCondition()
 	CheckGameLostCondition()
 	if IsGameWon:
-		emit_signal("game_is_won", EncounterEnemies)
+		OnGameWin()
 	if IsGameLost:
 		emit_signal("game_is_lost")
 
+func OnGameWin():
+	IsGameWon = false
+	WinLoseText.set_text('You Win!')
+#	yield(get_tree().create_timer(1.0), "timeout")
+#	WinLoseText.set_text('')
+	emit_signal("game_is_won", EncounterEnemies)
+	
+
 #setters and getters
-func OnSelectEnemy(SelectedEnemy, EnemyNode):
-	for EnemyNode in EncounterEnemyNodes:
-		if EnemyNode.node != null:
-			EnemyNode.node.OnDeselect()
-	EnemyNode.OnSelect()
+func OnSelectEnemy(SelectedEnemy, SelectedEnemyNode):
+	for IteratedEnemyNode in EncounterEnemyNodes:
+		if IteratedEnemyNode.node != null:
+			IteratedEnemyNode.node.OnDeselect()
+	SelectedEnemyNode.OnSelect()
 	TargetEnemy = { 
-		'node': EnemyNode,
+		'node': SelectedEnemyNode,
 		'enemyRef': SelectedEnemy, 
 	}
 
@@ -191,11 +199,13 @@ func UpdateHand():
 	SetGetUtils.SetHandTotal(HandTotalLabel, Hand.size())
 
 func MoveCardFromHandToDiscard():
+	print(Hand.size())
 	DiscardPile.push_back(Hand[0])
 	Hand.pop_front()
 
 func GoToNextCard():
-	MoveCardFromHandToDiscard()
+	if Hand.size() != 0:
+		MoveCardFromHandToDiscard()
 	if SkipNext:
 		SkipNext = false
 		if Hand.size() != 0:
@@ -203,6 +213,7 @@ func GoToNextCard():
 	#Check to see if turn is done
 	var IsTurnDone = GetIsTurnDone()
 	if IsTurnDone:
+		yield(get_tree().create_timer(0.5), 'timeout')
 		DealEnemyDamage()
 		return
 	UpdateHand()
@@ -252,12 +263,11 @@ func EndTurn():
 	TopCard.queue_free()
 	BeginTurn()
 	
-func StartEnemyDamageAnim(Type):
+func GetEnemyDamageAnim():
 	var NewAttackAnim = AttackSpriteNode.instance()
 	add_child(NewAttackAnim)
 	IsAnimatingAttack = true
-	NewAttackAnim.connect('anim_done', self, 'OnAttackDone', [Type])
-	NewAttackAnim.AnimateAttack(TargetEnemy.node.get_position().x)
+	return NewAttackAnim
 	
 func OnAttackDone(Type):
 	IsAnimatingAttack = false
@@ -270,7 +280,10 @@ func DealDamageToEnemy(Enemy, CardDamage):
 	
 func ExecuteCard(CardAction, Type):
 	if (CardAction.damage != null):
-		StartEnemyDamageAnim(Type)
+		var NewAttackAnim = GetEnemyDamageAnim()
+		NewAttackAnim.AnimateAttack(TargetEnemy.node.get_position().x)
+		yield(NewAttackAnim, 'anim_done')
+		OnAttackDone(Type)
 	if (CardAction.block != null):
 		SetGetUtils.SetPlayerBlock(PlayerBlockLabel, Player, Player.block + CurrentCard.onAction.block)
 	if (CardAction.heal != null):
@@ -278,6 +291,8 @@ func ExecuteCard(CardAction, Type):
 		SetGetUtils.SetPlayerHealth(PlayerHealthLabel, Player, newPlayerHealth)
 	if (CardAction.power != null):
 		ExecuteCardPowers(CardAction.power)
+	if !IsGameWon:
+		GoToNextCard()
 
 func ExecuteCardPowers(Powers):
 	for Power in Powers:
@@ -301,8 +316,7 @@ func OnAction():
 	CurrentCard = Hand[0]
 	ExecuteCard(CurrentCard.onAction, 'onAction')
 	SetGetUtils.SetPlayerEnergy(PlayerEnergyLabel, Player, Player.energy - CurrentCard.onAction.cost)
-	if !IsGameWon:
-		GoToNextCard()
+
 
 func OnSkip() -> void:
 	if IsGameLost && IsAnimatingAttack:
@@ -310,7 +324,8 @@ func OnSkip() -> void:
 	CurrentCard = Hand[0]
 	if CurrentCard.onSkip != null:
 		ExecuteCard(CurrentCard.onSkip, 'onSkip')
-	GoToNextCard()
+	else:
+		GoToNextCard()
 
 func OnSpecial() -> void:
 	if IsGameLost && IsAnimatingAttack:
@@ -318,14 +333,12 @@ func OnSpecial() -> void:
 	CurrentCard = Hand[0]
 	ExecuteCard(CurrentCard.onSpecial, 'onSpecial')
 	SetGetUtils.SetPlayerEnergy(PlayerEnergyLabel, Player, Player.energy - GetCardCostForSpecial(CurrentCard))
-	if !IsGameWon:
-		GoToNextCard()
 
-func GetCardCostForSpecial(Card):
-	if Card.onSpecial.cost != null:
-		return Card.onSpecial.cost
+func GetCardCostForSpecial(CardForCost):
+	if CardForCost.onSpecial.cost != null:
+		return CardForCost.onSpecial.cost
 	else:
-		return Card.onAction.cost
+		return CardForCost.onAction.cost
 
 func GetCardDamage(Type):
 	var Damage = CurrentCard[Type].damage * LocalDamageModifier
@@ -338,6 +351,7 @@ func PlayDamageIndicator(damage):
 	NewDamageIndicator.set_position(Vector2(768 / 2, 1366 / 2))
 	NewDamageIndicator.PlayAnimWithValue(damage)
 
+# warning-ignore:unused_argument
 func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
 	var Enemy = EncounterEnemyNodes[EnemyAttackIndex]
 	var damage = Enemy.enemyRef.baseDamage - Player.block if Enemy.enemyRef.baseDamage - Player.block > 0 else 0

@@ -59,6 +59,7 @@ func UpdateUserCreditTotal():
 	
 func OnBuySkill(Skill):
 	if (CurrentBuySignal != null):
+# warning-ignore:return_value_discarded
 		self.connect('buy_skill', Skills, CurrentBuySignal)
 		emit_signal('buy_skill', GameManager, Skill.effect)
 		GameManager.Player.credits -= Skill.cost

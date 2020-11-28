@@ -1,5 +1,7 @@
 extends Node2D
 
+signal encounter_complete
+
 onready var WorldMapNode = load('res://Scenes/WorldMap/WorldMap.tscn')
 onready var CombatNode = load('res://Scenes/Combat/Combat.tscn')
 onready var RewardScreenNode = load('res://Scenes/RewardScreen/RewardScreen.tscn')
@@ -16,6 +18,8 @@ var LosingScreen
 var SkillTree
 var Inventory
 var Shop
+
+var CurrentEncounter
 
 func _ready() -> void:
 	Player = InitGame.NewPlayerTemplate.duplicate(true)
@@ -61,6 +65,7 @@ func OnGameWin(EncounterEnemies):
 	RewardScreen.InstanciateRewardScreen(EncounterEnemies)
 	RewardScreen.connect("credits_claimed", self, 'OnRewardsClaimed')
 	Combat.queue_free()
+	emit_signal('encounter_complete')
 	
 func OnGameLose():
 	LosingScreen = LosingScreenNode.instance()
