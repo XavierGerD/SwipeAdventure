@@ -323,7 +323,7 @@ const Repair = {
 		'damage': null,
 		'block': null,
 		'special': null,
-		'heal': 1,
+		'heal': 3,
 		'power': null,
 		'stun': null,
 		'effect': null,

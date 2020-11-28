@@ -69,13 +69,13 @@ func OnBuySkill(Skill):
 		UpdatePrerequisited()
 	
 func _input(event):
-	MousePosition = event.position.y
-	if IsClicked:
-		TotalDisplacementY = event.position.y - DeltaY
-		TreeContainer.set_position(Vector2(TreeContainer.get_position().x, TotalDisplacementY))
-		if (TreeContainer.get_position().y > -500):
-			TreeContainer.set_position(Vector2(TreeContainer.get_position().x, -500))
-	pass
+	if "position" in event:
+		MousePosition = event.position.y
+		if IsClicked:
+			TotalDisplacementY = event.position.y - DeltaY
+			TreeContainer.set_position(Vector2(TreeContainer.get_position().x, TotalDisplacementY))
+			if (TreeContainer.get_position().y > -500):
+				TreeContainer.set_position(Vector2(TreeContainer.get_position().x, -500))
 
 func _on_TreeContainer_button_up() -> void:
 	IsClicked = false

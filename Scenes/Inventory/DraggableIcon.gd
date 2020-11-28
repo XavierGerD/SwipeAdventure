@@ -16,20 +16,17 @@ func InstanciateDraggableIcon(Icon):
 	Item = Icon
 
 func _input(event):
-	if IsDragging:
-		self.set_position(Vector2(event.position.x - Deltas.x, event.position.y - Deltas.y))
-		return
-	MousePosition = Vector2(event.position)
-	pass
+	if "position" in event:
+		if IsDragging:
+			self.set_position(Vector2(event.position.x - Deltas.x, event.position.y - Deltas.y))
+			return
+		MousePosition = Vector2(event.position)
 
 func _on_Button_button_down() -> void:
 	var CurrentButtonPosition = self.get_position()
 	Deltas = Vector2(MousePosition.x - CurrentButtonPosition.x, MousePosition.y - CurrentButtonPosition.y)
 	IsDragging = true
-	pass # Replace with function body.
-
 
 func _on_Button_button_up() -> void:
 	IsDragging = false
 	emit_signal('icon_dropped', self)
-	pass # Replace with function body.

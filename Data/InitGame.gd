@@ -13,7 +13,7 @@ onready var NewPlayerTemplate = {
 		'weapon3': ClosedSlot,
 		'shield': Cards.BasicShield
 	},
-	'inventory': [Cards.Welder, Cards.PlasmaBolter, Cards.BasicShield],
+	'inventory': [Cards.Welder, Cards.BasicShield],
 	'credits': 0,
 	'stage': null,
 	'skills': {}

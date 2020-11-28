@@ -20,7 +20,8 @@ func _on_HideButton_pressed() -> void:
 	GameManager.ShowWorldMap()
 
 func _input(event):
-	MousePointer = event.position
+	if "position" in event:
+		MousePointer = event.position
 	
 func AddNewIcon(Item):
 	var NewDraggableIcon = DraggableIconNode.instance()
@@ -58,7 +59,6 @@ func AssignIconToSlot(Item, Icon):
 func FindSlotForPlayerLoadout(LoadoutSlot):
 	var ReturnedSlot
 	for WeaponSlot in WeaponSlots:
-		#print(LoadoutSlot, WeaponSlot.Name)
 		if LoadoutSlot == WeaponSlot.Name:
 			ReturnedSlot = WeaponSlot
 	return ReturnedSlot
@@ -127,10 +127,14 @@ func OnIconDrop(DraggableIcon):
 		if IntersectingBox.get_child(0) != null:
 			AddIconToNewParent(IntersectingBox.get_child(0), InventoryBox)
 		#In any case, add the dragged item to the slot and update player loadout
+		if DraggableIcon.get_parent().Name != IntersectingBox.Name:
+			GameManager.Player.loadout[DraggableIcon.get_parent().Name] = InitGame.UnusedSlot
 		AddIconToNewParent(DraggableIcon, IntersectingBox)
 		GameManager.Player.loadout[IntersectingBox.Name] = DraggableIcon.Item
 		
 	if IntersectingBox.Type == 'inventory':
+		if DraggableIcon.get_parent().Name != "inventory":
+			GameManager.Player.loadout[DraggableIcon.get_parent().Name] = InitGame.UnusedSlot
 		AddIconToNewParent(DraggableIcon, IntersectingBox)
 		IntersectingBox.move_child(DraggableIcon, IntersectingBox.get_child_count())
 	AddIconToNewParent(DraggableIcon, DraggableIcon.get_parent())

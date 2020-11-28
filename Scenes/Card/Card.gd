@@ -33,12 +33,18 @@ func getCardDescription(Card, LocalDamageModifier):
 		
 	if (Card.onAction.block != null):
 		Description = Description.replace('{blk}', Card.onAction.block)
-		
+
+	if (Card.onAction != null && Card.onAction.effect != null):
+		Description = Description.replace('{efDmg}', Card.onAction.effect * LocalDamageModifier)
+
 	if (Card.onSpecial != null && Card.onSpecial.effect != null):
 		Description = Description.replace('{spDmg}', Card.onSpecial.effect * LocalDamageModifier)
 	
 	if (Card.onSpecial != null && Card.onSpecial.damage != null):
 		Description = Description.replace('{spDmg}', Card.onSpecial.damage * LocalDamageModifier)
+	
+	if (Card.onSpecial != null && Card.onSpecial.effect != null):
+		Description = Description.replace('{spEfDmg}', Card.onSpecial.effect * LocalDamageModifier)
 
 		
 	return Description
@@ -64,15 +70,14 @@ func InstanciateCard(
 		CardImage.texture = load(TexturePath)
 
 func _input(event):
-	MousePosition = event.position
-	if IsClicked:
-		rotation = (event.position.x - DeltaX) * 0.001
-		TotalDisplacementX = MousePosition.x - DeltaX
-		TotalDisplacementY = MousePosition.y - DeltaY
-		self.rotation = (TotalDisplacementX - CardStartingPosition.x) * 0.001
-		self.set_position(Vector2(TotalDisplacementX, TotalDisplacementY))
-		#self.set_position(Vector2(event.position.x - DeltaX, self.get_position().y))
-	pass
+	if "position" in event:
+		MousePosition = event.position
+		if IsClicked:
+			rotation = (event.position.x - DeltaX) * 0.001
+			TotalDisplacementX = MousePosition.x - DeltaX
+			TotalDisplacementY = MousePosition.y - DeltaY
+			self.rotation = (TotalDisplacementX - CardStartingPosition.x) * 0.001
+			self.set_position(Vector2(TotalDisplacementX, TotalDisplacementY))
 
 func _on_Button_button_down() -> void:
 	emit_signal("card_pressed")

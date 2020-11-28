@@ -74,8 +74,8 @@ const Encounter4 = {
 const Boss1 = {
 	'name': 'Argon Moon',
 	'enemies' : [
-		Enemies.SlaveWatcher,
+		Enemies.DuneMaker,
 		Enemies.SlaverMaster,
-		Enemies.SlaveWatcher
+		Enemies.DuneMaker,
 	]
 }

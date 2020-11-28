@@ -290,12 +290,12 @@ func ExecuteCard(CardAction, Type):
 		var newPlayerHealth = Player.health + CurrentCard.onAction.heal if Player.health + CurrentCard.onAction.heal <= Player.maxHealth else Player.maxHealth
 		SetGetUtils.SetPlayerHealth(PlayerHealthLabel, Player, newPlayerHealth)
 	if (CardAction.power != null):
-		ExecuteCardPowers(CardAction.power)
+		ExecuteCardPowers(CardAction)
 	if !IsGameWon:
 		GoToNextCard()
 
-func ExecuteCardPowers(Powers):
-	for Power in Powers:
+func ExecuteCardPowers(CardAction):
+	for Power in CardAction.power:
 		if Power == 'doubleDamage':
 			LocalDamageModifier = 2 if LocalDamageModifier == 1 else LocalDamageModifier + 2
 		if Power == 'pendingDamage':
@@ -304,7 +304,7 @@ func ExecuteCardPowers(Powers):
 			Hand.pop_front()
 		if Power == 'allEnemies':
 			for Enemy in EncounterEnemyNodes:
-				DealDamageToEnemy(Enemy, CurrentCard.onSpecial.effect)
+				DealDamageToEnemy(Enemy, CardAction.effect)
 		if Power == 'skipNext':
 			SkipNext = true
 		return
