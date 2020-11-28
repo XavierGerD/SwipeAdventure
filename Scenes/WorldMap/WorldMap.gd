@@ -46,6 +46,7 @@ onready var QuadrantThreeEncounterNodes = [
 
 onready var AllEncounterNodes = [QuadrantOneEncounterNodes, QuadrantTwoEncounterNodes, QuadrantThreeEncounterNodes]
 onready var CreditTotalLabel = get_node("CreditTotalLabel")
+var GameManager
 
 func FindNodeForEncounter(EncounterNodes, NewEncounter):
 	randomize()
@@ -63,15 +64,14 @@ func CreateEncountersByQuadrant(EncounterSet, EncounterNodes):
 		NewEncounter.InstanciateEncounter(EncounterSet[i])
 		NewEncounter.connect('encounter_chosen', self, 'LoadEncounter')
 
-func _ready() -> void:
+func InstanciateWorldMap(Player, GameManagerFromProps):
+	GameManager = GameManagerFromProps
+	CreditTotalLabel.set_text('Credits: ' + str(Player.credits))
 	for i in range(Encounters.AllEncounters.size()):
 		CreateEncountersByQuadrant(Encounters.AllEncounters[i], AllEncounterNodes[i])
-	
-func InstanciateWorldMap(Player):
-	CreditTotalLabel.set_text('Credits: ' + str(Player.credits))
 
-func LoadEncounter(Encounter):
-	emit_signal("load_encounter", Encounter)
+func LoadEncounter(Encounter, EncounterNode):
+	emit_signal("load_encounter", Encounter, EncounterNode)
 
 func _on_SkillTreeButton_pressed() -> void:
 	emit_signal('show_or_hide_skill_tree')

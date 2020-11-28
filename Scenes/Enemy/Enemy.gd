@@ -5,7 +5,8 @@ signal enemy_selected(Enemy)
 onready var EnemyNameLabel = get_node("EnemyLabel")
 onready var EnemyHPLabel = get_node("EnemyHP")
 onready var EnemySelector = get_node("EnemySelector")
-onready var FlipAnimation = get_node("TextureButton/FlipAnimation")
+onready var FlipAnimation = get_node("Texture/FlipAnimation")
+onready var TextureNode = get_node("Texture")
 
 var Enemy
 
@@ -16,6 +17,7 @@ func InstanciateEnemy(EnemyFromProps):
 	Enemy = EnemyFromProps
 	EnemyNameLabel.set_text(Enemy.name)
 	EnemyHPLabel.set_text(str(Enemy.health) + '/' + str(Enemy.maxHealth))
+	TextureNode.set_normal_texture(load(Enemy.texture))
 
 func OnHealthUpdate():
 	EnemyHPLabel.set_text(str(Enemy.health) + '/' + str(Enemy.maxHealth))

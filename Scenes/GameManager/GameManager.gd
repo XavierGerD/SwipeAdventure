@@ -1,7 +1,5 @@
 extends Node2D
 
-signal encounter_complete
-
 onready var WorldMapNode = load('res://Scenes/WorldMap/WorldMap.tscn')
 onready var CombatNode = load('res://Scenes/Combat/Combat.tscn')
 onready var RewardScreenNode = load('res://Scenes/RewardScreen/RewardScreen.tscn')
@@ -45,27 +43,26 @@ func OnWorldMapLoad():
 	WorldMap = WorldMapNode.instance()
 	WorldMap.connect('load_encounter', self, 'OnEncounterLoad')
 	add_child(WorldMap)
-	WorldMap.InstanciateWorldMap(Player)
+	WorldMap.InstanciateWorldMap(Player, self)
 	WorldMap.connect('show_or_hide_skill_tree', self, 'OnShowSkillTree')
 	WorldMap.connect('show_or_hide_inventory', self, 'OnShowInventory')
 	WorldMap.connect('show_or_hide_shop', self, 'OnShowShop')
 	
-func OnEncounterLoad(Encounter):
+func OnEncounterLoad(Encounter, EncounterNode):
 	Combat = CombatNode.instance()
-	WorldMap.queue_free()
 	add_child(Combat)
 	Combat.InstanciateCombat(Player, Encounter.enemies.duplicate(true))
 	Combat.connect('game_is_won', self, 'OnGameWin')
 	Combat.connect('game_is_lost', self, 'OnGameLose')
-	pass
+	CurrentEncounter = EncounterNode
 
 func OnGameWin(EncounterEnemies):
+	CurrentEncounter.OnCompleteEncounter()
 	RewardScreen = RewardScreenNode.instance()
 	add_child(RewardScreen)
 	RewardScreen.InstanciateRewardScreen(EncounterEnemies)
 	RewardScreen.connect("credits_claimed", self, 'OnRewardsClaimed')
 	Combat.queue_free()
-	emit_signal('encounter_complete')
 	
 func OnGameLose():
 	LosingScreen = LosingScreenNode.instance()
@@ -76,7 +73,7 @@ func OnRewardsClaimed(Credits):
 	Player.credits += Credits
 	RewardScreen.queue_free()
 	Shop.SetCreditLabel(Player.credits)
-	OnWorldMapLoad()
+	#OnWorldMapLoad()
 
 func GetPlayerCredits():
 	return Player.credits

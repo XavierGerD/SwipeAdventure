@@ -7,6 +7,8 @@ var LevelOneEncounters = [
 	Encounter1,
 	Encounter1,
 	Encounter2,
+	Encounter1b,
+	Encounter1b,
 ]
 
 var LevelTwoEncounters = [
@@ -23,8 +25,18 @@ var LevelThreeEncounters = [
 const Encounter1 = {
 	'name': 'Asteroid',
 	'enemies': [
-#		Enemies.Heckler,
-#		Enemies.SlaveWatcher,
+		Enemies.Heckler,
+		Enemies.SlaveWatcher,
+		Enemies.SlaveWatcher
+	],
+	'completed': false,
+}
+
+const Encounter1b = {
+	'name': 'Asteroid',
+	'enemies': [
+		Enemies.SlaveWatcher,
+		Enemies.SlaveWatcher,
 		Enemies.SlaveWatcher
 	],
 	'completed': false,
@@ -53,7 +65,7 @@ const Encounter4 = {
 	'name': 'Astral Body',
 	'enemies': [
 		Enemies.DuneMaker,
-		Enemies.SlaveWatcher,
+		Enemies.Heckler,
 		Enemies.SlaveWatcher,
 		Enemies.SlaveWatcher
 	],
