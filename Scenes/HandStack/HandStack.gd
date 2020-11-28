@@ -9,15 +9,15 @@ onready var StartingPositionY1 = CardBack.get_position().y
 var CARD_LOWER_Y_LIMIT = 645
 
 func _ready() -> void:
-	SetScale(CardBack, 0.9, 1)
+#	SetScale(CardBack, 0.9, 1)
 	pass # Replace with function body.
 
-func SetScale(Card, value, maximum):
-	Card.scale = Vector2(value, value)
-	if Card.scale.x > maximum:
-		Card.scale.x = maximum
-	if Card.scale.y > maximum:
-		Card.scale.y = maximum
+#func SetScale(Card, value, maximum):
+#	Card.scale = Vector2(value, value)
+#	if Card.scale.x > maximum:
+#		Card.scale.x = maximum
+#	if Card.scale.y > maximum:
+#		Card.scale.y = maximum
 
 func OnCardPressed():
 	IsCardPressed = true
@@ -38,15 +38,15 @@ func OnCardReleased():
 	add_child(PositionTween)
 	PositionTween.start()
 	var ScaleTween = Tween.new()
-	ScaleTween.interpolate_property(
-		CardBack,
-		'scale',
-		CardBack.scale,
-		Vector2(0.9, 0.9),
-		0.2, 
-		Tween.TRANS_LINEAR, 
-		Tween.EASE_IN_OUT
-	)
+#	ScaleTween.interpolate_property(
+#		CardBack,
+#		'scale',
+#		CardBack.scale,
+#		Vector2(0.9, 0.9),
+#		0.2, 
+#		Tween.TRANS_LINEAR, 
+#		Tween.EASE_IN_OUT
+#	)
 	add_child(ScaleTween)
 	ScaleTween.start()
 
@@ -56,7 +56,7 @@ func _input(event):
 		var square = pow(MousePosition.x - MouseDownPoint.x, 2) + pow(MousePosition.y - MouseDownPoint.y, 2)
 		var hypotenuse = sqrt(square)
 		CardBack.position.y = StartingPositionY1 - hypotenuse / 10
-		SetScale(CardBack, 0.9 + hypotenuse / 2000, 1)
+#		SetScale(CardBack, 0.9 + hypotenuse / 2000, 1)
 		if CardBack.position.y < CARD_LOWER_Y_LIMIT:
 			CardBack.position.y = CARD_LOWER_Y_LIMIT
 	pass

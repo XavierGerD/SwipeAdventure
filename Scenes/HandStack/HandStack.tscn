@@ -20,11 +20,12 @@ texture = ExtResource( 1 )
 offset = Vector2( 272, 312 )
 
 [node name="CardBack" type="Sprite" parent="."]
-position = Vector2( 384, 816 )
+position = Vector2( 384, 778 )
 scale = Vector2( 1.35138, 1.35138 )
 texture = ExtResource( 1 )
 
 [node name="Blur" type="ColorRect" parent="."]
+visible = false
 material = ExtResource( 2 )
 margin_left = -216.0
 margin_top = -104.0

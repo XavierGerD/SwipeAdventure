@@ -1,8 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scenes/Combat/Combat.gd" type="Script" id=1]
 [ext_resource path="res://Fonts/Font1.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Scenes/HandStack/HandStack.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Sprite/health.png" type="Texture" id=4]
+[ext_resource path="res://Sprite/power.png" type="Texture" id=5]
+[ext_resource path="res://Sprite/shield.png" type="Texture" id=6]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Blink"
@@ -26,54 +29,87 @@ script = ExtResource( 1 )
 margin_right = 571.0
 margin_bottom = 1021.0
 rect_scale = Vector2( 1.34467, 1.34022 )
-color = Color( 0.145098, 0.0823529, 0.0823529, 1 )
+color = Color( 0.0784314, 0.0784314, 0.0784314, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HandStack" parent="." instance=ExtResource( 3 )]
 
+[node name="HealthIcon" type="TextureRect" parent="."]
+margin_left = 24.0
+margin_top = 1272.0
+margin_right = 108.0
+margin_bottom = 1356.0
+texture = ExtResource( 4 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="PlayerHealth" type="RichTextLabel" parent="."]
-margin_left = 16.0
-margin_top = 1304.0
-margin_right = 280.0
-margin_bottom = 1360.0
+margin_left = 122.53
+margin_top = 1292.93
+margin_right = 386.53
+margin_bottom = 1348.93
 custom_fonts/normal_font = ExtResource( 2 )
-text = "HP: 10"
+text = "10/10"
 scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnergyIcon" type="TextureRect" parent="."]
+margin_left = 336.0
+margin_top = 1272.0
+margin_right = 420.0
+margin_bottom = 1356.0
+texture = ExtResource( 5 )
+expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="PlayerEnergy" type="RichTextLabel" parent="."]
-margin_left = 296.0
-margin_top = 1296.0
-margin_right = 456.0
-margin_bottom = 1352.0
+margin_left = 424.0
+margin_top = 1288.0
+margin_right = 584.0
+margin_bottom = 1344.0
 custom_fonts/normal_font = ExtResource( 2 )
-text = "PWR: 3"
+text = "3"
 scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="BlockIcon" type="TextureRect" parent="."]
+margin_left = 584.0
+margin_top = 1272.0
+margin_right = 668.0
+margin_bottom = 1356.0
+texture = ExtResource( 6 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="PlayerBlock" type="RichTextLabel" parent="."]
-margin_left = 560.0
-margin_top = 1296.0
-margin_right = 752.0
-margin_bottom = 1352.0
+margin_left = 680.0
+margin_top = 1288.0
+margin_right = 872.0
+margin_bottom = 1344.0
 custom_fonts/normal_font = ExtResource( 2 )
-text = "BLK: 0 "
+text = "0"
 scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="DiscardTotal" type="RichTextLabel" parent="."]
-margin_left = 8.0
-margin_top = 368.0
-margin_right = 232.0
-margin_bottom = 424.0
+margin_left = 544.0
+margin_top = 1200.0
+margin_right = 768.0
+margin_bottom = 1256.0
 custom_fonts/normal_font = ExtResource( 2 )
 text = "Discard:"
 scroll_active = false
@@ -82,10 +118,10 @@ __meta__ = {
 }
 
 [node name="DrawTotal" type="RichTextLabel" parent="."]
-margin_left = 232.0
-margin_top = 368.0
-margin_right = 416.0
-margin_bottom = 424.0
+margin_left = 312.0
+margin_top = 1200.0
+margin_right = 496.0
+margin_bottom = 1256.0
 custom_fonts/normal_font = ExtResource( 2 )
 text = "Draw:"
 scroll_active = false
@@ -94,10 +130,10 @@ __meta__ = {
 }
 
 [node name="HandTotal" type="RichTextLabel" parent="."]
-margin_left = 400.0
-margin_top = 368.0
-margin_right = 576.0
-margin_bottom = 424.0
+margin_left = 40.0
+margin_top = 1200.0
+margin_right = 216.0
+margin_bottom = 1256.0
 custom_fonts/normal_font = ExtResource( 2 )
 text = "Hand: "
 scroll_active = false
@@ -106,10 +142,10 @@ __meta__ = {
 }
 
 [node name="CardName" type="RichTextLabel" parent="."]
-margin_left = 56.0
-margin_top = 384.0
-margin_right = 528.0
-margin_bottom = 424.0
+margin_left = 152.0
+margin_top = 360.0
+margin_right = 624.0
+margin_bottom = 400.0
 custom_fonts/normal_font = ExtResource( 2 )
 scroll_active = false
 __meta__ = {
