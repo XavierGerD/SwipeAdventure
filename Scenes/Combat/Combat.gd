@@ -28,6 +28,9 @@ onready var HandStack = get_node("HandStack")
 var IsGameLost = false
 var IsGameWon = false
 var SkipNext = false
+var IsPlayerFocused = false
+var PlayerFocusDamage = 0
+var PlayerFocusDamageIncrease = 0
 
 var TopCard
 
@@ -44,7 +47,7 @@ var Hand = []
 var DrawPile = []
 var DiscardPile = []
 var CurrentCard
-var LocalDamageModifier = 1
+var LocalDamageMultiplier = 1
 var PendingPlayerToEnemyDamage = []
 
 var IsAnimatingAttack = false
@@ -155,8 +158,6 @@ func OnGameWin():
 	IsGameWon = false
 	WinLoseText.set_text('You Win!')
 	Player.block = 0
-#	yield(get_tree().create_timer(1.0), "timeout")
-#	WinLoseText.set_text('')
 	emit_signal("game_is_won", EncounterEnemies)
 	
 
@@ -187,7 +188,8 @@ func DisplayCard(card):
 		card.onSpecial != null,
 		true,
 		card.texturePath,
-		LocalDamageModifier
+		LocalDamageMultiplier,
+		PlayerFocusDamage
 	)
 	TopCard = NewCard
 	
@@ -201,7 +203,6 @@ func UpdateHand():
 	SetGetUtils.SetHandTotal(HandTotalLabel, Hand.size())
 
 func MoveCardFromHandToDiscard():
-	print(Hand.size())
 	DiscardPile.push_back(Hand[0])
 	Hand.pop_front()
 
@@ -279,6 +280,9 @@ func GetEnemyDamageAnim():
 func OnAttackDone(Type):
 	IsAnimatingAttack = false
 	var CardDamage = GetCardDamage(Type)
+	if IsPlayerFocused:
+		CardDamage += PlayerFocusDamage
+		IsPlayerFocused = false
 	DealDamageToEnemy(TargetEnemy, CardDamage)
 	emit_signal("update_health")
 
@@ -304,7 +308,7 @@ func ExecuteCard(CardAction, Type):
 func ExecuteCardPowers(CardAction):
 	for Power in CardAction.power:
 		if Power == 'doubleDamage':
-			LocalDamageModifier = 2 if LocalDamageModifier == 1 else LocalDamageModifier + 2
+			LocalDamageMultiplier = 2 if LocalDamageMultiplier == 1 else LocalDamageMultiplier + 2
 		if Power == 'pendingDamage':
 			PendingPlayerToEnemyDamage.push_back({ 
 				'damage': CurrentCard.onSpecial.effect,
@@ -319,6 +323,9 @@ func ExecuteCardPowers(CardAction):
 			SkipNext = true
 		if Power == 'restoreEnergy':
 			Player.energy += CardAction.effect
+		if Power == 'focus':
+			IsPlayerFocused = true
+			PlayerFocusDamageIncrease += CardAction.effect
 		return
 
 #player actions
@@ -334,6 +341,8 @@ func OnSkip() -> void:
 	if IsGameLost && IsAnimatingAttack:
 		return
 	CurrentCard = Hand[0]
+	if IsPlayerFocused:
+		PlayerFocusDamage += PlayerFocusDamageIncrease	
 	if CurrentCard.onSkip != null:
 		ExecuteCard(CurrentCard.onSkip, 'onSkip')
 	else:
@@ -353,8 +362,8 @@ func GetCardCostForSpecial(CardForCost):
 		return CardForCost.onAction.cost
 
 func GetCardDamage(Type):
-	var Damage = CurrentCard[Type].damage * LocalDamageModifier
-	LocalDamageModifier = 1
+	var Damage = CurrentCard[Type].damage * LocalDamageMultiplier
+	LocalDamageMultiplier = 1
 	return Damage
 
 func PlayDamageIndicator(damage):

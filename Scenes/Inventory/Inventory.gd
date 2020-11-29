@@ -31,7 +31,6 @@ func AddNewIcon(Item):
 
 func InitializeSlot(Slot, Disabled):
 	var Background = get_node(Slot.get_name() + 'BackGround')
-	print(Background)
 	if Disabled:
 		Slot.IsDisabled = true
 		Background.color = DISABLED_COLOR

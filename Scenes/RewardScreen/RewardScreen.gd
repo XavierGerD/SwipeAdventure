@@ -5,6 +5,8 @@ signal credits_claimed(Credits)
 onready var CreditsLabel = get_node("CreditsLabel")
 onready var Card = load('res://Scenes/Card/Card.tscn')
 onready var CardBack = load('res://Scenes/CardBack/CardBack.tscn')
+onready var WorldMap = get_node('/root/GameManager/WorldMap')
+onready var CardPickerNode = get_node("CardPicker")
 
 var NewCard
 var NewCardBack
@@ -67,6 +69,9 @@ func ShowCard():
 	pass # Replace with function body.
 
 func InstanciateRewardScreen(DeadEnemies):
+	if WorldMap.EncouterCounter%5 == 0:
+		CardPickerNode.visible = true
+		CardPickerNode.GetNewRewards()
 	var CashPrize = 0
 	for Enemy in DeadEnemies:
 		var RNG = RandomNumberGenerator.new()

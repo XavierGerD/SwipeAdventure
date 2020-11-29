@@ -12,5 +12,3 @@ func _on_ShopButton_pressed() -> void:
 		GameManager.Player.inventory.push_back(Item)
 		GameManager.Player.credits = GameManager.Player.credits - Item.cost
 		GameManager.AddItemToInventory(Item)
-	print(Item.name)
-	pass # Replace with function body.

@@ -206,7 +206,7 @@ const Focus = {
 		'heal': null,
 		'power': ['focus'],
 		'stun': null,
-		'effect': null,
+		'effect': 2,
 	},
 	'onSpecial': null,
 	'onSkip': null,

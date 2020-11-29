@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scenes/RewardScreen/RewardScreen.gd" type="Script" id=1]
 [ext_resource path="res://Fonts/Font1.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Scenes/RewardScreen/CardPicker.tscn" type="PackedScene" id=3]
 
 [node name="RewardScreen" type="Node2D"]
 script = ExtResource( 1 )
@@ -35,4 +36,7 @@ text = "CLAIM"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="CardPicker" parent="." instance=ExtResource( 3 )]
+visible = false
 [connection signal="pressed" from="ClaimCreditsButtom" to="." method="_on_ClaimCreditsButtom_pressed"]

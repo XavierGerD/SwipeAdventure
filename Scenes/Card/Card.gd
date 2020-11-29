@@ -22,11 +22,11 @@ var HasSpecial = false
 var CardCost
 var IsCardPlayable
 
-func getCardDescription(Card, LocalDamageModifier):
+func getCardDescription(Card, LocalDamageModifier, FocusDamage):
 	var Description = Card.description
 	
 	if (Card.onAction.damage != null):
-		Description = Description.replace('{dmg}', Card.onAction.damage * LocalDamageModifier)
+		Description = Description.replace('{dmg}', Card.onAction.damage * LocalDamageModifier + FocusDamage)
 		
 	if (Card.onAction.heal != null):
 		Description = Description.replace('{hp}', Card.onAction.heal)
@@ -35,16 +35,16 @@ func getCardDescription(Card, LocalDamageModifier):
 		Description = Description.replace('{blk}', Card.onAction.block)
 
 	if (Card.onAction != null && Card.onAction.effect != null):
-		Description = Description.replace('{efDmg}', Card.onAction.effect * LocalDamageModifier)
+		Description = Description.replace('{efDmg}', Card.onAction.effect * LocalDamageModifier + FocusDamage)
 
 	if (Card.onSpecial != null && Card.onSpecial.effect != null):
 		Description = Description.replace('{spDmg}', Card.onSpecial.effect * LocalDamageModifier)
 	
 	if (Card.onSpecial != null && Card.onSpecial.damage != null):
-		Description = Description.replace('{spDmg}', Card.onSpecial.damage * LocalDamageModifier)
+		Description = Description.replace('{spDmg}', Card.onSpecial.damage * LocalDamageModifier + FocusDamage)
 	
 	if (Card.onSpecial != null && Card.onSpecial.effect != null):
-		Description = Description.replace('{spEfDmg}', Card.onSpecial.effect * LocalDamageModifier)
+		Description = Description.replace('{spEfDmg}', Card.onSpecial.effect * LocalDamageModifier + FocusDamage)
 
 		
 	return Description
@@ -56,11 +56,12 @@ func InstanciateCard(
 	HasSpecialFromProps, 
 	IsCardPlayableFromProps, 
 	TexturePath,
-	LocalDamageModifier = 1
+	LocalDamageModifier = 1,
+	FocusDamage = 0
 	):
 		CardName.set_text(Card.name)
 		Cost.set_text(str(Card.onAction.cost))
-		DescriptionNode.set_text(getCardDescription(Card, LocalDamageModifier))
+		DescriptionNode.set_text(getCardDescription(Card, LocalDamageModifier, FocusDamage))
 		CardStartingPosition.x = CardX
 		CardStartingPosition.y = CardY
 		HasSpecial = HasSpecialFromProps
