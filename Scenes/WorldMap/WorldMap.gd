@@ -4,6 +4,7 @@ signal load_encounter(Encounter)
 signal show_or_hide_skill_tree
 signal show_or_hide_inventory
 signal show_or_hide_shop
+signal boss_defeated
 
 var EmptyEncounter = load('res://Scenes/WorldMap/Encounter.tscn')
 onready var QuadrantOneEncounterOne = get_node("QuadrantOne/QuandrantOneEncounterOne")
@@ -66,6 +67,7 @@ func CreateEncountersByQuadrant(EncounterSet, EncounterNodes):
 		FindNodeForEncounter(EncounterNodes, NewEncounter)
 		NewEncounter.InstanciateEncounter(EncounterSet[i])
 		NewEncounter.connect('encounter_chosen', self, 'LoadEncounter')
+		NewEncounter.connect('boss_defeated', self, 'OnBossDefeated')
 
 func InstanciateWorldMap(Player, GameManagerFromProps):
 	GameManager = GameManagerFromProps
@@ -98,3 +100,6 @@ func SetCreditLabel(NewTotal):
 
 func SetHealthLabel(NewTotal, Max):
 	HealthTotalLabel.set_text('Health: ' + str(NewTotal) + "/" + str(Max))
+
+func OnBossDefeated():
+	emit_signal('boss_defeated')

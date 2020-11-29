@@ -7,6 +7,7 @@ onready var LosingScreenNode = load('res://Scenes/LosingScreen/LosingScreen.tscn
 onready var SkillTreeNode = load('res://Scenes/SkillTree/SkillTree.tscn')
 onready var InventoryNode = load('res://Scenes/Inventory/Inventory.tscn')
 onready var ShopNode = load('res://Scenes/Shop/Shop.tscn')
+onready var WinScreenNode = load('res://Scenes/Win Screen/WinScreen.tscn')
 
 var Player
 var WorldMap
@@ -16,6 +17,7 @@ var LosingScreen
 var SkillTree
 var Inventory
 var Shop
+var WinScreen
 
 var CurrentEncounter
 
@@ -34,7 +36,7 @@ func StartNewGame():
 	Shop = ShopNode.instance()
 	add_child(Shop)
 	Shop.hide()
-	
+
 	OnWorldMapLoad()
 	self.move_child(SkillTree, self.get_child_count())
 	
@@ -49,6 +51,7 @@ func OnWorldMapLoad():
 	WorldMap.connect('show_or_hide_skill_tree', self, 'OnShowSkillTree')
 	WorldMap.connect('show_or_hide_inventory', self, 'OnShowInventory')
 	WorldMap.connect('show_or_hide_shop', self, 'OnShowShop')
+	WorldMap.connect('boss_defeated', self, 'OnBossDefeated')
 	
 func OnEncounterLoad(Encounter, EncounterNode):
 	Combat = CombatNode.instance()
@@ -97,6 +100,10 @@ func OnShowShop():
 	Shop.show()
 	HideWorldMap()
 	self.move_child(Shop, self.get_child_count())
+	
+func OnBossDefeated():
+	WinScreen = WinScreenNode.instance()
+	add_child(WinScreen)
 
 func HideWorldMap():
 	WorldMap.visible = false

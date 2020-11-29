@@ -61,6 +61,7 @@ func InstanciateLoadout(CurrentLoadout):
 		if Items[i] != null && 'cardList' in Items[i]:
 				NewDeck += Items[i].cardList
 	Deck = NewDeck
+	Deck += Player.looseCards
 
 func InstanciateEnemy(CurrentEnemy, i):
 	var NewEnemyNode = EnemyNode.instance()
@@ -316,6 +317,8 @@ func ExecuteCardPowers(CardAction):
 				DealDamageToEnemy(Enemy, CardAction.effect)
 		if Power == 'skipNext':
 			SkipNext = true
+		if Power == 'restoreEnergy':
+			Player.energy += CardAction.effect
 		return
 
 #player actions

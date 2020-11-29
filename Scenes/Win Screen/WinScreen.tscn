@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Fonts/Font1.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Fonts/Font1_BIG.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Scenes/Win Screen/WinScreen.gd" type="Script" id=3]
+
+[node name="WinScreen" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Background" type="ColorRect" parent="."]
+margin_right = 776.0
+margin_bottom = 1384.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_left = 128.0
+margin_top = 280.0
+margin_right = 640.0
+margin_bottom = 752.0
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[center]Victory!
+
+The grip of the Slave Master loosens on this outer world. But here are other systems that need your help... [/center]"
+text = "Victory!
+
+The grip of the Slave Master loosens on this outer world. But here are other systems that need your help... "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="."]
+margin_left = 64.0
+margin_top = 1064.0
+margin_right = 699.0
+margin_bottom = 1188.0
+custom_fonts/font = ExtResource( 2 )
+text = "PLAY AGAIN"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

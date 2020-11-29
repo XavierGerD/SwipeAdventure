@@ -100,6 +100,12 @@ onready var AllItems = [
 	GrenadeLauncher
 ]
 
+onready var LooseCards = [
+	Fortify,
+	Energize,
+	StrangeBrew
+]
+
 const ShieldCharge = {
 	'name': 'Shield Charge',
 	'description': 'Gain {blk} block.',

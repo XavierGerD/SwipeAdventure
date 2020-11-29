@@ -1,6 +1,7 @@
 extends Node2D
 
 signal encounter_chosen(Encounter, EncouterNode)
+signal boss_defeated
 
 onready var EncounterButton = get_node("TextureButton")
 onready var EncounterLabel = get_node("EncounterNameLabel")
@@ -28,3 +29,5 @@ func OnCompleteEncounter():
 	WorldMap.ConditionnallyCompleteQuadrant()
 	XMarksTheSpot.visible = true
 	EncounterButton.disabled = true
+	if CurrentEncounter.name == 'Argon Moon':
+		emit_signal("boss_defeated")

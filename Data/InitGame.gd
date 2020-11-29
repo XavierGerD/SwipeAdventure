@@ -14,6 +14,7 @@ onready var NewPlayerTemplate = {
 		'shield': Cards.BasicShield
 	},
 	'inventory': [Cards.PlasmaBolter, Cards.BasicShield],
+	'looseCards': [],
 	'credits': 0,
 	'stage': null,
 	'skills': {}
