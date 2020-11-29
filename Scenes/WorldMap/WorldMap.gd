@@ -44,8 +44,11 @@ onready var QuadrantThreeEncounterNodes = [
 	QuandrantThreeEncounterOne
 ]
 
+var EncouterCounter = 0
+
 onready var AllEncounterNodes = [QuadrantOneEncounterNodes, QuadrantTwoEncounterNodes, QuadrantThreeEncounterNodes]
 onready var CreditTotalLabel = get_node("CreditTotalLabel")
+onready var HealthTotalLabel = get_node("HealthTotalLabel")
 var GameManager
 
 func FindNodeForEncounter(EncounterNodes, NewEncounter):
@@ -66,7 +69,8 @@ func CreateEncountersByQuadrant(EncounterSet, EncounterNodes):
 
 func InstanciateWorldMap(Player, GameManagerFromProps):
 	GameManager = GameManagerFromProps
-	CreditTotalLabel.set_text('Credits: ' + str(Player.credits))
+	SetCreditLabel(Player.credits)
+	SetHealthLabel(Player.health, Player.maxHealth)
 	for i in range(Encounters.AllEncounters.size()):
 		CreateEncountersByQuadrant(Encounters.AllEncounters[i], AllEncounterNodes[i])
 
@@ -81,7 +85,16 @@ func _on_InventoryButton_pressed() -> void:
 	emit_signal('show_or_hide_inventory')
 	pass # Replace with function body.
 
-
 func _on_ShopButton_pressed() -> void:
 	emit_signal('show_or_hide_shop')
 	pass # Replace with function body.
+
+func ConditionnallyCompleteQuadrant():
+	if EncouterCounter == 5 || EncouterCounter == 10:
+		GameManager.Player.health = GameManager.Player.maxHealth
+
+func SetCreditLabel(NewTotal):
+	CreditTotalLabel.set_text('Credits: ' + str(NewTotal))
+
+func SetHealthLabel(NewTotal, Max):
+	HealthTotalLabel.set_text('Health: ' + str(NewTotal) + "/" + str(Max))

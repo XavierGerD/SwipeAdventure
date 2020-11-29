@@ -12,6 +12,5 @@ func _ready() -> void:
 
 
 func _on_Button_pressed() -> void:
-	get_parent().add_child(Combat.instance())
+	get_node('/root/GameManager').StartNewGame()
 	self.queue_free()
-	pass # Replace with function body.

@@ -19,7 +19,7 @@ var Shop
 
 var CurrentEncounter
 
-func _ready() -> void:
+func StartNewGame():
 	Player = InitGame.NewPlayerTemplate.duplicate(true)
 	
 	SkillTree = SkillTreeNode.instance()
@@ -38,7 +38,9 @@ func _ready() -> void:
 	OnWorldMapLoad()
 	self.move_child(SkillTree, self.get_child_count())
 	
-	
+func _ready() -> void:
+	StartNewGame()
+
 func OnWorldMapLoad():
 	WorldMap = WorldMapNode.instance()
 	WorldMap.connect('load_encounter', self, 'OnEncounterLoad')
@@ -73,6 +75,8 @@ func OnRewardsClaimed(Credits):
 	Player.credits += Credits
 	RewardScreen.queue_free()
 	Shop.SetCreditLabel(Player.credits)
+	WorldMap.SetCreditLabel(Player.credits)
+	WorldMap.SetHealthLabel(Player.health, Player.maxHealth)
 	#OnWorldMapLoad()
 
 func GetPlayerCredits():

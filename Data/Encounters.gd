@@ -5,17 +5,18 @@ onready var AllEncounters = [LevelOneEncounters, LevelTwoEncounters, LevelThreeE
 var LevelOneEncounters = [
 	Encounter1,
 	Encounter1,
-	Encounter1,
+	Encounter2,
 	Encounter2,
 	Encounter1b,
-	Encounter1b,
+	Encounter3,
 ]
 
 var LevelTwoEncounters = [
 	Encounter2,
 	Encounter2,
 	Encounter3,
-	Encounter3
+	Encounter3,
+	Encounter4
 ]
 
 var LevelThreeEncounters = [
@@ -66,8 +67,7 @@ const Encounter4 = {
 	'enemies': [
 		Enemies.DuneMaker,
 		Enemies.Heckler,
-		Enemies.SlaveWatcher,
-		Enemies.SlaveWatcher
+		Enemies.DuneMaker,
 	],
 }
 

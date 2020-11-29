@@ -7,6 +7,7 @@ onready var EncounterLabel = get_node("EncounterNameLabel")
 onready var XMarksTheSpot = get_node("XMarksTheSpot")
 
 var CurrentEncounter
+onready var WorldMap = get_node("/root/GameManager/WorldMap")
 
 func InstanciateEncounter(Encounter):
 	CurrentEncounter = Encounter
@@ -23,6 +24,7 @@ func _on_TextureButton_pressed() -> void:
 	emit_signal("encounter_chosen", CurrentEncounter, self)
 
 func OnCompleteEncounter():
-	print('done')
+	WorldMap.EncouterCounter += 1
+	WorldMap.ConditionnallyCompleteQuadrant()
 	XMarksTheSpot.visible = true
 	EncounterButton.disabled = true

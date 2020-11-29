@@ -45,7 +45,7 @@ var DrawPile = []
 var DiscardPile = []
 var CurrentCard
 var LocalDamageModifier = 1
-var PendingPlayerToEnemyDamage = 0
+var PendingPlayerToEnemyDamage = []
 
 var IsAnimatingAttack = false
 var EnemyAttackIndex = 0
@@ -153,6 +153,7 @@ func _process(_delta):
 func OnGameWin():
 	IsGameWon = false
 	WinLoseText.set_text('You Win!')
+	Player.block = 0
 #	yield(get_tree().create_timer(1.0), "timeout")
 #	WinLoseText.set_text('')
 	emit_signal("game_is_won", EncounterEnemies)
@@ -246,9 +247,14 @@ func GetIsTurnDone():
 	return false
 	
 func BeginTurn():
-	TargetEnemy.enemyRef.health = TargetEnemy.enemyRef.health - PendingPlayerToEnemyDamage if TargetEnemy.enemyRef.health - PendingPlayerToEnemyDamage >= 0 else 0
+	for PendingDamage in PendingPlayerToEnemyDamage:
+		PendingDamage.target.enemyRef.health = (
+			PendingDamage.target.enemyRef.health - PendingDamage.damage if
+			PendingDamage.target.enemyRef.health - PendingDamage.damage >= 0 else
+			0
+		)
 	emit_signal("update_health")
-	PendingPlayerToEnemyDamage = 0
+	PendingPlayerToEnemyDamage = []
 	UpdateHand()
 	
 func EndTurn():
@@ -299,7 +305,10 @@ func ExecuteCardPowers(CardAction):
 		if Power == 'doubleDamage':
 			LocalDamageModifier = 2 if LocalDamageModifier == 1 else LocalDamageModifier + 2
 		if Power == 'pendingDamage':
-			PendingPlayerToEnemyDamage = CurrentCard.onSpecial.effect
+			PendingPlayerToEnemyDamage.push_back({ 
+				'damage': CurrentCard.onSpecial.effect,
+				'target': TargetEnemy
+				})
 		if Power == 'removeFromGame':
 			Hand.pop_front()
 		if Power == 'allEnemies':
