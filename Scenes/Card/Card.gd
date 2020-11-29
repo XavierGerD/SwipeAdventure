@@ -138,6 +138,12 @@ func _on_Button_button_up() -> void:
 		PositionTween.start()
 		PositionTween.connect('tween_all_completed', self, 'TweenEndAction')
 		return
+	if (self.get_global_position().x >= Constants.CARD_SWIPE_RIGHT_LIMIT &&
+		self.get_global_position().y > Constants.CARD_SWIPE_UPPER_LIMIT &&
+		CardCost > Energy):
+			$AudioPlayer.stream = load("res://Sound/SFX/TooExpensive.wav")
+			$AudioPlayer.play()
+		
 	if (self.get_global_position().x <= Constants.CARD_SWIPE_LEFT_LIMIT &&
 		self.get_global_position().y > Constants.CARD_SWIPE_UPPER_LIMIT):
 		var PositionTween = Tween.new()

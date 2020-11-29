@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/SelectEnemy.wav-3bd7eb365b66a15f3d2639996192212f.sample"
+
+[deps]
+
+source_file="res://Sound/SFX/SelectEnemy.wav"
+dest_files=[ "res://.import/SelectEnemy.wav-3bd7eb365b66a15f3d2639996192212f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

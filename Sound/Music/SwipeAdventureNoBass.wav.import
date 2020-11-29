@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/SwipeAdventureNoBass.wav-6f24596657ebbee532acd80f9393515d.sample"
+
+[deps]
+
+source_file="res://Sound/Music/SwipeAdventureNoBass.wav"
+dest_files=[ "res://.import/SwipeAdventureNoBass.wav-6f24596657ebbee532acd80f9393515d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

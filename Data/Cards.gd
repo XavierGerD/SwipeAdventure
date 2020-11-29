@@ -177,7 +177,7 @@ const Phaser = {
 }
 
 const StrangeBrew = {
-	'name': 'StrangeBrew',
+	'name': 'Strange Brew',
 	'description': 'Heal {hp} HP. Skip your next card.',
 	'texturePath': 'res://Sprite/CardImages/Common/StrangeBrew.png',
 	'onAction': {
@@ -243,7 +243,7 @@ const Restoration = {
 }
 
 const Agression = {
-	'name': 'Restoration',
+	'name': 'Agression',
 	'description': 'All your cards gain “Deal 1 damage on skip.” until the end of combat.',
 	'texturePath': 'res://Sprite/CardImages/Common/Aggression.png',
 	'onAction': {
@@ -272,7 +272,7 @@ const Agression = {
 }
 
 const Ionization = {
-	'name': 'Restoration',
+	'name': 'Ionization',
 	'description': 'All your cards gain “Gain 2 block on skip.” until the end of combat.',
 	'texturePath': 'res://Sprite/CardImages/Common/Ionization.png',
 	'onAction': {
@@ -339,7 +339,7 @@ const Repair = {
 }
 	
 const OverCharge = {
-	'name': 'Plasma Bolt',
+	'name': 'OverCharge',
 	'description': 'Deal {dmg} damage. Overload this card to deal {spDmg} damage and remove it from the game until the end of battle.',
 	'texturePath': 'res://Sprite/CardImages/Welder/Overcharge.png',
 	'onAction': {
@@ -620,7 +620,7 @@ const ClusterBomb = {
 }
 
 const PrimedGrenade = {
-	'name': 'PrimedGrenade',
+	'name': 'Primed Grenade',
 	'description': 'Deal {dmg} damage. Skipping this card deals 1 damage to you.',
 	'texturePath': 'res://Sprite/CardImages/GrenadeLauncher/PrimedGrenade.png',
 	'onAction': {

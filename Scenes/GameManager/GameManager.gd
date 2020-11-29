@@ -54,6 +54,8 @@ func OnWorldMapLoad():
 	WorldMap.connect('boss_defeated', self, 'OnBossDefeated')
 	
 func OnEncounterLoad(Encounter, EncounterNode):
+	$ButtonsAudioPlayer.stream = load("res://Sound/SFX/Combat.wav")
+	$ButtonsAudioPlayer.play()
 	Combat = CombatNode.instance()
 	add_child(Combat)
 	Combat.InstanciateCombat(Player, Encounter.enemies.duplicate(true))
@@ -75,6 +77,8 @@ func OnGameLose():
 
 #This func name will probably change in time
 func OnRewardsClaimed(Credits):
+	$ButtonsAudioPlayer.stream = load("res://Sound/SFX/Click.wav")
+	$ButtonsAudioPlayer.play()
 	Player.credits += Credits
 	RewardScreen.queue_free()
 	Shop.SetCreditLabel(Player.credits)
@@ -86,17 +90,23 @@ func GetPlayerCredits():
 	return Player.credits
 	
 func OnShowSkillTree():
+	$ButtonsAudioPlayer.stream = load("res://Sound/SFX/Click.wav")
+	$ButtonsAudioPlayer.play()
 	SkillTree.show()
 	SkillTree.UpdateUserCreditTotal()
 	HideWorldMap()
 	self.move_child(SkillTree, self.get_child_count())
 
 func OnShowInventory():
+	$ButtonsAudioPlayer.stream = load("res://Sound/SFX/Click.wav")
+	$ButtonsAudioPlayer.play()
 	Inventory.show()
 	HideWorldMap()
 	self.move_child(Inventory, self.get_child_count())
 	
 func OnShowShop():
+	$ButtonsAudioPlayer.stream = load("res://Sound/SFX/Click.wav")
+	$ButtonsAudioPlayer.play()
 	Shop.show()
 	HideWorldMap()
 	self.move_child(Shop, self.get_child_count())
@@ -109,6 +119,8 @@ func HideWorldMap():
 	WorldMap.visible = false
 	
 func ShowWorldMap():
+	$ButtonsAudioPlayer.stream = load("res://Sound/SFX/Click.wav")
+	$ButtonsAudioPlayer.play()
 	WorldMap.visible = true
 
 func AddItemToInventory(Item):

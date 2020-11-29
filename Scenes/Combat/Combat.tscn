@@ -218,4 +218,6 @@ __meta__ = {
 
 [node name="PlayerHitAnim" type="AnimationPlayer" parent="Flasher"]
 anims/Blink = SubResource( 1 )
+
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
 [connection signal="animation_finished" from="Flasher/PlayerHitAnim" to="." method="_on_AnimationPlayer_animation_finished"]

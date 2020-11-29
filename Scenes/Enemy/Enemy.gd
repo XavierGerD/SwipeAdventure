@@ -26,6 +26,8 @@ func OnDeselect():
 	EnemySelector.visible = false
 
 func OnSelect():
+	$AudioPlayer.stream = load("res://Sound/SFX/SelectEnemy.wav")
+	$AudioPlayer.play()
 	EnemySelector.visible = true
 
 func _on_TextureButton_pressed() -> void:

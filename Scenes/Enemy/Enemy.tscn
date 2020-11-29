@@ -132,4 +132,6 @@ flip_h = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
 [connection signal="pressed" from="Texture" to="." method="_on_TextureButton_pressed"]

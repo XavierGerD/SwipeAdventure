@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/DiscardCard.wav-4989cde8908539d0c608f1c5d05c1cf0.sample"
+
+[deps]
+
+source_file="res://Sound/SFX/DiscardCard.wav"
+dest_files=[ "res://.import/DiscardCard.wav-4989cde8908539d0c608f1c5d05c1cf0.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

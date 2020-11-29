@@ -39,4 +39,6 @@ __meta__ = {
 
 [node name="CardPicker" parent="." instance=ExtResource( 3 )]
 visible = false
+
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
 [connection signal="pressed" from="ClaimCreditsButtom" to="." method="_on_ClaimCreditsButtom_pressed"]

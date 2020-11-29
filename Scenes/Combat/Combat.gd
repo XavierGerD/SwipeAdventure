@@ -4,6 +4,8 @@ signal game_is_won(Enemy)
 signal game_is_lost
 signal update_health
 
+onready var rng = RandomNumberGenerator.new()
+
 onready var PlayerHealthLabel = get_node("PlayerHealth")
 onready var PlayerEnergyLabel = get_node("PlayerEnergy")
 onready var PlayerBlockLabel = get_node("PlayerBlock")
@@ -242,6 +244,11 @@ func DealEnemyDamage():
 	IsAnimatingAttack = true
 	PlayerHitAnim.play("Blink")
 	Enemy.node.FlipAnimation.play('Flip')
+	
+	rng.randomize()
+	var random_number = ceil(rng.randf_range(0, 6))
+	$AudioPlayer.stream = load("res://Sound/SFX/EnemyAttack"+String(random_number)+".wav")
+	$AudioPlayer.play()
 
 func GetIsTurnDone():
 	if (Hand.size() == 0 || Player.energy == 0):
@@ -290,6 +297,21 @@ func DealDamageToEnemy(Enemy, CardDamage):
 	Enemy.enemyRef.health = Enemy.enemyRef.health - CardDamage if Enemy.enemyRef.health - CardDamage >= 0 else 0
 	
 func ExecuteCard(CardAction, Type):
+	if CurrentCard.name == "Weld" or CurrentCard.name == "OverCharge":
+		$AudioPlayer.stream = load("res://Sound/SFX/Welder.wav")
+	elif CurrentCard.name == "Quick Shot" or CurrentCard.name == "Steady Sight":
+		$AudioPlayer.stream = load("res://Sound/SFX/PlasmaBolter.wav")
+	elif CurrentCard.name == "Iron Sights" or CurrentCard.name == "Rapid Fire" or CurrentCard.name == "Collateral":
+		$AudioPlayer.stream = load("res://Sound/SFX/PlasmaRifle.wav")
+	elif CurrentCard.name == "Lobbed Shot" or CurrentCard.name == "Cluster Bomb" or CurrentCard.name == "Primed Grenade":
+		$AudioPlayer.stream = load("res://Sound/SFX/GrenadeLauncher.wav")
+	elif CurrentCard.name == "RevUp" or CurrentCard.name == "Repair" or CurrentCard.name == "Shield Charge" or CurrentCard.name == "Fortify" or CurrentCard.name == "Energize" or CurrentCard.name == "Phaser" or CurrentCard.name == "Restoration" or CurrentCard.name == "Aggression" or CurrentCard.name == "Ionization" or CurrentCard.name == "Focus" or CurrentCard.name =="Strange Brew":
+		$AudioPlayer.stream = load("res://Sound/SFX/PositiveItem.wav")
+	else :
+		$AudioPlayer.stream = load("res://Sound/SFX/UseCard.wav")
+	$AudioPlayer.play()
+	
+	
 	if (CardAction.damage != null):
 		var NewAttackAnim = GetEnemyDamageAnim()
 		NewAttackAnim.AnimateAttack(TargetEnemy.node.get_position().x)
@@ -338,6 +360,8 @@ func OnAction():
 
 
 func OnSkip() -> void:
+	$AudioPlayer.stream = load("res://Sound/SFX/DiscardCard.wav")
+	$AudioPlayer.play()
 	if IsGameLost && IsAnimatingAttack:
 		return
 	CurrentCard = Hand[0]
