@@ -518,21 +518,21 @@ const HammerSpin = {
 	'texturePath': 'res://Sprite/CardImages/RevUp.png',
 	'onAction': {
 		'cost': 2,
-		'damage': 2,
+		'damage': null,
 		'block': null,
 		'heal': -2,
 		'stun': null,
-		'effect': null,
+		'effect': 2,
 		'power': ['allEnemies'],
 	},
 	'onSpecial': {
-		'damage': 4,
+		'damage': null,
 		'cost': null,
 		'condition': null,
 		'heal': -4,
 		'block': null,
 		'power': ['allEnemies', 'selfStun'],
-		'effect': 1
+		'effect': 4
 	},
 	'onSkip': null
 }
@@ -594,17 +594,17 @@ const LobbedShot = {
 
 const ClusterBomb = {
 	'name': 'Cluster Bomb',
-	'description': 'Deal {dmg} damage to all enemies. Skipping this card deals 1 damage to you.',
+	'description': 'Deal {efDmg} damage to all enemies. Skipping this card deals 1 damage to you.',
 	'texturePath': 'res://Sprite/CardImages/GrenadeLauncher/ClusterBomb.png',
 	'onAction': {
 		'cost': 1,
-		'damage': 2,
+		'damage': null,
 		'block': null,
 		'special': null,
 		'heal': null,
 		'stun': null,
 		'power': ['allEnemies'],
-		'effect': null,
+		'effect': 2,
 	},
 	'onSkip': {
 		'cost': null,

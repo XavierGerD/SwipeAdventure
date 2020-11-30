@@ -245,6 +245,7 @@ func DealEnemyDamage():
 	PlayerHitAnim.play("Blink")
 	Enemy.node.FlipAnimation.play('Flip')
 	
+func PlayPlayerHitSound():
 	rng.randomize()
 	var random_number = ceil(rng.randf_range(0, 6))
 	$AudioPlayer.stream = load("res://Sound/SFX/EnemyAttack"+String(random_number)+".wav")
@@ -320,7 +321,7 @@ func ExecuteCard(CardAction, Type):
 	if (CardAction.block != null):
 		SetGetUtils.SetPlayerBlock(PlayerBlockLabel, Player, Player.block + CurrentCard.onAction.block)
 	if (CardAction.heal != null):
-		var newPlayerHealth = Player.health + CurrentCard.onAction.heal if Player.health + CurrentCard.onAction.heal <= Player.maxHealth else Player.maxHealth
+		var newPlayerHealth = Player.health + CardAction.heal if Player.health + CardAction.heal <= Player.maxHealth else Player.maxHealth
 		SetGetUtils.SetPlayerHealth(PlayerHealthLabel, Player, newPlayerHealth)
 	if (CardAction.power != null):
 		ExecuteCardPowers(CardAction)
@@ -407,6 +408,7 @@ func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
 	IsAnimatingAttack = false
 	DealEnemyDamage()
 	PlayDamageIndicator(damage)
+	PlayPlayerHitSound()
 
 func GetIsAnimatingAttack():
 	return IsAnimatingAttack
