@@ -158,6 +158,7 @@ onready var SkillList = {
 }
 
 func OnBuyLifeBoost(GameManager, Effect):
+	print(Effect)
 	GameManager.Player.health += Effect
 	GameManager.Player.maxHealth += Effect
 

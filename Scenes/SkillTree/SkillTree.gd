@@ -65,6 +65,7 @@ func OnBuySkill(Skill):
 		print(CurrentBuySignal)
 		self.connect('buy_skill', Skills, CurrentBuySignal)
 		emit_signal('buy_skill', GameManager, Skill.effect)
+		self.disconnect('buy_skill', Skills, CurrentBuySignal)
 		GameManager.Player.credits -= Skill.cost
 		SkillModalNode.visible = false
 		UpdateUserCreditTotal()
