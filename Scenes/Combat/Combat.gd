@@ -292,10 +292,6 @@ func OnAttackDone(Type):
 		CardDamage += PlayerFocusDamage
 		IsPlayerFocused = false
 	DealDamageToEnemy(TargetEnemy, CardDamage)
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 
 func DealDamageToEnemy(Enemy, CardDamage):
 	Enemy.enemyRef.health = Enemy.enemyRef.health - CardDamage if Enemy.enemyRef.health - CardDamage >= 0 else 0
