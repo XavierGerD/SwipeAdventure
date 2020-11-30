@@ -85,11 +85,13 @@ __meta__ = {
 }
 
 [node name="Line2D2" type="Line2D" parent="TreeContainer"]
+visible = false
 position = Vector2( 424, 1637.7 )
 scale = Vector2( 1.33333, 1.51351 )
 points = PoolVector2Array( 26, -14.9091, 26, 39.0909 )
 
 [node name="PremonitionI" type="Button" parent="TreeContainer"]
+visible = false
 margin_left = 360.0
 margin_top = 1656.0
 margin_right = 604.0
@@ -101,6 +103,7 @@ __meta__ = {
 }
 
 [node name="PremonitionII" type="Button" parent="TreeContainer"]
+visible = false
 margin_left = 360.0
 margin_top = 1576.0
 margin_right = 604.0
@@ -112,11 +115,13 @@ __meta__ = {
 }
 
 [node name="Line2D3" type="Line2D" parent="TreeContainer"]
+visible = false
 position = Vector2( 552, 1437.7 )
 scale = Vector2( 1.33333, 1.51351 )
 points = PoolVector2Array( 26, -14.9091, 26, 39.0909 )
 
 [node name="HustleI" type="Button" parent="TreeContainer"]
+visible = false
 margin_left = 488.0
 margin_top = 1456.0
 margin_right = 732.0
@@ -128,6 +133,7 @@ __meta__ = {
 }
 
 [node name="HustleII" type="Button" parent="TreeContainer"]
+visible = false
 margin_left = 488.0
 margin_top = 1376.0
 margin_right = 732.0
@@ -139,11 +145,13 @@ __meta__ = {
 }
 
 [node name="Line2D4" type="Line2D" parent="TreeContainer"]
+visible = false
 position = Vector2( 120, 1469.7 )
 scale = Vector2( 1.33333, 1.51351 )
 points = PoolVector2Array( 26, -14.9091, 26, 39.0909 )
 
 [node name="DeterminationI" type="Button" parent="TreeContainer"]
+visible = false
 margin_left = 56.0
 margin_top = 1488.0
 margin_right = 300.0
@@ -155,6 +163,7 @@ __meta__ = {
 }
 
 [node name="DeterminationII" type="Button" parent="TreeContainer"]
+visible = false
 margin_left = 56.0
 margin_top = 1408.0
 margin_right = 300.0

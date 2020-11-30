@@ -15,7 +15,7 @@ func _ready() -> void:
 
 func InstanciateEnemy(EnemyFromProps):
 	Enemy = EnemyFromProps
-	EnemyNameLabel.set_text(Enemy.name)
+	EnemyNameLabel.bbcode_text = '[center]' + Enemy.name + '[/center]'
 	EnemyHPLabel.set_text(str(Enemy.health) + '/' + str(Enemy.maxHealth))
 	TextureNode.set_normal_texture(load(Enemy.texture))
 

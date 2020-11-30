@@ -108,8 +108,19 @@ onready var SkillList = {
 		'effect': 1,
 		'cost': 20,
 		'hasUserAcquired': false,
-		'onBuy': funcref(self, 'OnBuyLifeBoost'),
+		'onBuy': 'OnBuyLongevity',
 		'prerequisite': null
+	},
+	'LongevityII': {
+		'key': 'LongevityII',
+		'skillName': 'Longevity II',
+		'description': 'Increase the maximum number of cards in your hand by one.',
+		'power': 'increaseHandSize',
+		'effect': 1,
+		'cost': 40,
+		'hasUserAcquired': false,
+		'onBuy': 'OnBuyLongevity',
+		'prerequisite': 'LongevityI'
 	},
 }
 
@@ -117,3 +128,5 @@ func OnBuyLifeBoost(GameManager, Effect):
 	GameManager.Player.health += Effect
 	GameManager.Player.maxHealth += Effect
 
+func OnBuyLongevity(GameManager, Effect):
+	GameManager.Player.maxCardsInHand += Effect

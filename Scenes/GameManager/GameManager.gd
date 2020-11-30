@@ -84,7 +84,6 @@ func OnRewardsClaimed(Credits):
 	Shop.SetCreditLabel(Player.credits)
 	WorldMap.SetCreditLabel(Player.credits)
 	WorldMap.SetHealthLabel(Player.health, Player.maxHealth)
-	#OnWorldMapLoad()
 
 func GetPlayerCredits():
 	return Player.credits
