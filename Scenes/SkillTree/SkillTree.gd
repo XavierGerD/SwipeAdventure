@@ -35,6 +35,7 @@ func UpdatePrerequisited():
 
 func InstanciateSkillButtons():
 	for Skill in Skills.SkillList.values():
+		print("Skill.key ",Skill.key)
 		var SkillNodeButton = get_node(ControlButtonPath + Skill.key)
 		SkillNodeButton.connect('pressed', self, 'OnSkillButtonPressed', [Skill, SkillNodeButton])
 		SkillNodeButton.set_text(Skill.skillName)
@@ -60,6 +61,8 @@ func UpdateUserCreditTotal():
 	UserCreditsTotalLabelNode.set_text('Credits: ' + str(GetUserCreditTotal()))
 	
 func OnBuySkill(Skill):
+	$AudioPlayer.stream = load("res://Sound/SFX/BuySkill.wav")
+	$AudioPlayer.play()
 	if (CurrentBuySignal != null):
 # warning-ignore:return_value_discarded
 		print(CurrentBuySignal)

@@ -8,7 +8,7 @@ func InitializeButton(ItemObject):
 	Item = ItemObject
 
 func _on_ShopButton_pressed() -> void:
-	$AudioPlayer.stream = load("res://Sound/SFX/Click.wav")
+	$AudioPlayer.stream = load("res://Sound/SFX/BuyWeapon.wav")
 	$AudioPlayer.play()
 	var PlayerCredits = GameManager.Player.credits
 	if PlayerCredits >= Item.cost:

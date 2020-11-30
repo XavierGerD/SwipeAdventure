@@ -172,5 +172,6 @@ func OnBuyEnergyManagement(GameManager, Effect):
 func OnBuyHustle(GameManager, Effect):
 	GameManager.Player.loadout['weapon' + str(Effect)] = InitGame.UnusedSlot
 	var Inventory = get_node('/root/GameManager/Inventory')
+	print('WeaponSlot' + str(Effect))
 	Inventory.get_node('WeaponSlot' + str(Effect)).IsDisabled = false
 	Inventory.get_node('WeaponSlot' + str(Effect) + 'BackGround').color = Inventory.ACTIVE_COLOR
