@@ -292,10 +292,10 @@ func OnAttackDone(Type):
 		CardDamage += PlayerFocusDamage
 		IsPlayerFocused = false
 	DealDamageToEnemy(TargetEnemy, CardDamage)
-	emit_signal("update_health")
 
 func DealDamageToEnemy(Enemy, CardDamage):
 	Enemy.enemyRef.health = Enemy.enemyRef.health - CardDamage if Enemy.enemyRef.health - CardDamage >= 0 else 0
+	emit_signal("update_health")
 	
 func ExecuteCard(CardAction, Type):
 	if CurrentCard.name == "Weld" or CurrentCard.name == "OverCharge":

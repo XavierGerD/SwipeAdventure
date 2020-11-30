@@ -61,10 +61,10 @@ onready var SkillList = {
 		'skillName': 'Hustle I',
 		'description': 'Unlock a second weapon slot.',
 		'power': 'unlockSlot',
-		'effect': null,
-		'cost': 20,
+		'effect': 2,
+		'cost': 0,
 		'hasUserAcquired': false,
-		'onBuy': funcref(self, 'OnBuyLifeBoost'),
+		'onBuy': 'OnBuyHustle',
 		'prerequisite': null
 	},
 	'HustleII': {
@@ -72,10 +72,10 @@ onready var SkillList = {
 		'skillName': 'Hustle II',
 		'description': 'Unlock a third weapon slot.',
 		'power': 'unlockSlot',
-		'effect': null,
+		'effect': 3,
 		'cost': 20,
 		'hasUserAcquired': false,
-		'onBuy': funcref(self, 'OnBuyLifeBoost'),
+		'onBuy': 'OnBuyHustle',
 		'prerequisite': 'HustleI'
 	},
 	'DeterminationI': {
@@ -122,6 +122,39 @@ onready var SkillList = {
 		'onBuy': 'OnBuyLongevity',
 		'prerequisite': 'LongevityI'
 	},
+	'EnergyManagementI': {
+		'key': 'EnergyManagementI',
+		'skillName': 'EnergyManagement I',
+		'description': 'Gain 1 maximum Energy.',
+		'power': 'plusMaxEnergy',
+		'effect': 1,
+		'cost': 0,
+		'hasUserAcquired': false,
+		'onBuy': 'OnBuyEnergyManagement',
+		'prerequisite': null
+	},
+	'EnergyManagementII': {
+		'key': 'EnergyManagementII',
+		'skillName': 'EnergyManagement II',
+		'description': 'Gain 1 maximum Energy.',
+		'power': 'plusMaxEnergy',
+		'effect': 1,
+		'cost': 40,
+		'hasUserAcquired': false,
+		'onBuy': 'OnBuyEnergyManagement',
+		'prerequisite': 'EnergyManagementI'
+	},
+	'EnergyManagementIII': {
+		'key': 'EnergyManagementIII',
+		'skillName': 'EnergyManagement III',
+		'description': 'Gain 1 maximum Energy.',
+		'power': 'plusMaxEnergy',
+		'effect': 1,
+		'cost': 60,
+		'hasUserAcquired': false,
+		'onBuy': 'OnBuyEnergyManagement',
+		'prerequisite': 'EnergyManagementII'
+	},
 }
 
 func OnBuyLifeBoost(GameManager, Effect):
@@ -130,3 +163,13 @@ func OnBuyLifeBoost(GameManager, Effect):
 
 func OnBuyLongevity(GameManager, Effect):
 	GameManager.Player.maxCardsInHand += Effect
+
+func OnBuyEnergyManagement(GameManager, Effect):
+	GameManager.Player.energy += Effect
+	GameManager.Player.maxEnergy += Effect
+
+func OnBuyHustle(GameManager, Effect):
+	GameManager.Player.loadout['weapon' + str(Effect)] = InitGame.UnusedSlot
+	var Inventory = get_node('/root/GameManager/Inventory')
+	Inventory.get_node('WeaponSlot' + str(Effect)).IsDisabled = false
+	Inventory.get_node('WeaponSlot' + str(Effect) + 'BackGround').color = Inventory.ACTIVE_COLOR

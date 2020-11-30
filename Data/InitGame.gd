@@ -9,7 +9,7 @@ onready var NewPlayerTemplate = {
 	'maxCardsInHand': 3,
 	'loadout': {
 		'weapon1': Cards.Welder,
-		'weapon2': UnusedSlot,
+		'weapon2': ClosedSlot,
 		'weapon3': ClosedSlot,
 		'shield': Cards.BasicShield
 	},
