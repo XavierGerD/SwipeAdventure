@@ -11,7 +11,7 @@ var Type
 var Item
 
 func InstanciateDraggableIcon(Icon):
-	ButtonWithName.set_text(Icon.name)
+	$ButtonWithName/Label.set_text(Icon.name)
 	Type = Icon.type
 	Item = Icon
 

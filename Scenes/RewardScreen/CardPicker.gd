@@ -25,6 +25,7 @@ onready var CardRewardButtonNodes = [
 var RandomIndices = []
 
 func GetNewRewards():
+# warning-ignore:unused_variable
 	for i in range(CardRewardButtonNodes.size()):
 		GetRandomNumber(RandomIndices)
 	for i in range(RandomIndices.size()):

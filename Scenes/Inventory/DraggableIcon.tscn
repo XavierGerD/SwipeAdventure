@@ -13,8 +13,19 @@ __meta__ = {
 margin_right = 128.0
 margin_bottom = 128.0
 custom_fonts/font = ExtResource( 1 )
-text = "GUN"
 clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ButtonWithName"]
+margin_right = 128.0
+margin_bottom = 128.0
+custom_fonts/font = ExtResource( 1 )
+text = "Plasma Bolter"
+align = 1
+valign = 1
+autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }

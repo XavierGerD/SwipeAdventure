@@ -5,7 +5,7 @@ onready var WeaponSlotTwo = get_node("WeaponSlot2")
 onready var WeaponSlotThree = get_node("WeaponSlot3")
 onready var ShieldSlot = get_node("ShieldSlot")
 onready var InventoryBox = get_node("InventoryBox")
-onready var WeaponSlots = [WeaponSlotOne, WeaponSlotTwo, WeaponSlotThree, InventoryBox]
+onready var WeaponSlots = [WeaponSlotOne, WeaponSlotTwo, WeaponSlotThree, ShieldSlot, InventoryBox]
 
 onready var GameManager = self.get_parent()
 onready var DraggableIconNode = load('res://Scenes/Inventory/DraggableIcon.tscn')
@@ -116,7 +116,6 @@ func OnIconDrop(DraggableIcon):
 		var CurrentParent = DraggableIcon.get_parent()
 		AddIconToNewParent(DraggableIcon, CurrentParent)
 		return
-		
 	if IntersectingBox.Type == DraggableIcon.Type:
 		#if item can't be dropped, restore it to its old parent
 		if (!GetCanIconBeDroppedInSlot(IntersectingBox, DraggableIcon)):

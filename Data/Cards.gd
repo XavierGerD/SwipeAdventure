@@ -78,7 +78,7 @@ onready var PlasmaRifle = {
 #}
 
 onready var GrenadeLauncher = {
-	'name': 'Grenade Launcher', 
+	'name': 'Nade Launcher', 
 	'imagePath':'whatever.jpg',
 	'type': 'weapon',
 	'upgrades': null,
