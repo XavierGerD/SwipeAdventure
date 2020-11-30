@@ -340,8 +340,10 @@ func ExecuteCardPowers(CardAction):
 		if Power == 'removeFromGame':
 			Hand.pop_front()
 		if Power == 'allEnemies':
+			
 			for Enemy in EncounterEnemyNodes:
-				DealDamageToEnemy(Enemy, CardAction.effect)
+				
+				if Enemy.node != TargetEnemy.node : DealDamageToEnemy(Enemy, CardAction.effect)
 			
 		if Power == 'skipNext':
 			SkipNext = true
