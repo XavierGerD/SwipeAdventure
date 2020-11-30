@@ -59,6 +59,8 @@ func GetUserCreditTotal():
 
 func UpdateUserCreditTotal():
 	UserCreditsTotalLabelNode.set_text('Credits: ' + str(GetUserCreditTotal()))
+	var world_map = GameManager.get_node("WorldMap")
+	if world_map: GameManager.get_node("WorldMap").SetCreditLabel(GetUserCreditTotal())
 	
 func OnBuySkill(Skill):
 	$AudioPlayer.stream = load("res://Sound/SFX/BuySkill.wav")

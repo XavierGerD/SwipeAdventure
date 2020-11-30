@@ -15,4 +15,6 @@ func _on_ShopButton_pressed() -> void:
 		GameManager.Player.inventory.push_back(Item)
 		GameManager.Player.credits = GameManager.Player.credits - Item.cost
 		UserCreditsTotalLabelNode.set_text('Credits: ' + str(GameManager.Player.credits))
+		var world_map = GameManager.get_node("WorldMap")
+		if world_map: GameManager.get_node("WorldMap").SetCreditLabel(GameManager.Player.credits)
 		GameManager.AddItemToInventory(Item)

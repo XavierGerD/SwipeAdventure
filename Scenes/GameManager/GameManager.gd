@@ -22,6 +22,7 @@ var WinScreen
 var CurrentEncounter
 
 func StartNewGame():
+	print("starting new game")
 	Player = InitGame.NewPlayerTemplate.duplicate(true)
 	
 	SkillTree = SkillTreeNode.instance()
@@ -74,6 +75,7 @@ func OnGameWin(EncounterEnemies):
 func OnGameLose():
 	LosingScreen = LosingScreenNode.instance()
 	add_child(LosingScreen)
+	Combat.queue_free()
 
 #This func name will probably change in time
 func OnRewardsClaimed(Credits):
