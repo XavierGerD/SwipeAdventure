@@ -41,6 +41,8 @@ func InstanciateSkillButtons():
 	UpdatePrerequisited()
 
 func OnSkillButtonPressed(Skill, SkillNodeButton):
+	$AudioPlayer.stream = load("res://Sound/SFX/Click.wav")
+	$AudioPlayer.play()
 	SkillModalNode.UpdateSkillModal(Skill)
 	SkillModalNode.visible = true
 	CurrentBuySignal = Skill.onBuy

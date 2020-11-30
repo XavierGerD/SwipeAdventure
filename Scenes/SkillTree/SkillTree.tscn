@@ -280,6 +280,8 @@ __meta__ = {
 [node name="SkillModal" parent="." instance=ExtResource( 2 )]
 visible = false
 z_index = 10
+
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
 [connection signal="button_down" from="TreeContainer" to="." method="_on_TreeContainer_button_down"]
 [connection signal="button_up" from="TreeContainer" to="." method="_on_TreeContainer_button_up"]
 [connection signal="pressed" from="HideButton" to="." method="_on_Button_pressed"]

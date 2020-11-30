@@ -15,7 +15,7 @@ onready var NewPlayerTemplate = {
 	},
 	'inventory': [Cards.Welder, Cards.BasicShield],
 	'looseCards': [],
-	'credits': 0,
+	'credits': 1000,
 	'stage': null,
 	'skills': {}
 }

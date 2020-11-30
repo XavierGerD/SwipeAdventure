@@ -292,6 +292,10 @@ func OnAttackDone(Type):
 		CardDamage += PlayerFocusDamage
 		IsPlayerFocused = false
 	DealDamageToEnemy(TargetEnemy, CardDamage)
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 func DealDamageToEnemy(Enemy, CardDamage):
 	Enemy.enemyRef.health = Enemy.enemyRef.health - CardDamage if Enemy.enemyRef.health - CardDamage >= 0 else 0
@@ -342,6 +346,7 @@ func ExecuteCardPowers(CardAction):
 		if Power == 'allEnemies':
 			for Enemy in EncounterEnemyNodes:
 				DealDamageToEnemy(Enemy, CardAction.effect)
+			
 		if Power == 'skipNext':
 			SkipNext = true
 		if Power == 'restoreEnergy':
