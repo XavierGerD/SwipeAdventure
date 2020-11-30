@@ -84,6 +84,44 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Line2D6" type="Line2D" parent="TreeContainer"]
+position = Vector2( 157.333, 1007.24 )
+scale = Vector2( 1.33333, 2.37838 )
+points = PoolVector2Array( 26, -14.9091, 26, -5.53363, 26, 39.0909 )
+
+[node name="EnergyManagementI" type="Button" parent="TreeContainer"]
+margin_left = 96.0
+margin_top = 1068.0
+margin_right = 299.0
+margin_bottom = 1122.0
+custom_fonts/font = ExtResource( 1 )
+text = "Life Boost"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnergyManagementII" type="Button" parent="TreeContainer"]
+margin_left = 96.0
+margin_top = 996.0
+margin_right = 299.0
+margin_bottom = 1050.0
+custom_fonts/font = ExtResource( 1 )
+text = "Life Boost"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnergyManagementIII" type="Button" parent="TreeContainer"]
+margin_left = 96.0
+margin_top = 932.0
+margin_right = 299.0
+margin_bottom = 986.0
+custom_fonts/font = ExtResource( 1 )
+text = "Life Boost"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Line2D2" type="Line2D" parent="TreeContainer"]
 visible = false
 position = Vector2( 424, 1637.7 )
@@ -115,13 +153,11 @@ __meta__ = {
 }
 
 [node name="Line2D3" type="Line2D" parent="TreeContainer"]
-visible = false
 position = Vector2( 552, 1437.7 )
 scale = Vector2( 1.33333, 1.51351 )
 points = PoolVector2Array( 26, -14.9091, 26, 39.0909 )
 
 [node name="HustleI" type="Button" parent="TreeContainer"]
-visible = false
 margin_left = 488.0
 margin_top = 1456.0
 margin_right = 732.0
@@ -133,7 +169,6 @@ __meta__ = {
 }
 
 [node name="HustleII" type="Button" parent="TreeContainer"]
-visible = false
 margin_left = 488.0
 margin_top = 1376.0
 margin_right = 732.0
