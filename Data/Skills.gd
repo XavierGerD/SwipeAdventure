@@ -62,7 +62,7 @@ onready var SkillList = {
 		'description': 'Unlock a second weapon slot.',
 		'power': 'unlockSlot',
 		'effect': 2,
-		'cost': 0,
+		'cost': 20,
 		'hasUserAcquired': false,
 		'onBuy': 'OnBuyHustle',
 		'prerequisite': null
@@ -73,7 +73,7 @@ onready var SkillList = {
 		'description': 'Unlock a third weapon slot.',
 		'power': 'unlockSlot',
 		'effect': 3,
-		'cost': 20,
+		'cost': 40,
 		'hasUserAcquired': false,
 		'onBuy': 'OnBuyHustle',
 		'prerequisite': 'HustleI'
@@ -128,7 +128,7 @@ onready var SkillList = {
 		'description': 'Gain 1 maximum Energy.',
 		'power': 'plusMaxEnergy',
 		'effect': 1,
-		'cost': 0,
+		'cost': 20,
 		'hasUserAcquired': false,
 		'onBuy': 'OnBuyEnergyManagement',
 		'prerequisite': null
